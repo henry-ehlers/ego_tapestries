@@ -178,21 +178,66 @@ class Graph {
         return this.nodes.find(n => n.id == id);
    }
 
+   calculate_node_y_coordinates(nodes) {
+    
+    // 
+    let depths = [... new Set(nodes.map(n => n.depth))]
+    let nDepth = depths.length
+
+    //
+    let verticalspace = (dimensions.height - (depthlabelpadding.top + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom - depthPadding * (nDepth-1))) / nodes.length;
+
+    for (let n in nodes) {
+        if (n != 0 && nodes[n-1].depth != nodes[n].depth) {
+            nodes[n].y =  nodes[n - 1].y + 5; // TODO: define paramter for this buffer
+        } else if (n != 0 && nodes[n-1].depth == nodes[n].depth) {
+            nodes[n].y =  nodes[n - 1].y + verticalspace;
+        } else {
+            nodes[n].y = 0;
+        }
+    }
+
+   }
+
+    calculate_edge_x_coordinates (edges) {
+        
+        let nEdges = edges.filter(e => !e.collapsed).length
+        let depths = [... new Set(edges.map(e => e.depth))]
+        let nDepths = depths.length;
+        let horizontalspace = (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepths-1))) / (nEdges);
+
+        for (let e in edges){
+            let xcoordinate = 0;
+            if (e == 0) {
+                xcoordinate = 0;
+            } else {
+                if (edges[e].collapsed) {
+                    xcoordinate = edges[e - 1].xcoordinate;
+                } else {
+                    xcoordinate = edges[e - 1].xcoordinate + horizontalspace;
+                }
+                if (edges[e - 1].depth != edges[e].depth) {
+                    xcoordinate += depthPadding;
+                }
+            }
+            edges[e].xcoordinate = xcoordinate;
+        }
+
+    }
+
    draw_biofabric (svg) {
 
         //
         let filteredNodes = this.nodes.filter(n => (n.depth <= this.maxDepth));
         let filteredNodesIDs = filteredNodes.map(n => n.id)
         let filteredEdges = this.sort_edges(this.edges.filter(e => filteredNodesIDs.includes([...e.endpoints][0]) && filteredNodesIDs.includes([...e.endpoints][1])))
-
-        let depths = [... new Set(filteredEdges.map(e => e.depth))]
-        let depthPadding = 5;
-
+        
+        // TODO: CLEAN THIS MESS UP
+        let depths = [... new Set(filteredEdges.map(e => e.depth))];
+        let nDepth = depths.length
         let nEdges = filteredEdges.length
-        let nDepths = depths.length;        
-        let verticalspace = (dimensions.height - (depthlabelpadding.top + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom)) / filteredNodes.length;
-        let horizontalspace =  (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepths-1))) / (nEdges);
-
+        let horizontalspace = (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepth-1))) / (nEdges);
+        
         let innerG = svg
             .append("g")
             .attr("transform", "translate(" + (whitepadding.left + labelpadding.left + nodelabelpadding + nodecirclepadding) + "," + (depthlabelpadding.top + whitepadding.top + labelpadding.top) + ")")
@@ -209,17 +254,12 @@ class Graph {
             .append("g")
             .attr("transform", "translate(" + (whitepadding.left) + "," + (depthlabelpadding.top + whitepadding.top) + ")")
 
+
+        this.calculate_node_y_coordinates(filteredNodes)
+        this.calculate_edge_x_coordinates(filteredEdges)
+
         //
         for (let n in filteredNodes) {
-
-            //
-            if (n != 0 && filteredNodes[n-1].depth != filteredNodes[n].depth) {
-                filteredNodes[n].y =  filteredNodes[n - 1].y + 5; // TODO: define paramter for this buffer
-            } else if (n != 0 && filteredNodes[n-1].depth == filteredNodes[n].depth) {
-                filteredNodes[n].y =  filteredNodes[n - 1].y + verticalspace;
-            } else {
-                filteredNodes[n].y = 0;
-            }
 
             //
             innerG
@@ -227,7 +267,7 @@ class Graph {
                 .attr("id", "nodeline-" + filteredNodes[n].id)
                 .attr("class", "nodeline")
                 .attr("x1", 0)
-                .attr("x2", horizontalspace * nEdges + depthPadding * (nDepths-1))
+                .attr("x2", horizontalspace * nEdges + depthPadding * (nDepth-1))
                 .attr("y1", filteredNodes[n].y)
                 .attr("y2", filteredNodes[n].y)
                 .attr("stroke", "#eee")
@@ -298,8 +338,6 @@ class Graph {
 
         }
         
-        this.compute_edge_x_coordinates(filteredEdges, depthPadding);
-
         for (let e in filteredEdges){
 
             let endpoints = [...filteredEdges[e].endpoints];
@@ -412,31 +450,6 @@ class Graph {
             
         }
 
-   }
-
-   compute_edge_x_coordinates (filteredEdges, depthPadding) {
-        
-        let nEdges = filteredEdges.filter(e => !e.collapsed).length
-        let depths = [... new Set(filteredEdges.map(e => e.depth))]
-        let nDepths = depths.length;
-        let horizontalspace =  (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepths-1))) / (nEdges);
-
-        for (let e in filteredEdges){
-            let xcoordinate = 0;
-            if (e == 0) {
-                xcoordinate = 0;
-            } else {
-                if (filteredEdges[e].collapsed) {
-                    xcoordinate = filteredEdges[e - 1].xcoordinate;
-                } else {
-                    xcoordinate = filteredEdges[e - 1].xcoordinate + horizontalspace;
-                }
-                if (filteredEdges[e - 1].depth != filteredEdges[e].depth) {
-                    xcoordinate += depthPadding;
-                }
-            }
-            filteredEdges[e].xcoordinate = xcoordinate;
-        }
    }
 
 }
