@@ -189,7 +189,7 @@ class Graph {
 
     for (let n in nodes) {
         if (n != 0 && nodes[n-1].depth != nodes[n].depth) {
-            nodes[n].y =  nodes[n - 1].y + 5; // TODO: define paramter for this buffer
+            nodes[n].y =  nodes[n - 1].y + depthPadding;
         } else if (n != 0 && nodes[n-1].depth == nodes[n].depth) {
             nodes[n].y =  nodes[n - 1].y + verticalspace;
         } else {
@@ -254,26 +254,24 @@ class Graph {
             .append("g")
             .attr("transform", "translate(" + (whitepadding.left) + "," + (depthlabelpadding.top + whitepadding.top) + ")")
 
-
+        // Calculate X and Y positions of edges and nodes
         this.calculate_node_y_coordinates(filteredNodes)
         this.calculate_edge_x_coordinates(filteredEdges)
 
         //
         for (let n in filteredNodes) {
-
-            //
+            
             innerG
                 .append("line")
                 .attr("id", "nodeline-" + filteredNodes[n].id)
                 .attr("class", "nodeline")
                 .attr("x1", 0)
-                .attr("x2", horizontalspace * nEdges + depthPadding * (nDepth-1))
+                .attr("x2", horizontalspace * nEdges + depthPadding * nDepth)
                 .attr("y1", filteredNodes[n].y)
                 .attr("y2", filteredNodes[n].y)
                 .attr("stroke", "#eee")
                 .attr("stroke-width", 0.5)
                 .attr("stroke-linecap", "round")
-
             
             //
             nodeG
