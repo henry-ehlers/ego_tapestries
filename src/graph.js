@@ -56,7 +56,7 @@ class Graph {
         }
 
         this.root = this.nodes[1];
-        this.maxDepth = 4;
+        this.maxDepth = 3;
         this.nodes.map(n => n.depth = undefined);
         this.edges.map(e => {e.depth = undefined; e.collapsed = false});
         this.construct_ego_network();
@@ -186,39 +186,62 @@ class Graph {
         let filteredEdges = this.sort_edges(this.edges.filter(e => filteredNodesIDs.includes([...e.endpoints][0]) && filteredNodesIDs.includes([...e.endpoints][1])))
 
         let depths = [... new Set(filteredEdges.map(e => e.depth))]
-        let nDepths = depths.length;
         let depthPadding = 5;
 
-        let nEdges = filteredEdges.filter(e => !e.collapsed).length;
-
-        let verticalspace = (dimensions.height - (depthlabelpadding + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom)) / filteredNodes.length;
+        let nEdges = filteredEdges.length
+        let nDepths = depths.length;        
+        let verticalspace = (dimensions.height - (depthlabelpadding.top + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom)) / filteredNodes.length;
         let horizontalspace =  (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepths-1))) / (nEdges);
+
+        let innerG = svg
+            .append("g")
+            .attr("transform", "translate(" + (whitepadding.left + labelpadding.left + nodelabelpadding + nodecirclepadding) + "," + (depthlabelpadding.top + whitepadding.top + labelpadding.top) + ")")
+
+        let nodeG = svg
+            .append("g")
+            .attr("transform", "translate(" + (whitepadding.left + depthlabelpadding.left - nodelabelpadding) + "," + (depthlabelpadding.top + whitepadding.top) + ")")
         
+        let edgeDepthG = svg
+            .append("g")
+            .attr("transform", "translate(" + (whitepadding.left + labelpadding.left + nodelabelpadding + nodecirclepadding) + "," + (whitepadding.top) + ")")
+
+        let nodeDepthG = svg
+            .append("g")
+            .attr("transform", "translate(" + (whitepadding.left) + "," + (depthlabelpadding.top + whitepadding.top) + ")")
 
         //
         for (let n in filteredNodes) {
 
             //
-            svg
+            if (n != 0 && filteredNodes[n-1].depth != filteredNodes[n].depth) {
+                filteredNodes[n].y =  filteredNodes[n - 1].y + 5; // TODO: define paramter for this buffer
+            } else if (n != 0 && filteredNodes[n-1].depth == filteredNodes[n].depth) {
+                filteredNodes[n].y =  filteredNodes[n - 1].y + verticalspace;
+            } else {
+                filteredNodes[n].y = 0;
+            }
+
+            //
+            innerG
                 .append("line")
                 .attr("id", "nodeline-" + filteredNodes[n].id)
                 .attr("class", "nodeline")
-                .attr("x1", whitepadding.left + labelpadding.left + nodelabelpadding + nodecirclepadding)
-                .attr("x2", dimensions.width - whitepadding.right - labelpadding.right)
-                .attr("y1", depthlabelpadding + whitepadding.top + labelpadding.top + n * verticalspace)
-                .attr("y2", depthlabelpadding + whitepadding.top + labelpadding.top + n * verticalspace)
-                .attr("stroke", "lightgrey")
+                .attr("x1", 0)
+                .attr("x2", horizontalspace * nEdges + depthPadding * (nDepths-1))
+                .attr("y1", filteredNodes[n].y)
+                .attr("y2", filteredNodes[n].y)
+                .attr("stroke", "#eee")
                 .attr("stroke-width", 0.5)
                 .attr("stroke-linecap", "round")
 
             
             //
-            svg
+            nodeG
                 .append("text")
                 .attr("id", "nodetext-" + filteredNodes[n].id)
                 .attr("class", "nodetext")
-                .attr("x", whitepadding.left + labelpadding.left)
-                .attr("y", depthlabelpadding + whitepadding.top + labelpadding.top + n * verticalspace)
+                .attr("x", labelpadding.left)
+                .attr("y", filteredNodes[n].y)
                 .attr("text-anchor", "end")
                 .attr("dominant-baseline", "middle")
                 .text(filteredNodes[n].label)
@@ -262,17 +285,16 @@ class Graph {
             const radius = d3.scaleLinear([0, Math.max.apply(0, filteredNodes.map(n => n.neighbors.length))], [0, 1])
 
             //
-            svg
+            nodeG
                 .append("circle")
                 .attr("id", "nodeglyph-" + filteredNodes[n].id)
                 .attr("class", "nodeglyph")
-                .attr("cx", whitepadding.left + labelpadding.left + nodelabelpadding)
-                .attr("cy", depthlabelpadding + whitepadding.top + labelpadding.top + n * verticalspace)
+                .attr("cx", labelpadding.left + nodelabelpadding)
+                .attr("cy", filteredNodes[n].y)
                 .attr("r", radius(filteredNodes[n].neighbors.length))
                 .attr("fill", d3.schemeObservable10[filteredNodes[n].depth])
 
-            //
-            filteredNodes[n].y =  n * verticalspace;
+            
 
         }
         
@@ -284,14 +306,14 @@ class Graph {
             let source = filteredNodes.find(n => n.id == parseInt(endpoints[0]));
             let target = filteredNodes.find(n => n.id == parseInt(endpoints[1]));
 
-            svg
+            innerG
                 .append("line")
                 .attr("id", "edgeline-" + filteredEdges[e].id)
                 .attr("class", "edgeline")
                 .attr("x1", filteredEdges[e].xcoordinate)
                 .attr("x2", filteredEdges[e].xcoordinate)
-                .attr("y1", depthlabelpadding + whitepadding.top + labelpadding.top + source.y)
-                .attr("y2", depthlabelpadding + whitepadding.top + labelpadding.top + target.y)
+                .attr("y1", source.y)
+                .attr("y2", target.y)
                 .attr("stroke", ((filteredEdges[e].depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[filteredEdges[e].depth])
                 .attr("stroke-linecap", "round")
 
@@ -303,16 +325,29 @@ class Graph {
             
             let depthEdges = filteredEdges.filter(e => e.depth == g);
             let xcenter = depthEdges.map(e => e.xcoordinate).reduce((a,b) => a + b, 0)/depthEdges.length
-            
-            svg
+            let depthNodes = filteredNodes.filter(n => n.depth == g)
+            let ycenter = depthNodes.map(n => n.y).reduce((a,b) => a + b, 0)/depthNodes.length
+
+            edgeDepthG
+                .append("line")
+                .attr("id", "depthline-" + g.toString().replace(".", "-"))
+                .attr("class", "depthline")
+                .attr("x1", Math.min.apply(0, depthEdges.map(e => e.xcoordinate)))
+                .attr("x2", Math.max.apply(0, depthEdges.map(e => e.xcoordinate)))
+                .attr("y1", 0)
+                .attr("y2", 0)
+                .attr("stroke", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
+                .attr("stroke-linecap", "round")
+
+            edgeDepthG
                 .append("circle")
                 .attr("id", "depthcircle-" + g.toString().replace(".", "-"))
                 .attr("class", "depthcircle")
                 .attr("cx", xcenter)
-                .attr("cy", depthlabelpadding)
-                .attr("r", 4)
+                .attr("cy", 0)
+                .attr("r", 3)
                 .attr("fill", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
-                .attr("stroke", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
+                .attr("stroke", "white")
                 .on("click", () => {
                     for (let f of filteredEdges.filter(e => e.depth == g)) {
                         f.collapsed = !f.collapsed;
@@ -331,14 +366,50 @@ class Graph {
 
                         let newDepthEdges = filteredEdges.filter(e => e.depth == d);
                         let newxcenter = newDepthEdges.map(e => e.xcoordinate).reduce((a,b) => a + b, 0)/newDepthEdges.length
+                        let minX = Math.min.apply(0, newDepthEdges.map(e => e.xcoordinate))
+                        let maxX = Math.max.apply(0, newDepthEdges.map(e => e.xcoordinate))
 
                         svg
                             .select("#" + "depthcircle-" + d.toString().replace(".", "-"))
                             .transition()
                             .duration(100)
                             .attr("cx", newxcenter)
+
+                        svg
+                            .select("#depthline-" + d.toString().replace(".", "-"))
+                            .transition()
+                            .duration(100)
+                            .attr("x1", minX)
+                            .attr("x2", maxX)
                     }
-                })
+                }
+            )
+
+            if (g % 1 != 0.5) {
+
+                nodeDepthG
+                    .append("line")
+                    .attr("id", "nodeDepthLine-" + g.toString().replace(".", "-"))
+                    .attr("class", "nodeDepthLine")
+                    .attr("x1", 0)
+                    .attr("x2", 0)
+                    .attr("y1", Math.min.apply(0, depthNodes.map(n => n.y)))
+                    .attr("y2", Math.max.apply(0, depthNodes.map(n => n.y)))
+                    .attr("stroke", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
+                    .attr("stroke-linecap", "round")
+
+                nodeDepthG
+                    .append("circle")
+                    .attr("id", "nodeDepthCircle-" + g.toString().replace(".", "-"))
+                    .attr("class", "nodeDepthCircle")
+                    .attr("cx", 0)
+                    .attr("cy", ycenter)
+                    .attr("r", 3)
+                    .attr("fill", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
+                    .attr("stroke", "white")
+
+            }
+            
         }
 
    }
@@ -353,7 +424,7 @@ class Graph {
         for (let e in filteredEdges){
             let xcoordinate = 0;
             if (e == 0) {
-                xcoordinate = whitepadding.left + labelpadding.left + nodelabelpadding + nodecirclepadding;
+                xcoordinate = 0;
             } else {
                 if (filteredEdges[e].collapsed) {
                     xcoordinate = filteredEdges[e - 1].xcoordinate;
