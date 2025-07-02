@@ -261,6 +261,7 @@ class Graph {
         //
         for (let n in filteredNodes) {
             
+            // TODO: make lines 
             innerG
                 .append("line")
                 .attr("id", "nodeline-" + filteredNodes[n].id)
@@ -342,6 +343,7 @@ class Graph {
             let source = filteredNodes.find(n => n.id == parseInt(endpoints[0]));
             let target = filteredNodes.find(n => n.id == parseInt(endpoints[1]));
 
+            // TODO: make stroke-width a function of available screen space
             innerG
                 .append("line")
                 .attr("id", "edgeline-" + filteredEdges[e].id)
@@ -352,6 +354,7 @@ class Graph {
                 .attr("y2", target.y)
                 .attr("stroke", ((filteredEdges[e].depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[filteredEdges[e].depth])
                 .attr("stroke-linecap", "round")
+                .attr("stroke-width", 3)
 
             filteredEdges[e].htmlID = "edgeline-" + filteredEdges[e].id
 
@@ -388,7 +391,7 @@ class Graph {
                     for (let f of filteredEdges.filter(e => e.depth == g)) {
                         f.collapsed = !f.collapsed;
                     }
-                    this.compute_edge_x_coordinates(filteredEdges, depthPadding);
+                    this.calculate_edge_x_coordinates(filteredEdges);
                     for (let f of filteredEdges) {
                         svg
                             .select("#" + f.htmlID)

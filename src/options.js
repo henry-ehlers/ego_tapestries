@@ -4,4 +4,6 @@ let labelpadding = {left: 50, right: 0, top: 0, bottom: 0};
 let depthlabelpadding = {left: 10, top: 10};
 let nodelabelpadding = 5;
 let nodecirclepadding = 10;
+
+// TODO: make depth padding a function of the available screen space somehow
 let depthPadding = 5;
