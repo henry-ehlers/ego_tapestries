@@ -354,7 +354,7 @@ class Graph {
                 .attr("y2", target.y)
                 .attr("stroke", ((filteredEdges[e].depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[filteredEdges[e].depth])
                 .attr("stroke-linecap", "round")
-                .attr("stroke-width", 3)
+                .attr("stroke-width", 1)
 
             filteredEdges[e].htmlID = "edgeline-" + filteredEdges[e].id
 
