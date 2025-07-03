@@ -51,7 +51,6 @@ class Graph {
                 
                 this.edges.push(newEdge)
 
-
             }
         }
 
@@ -174,37 +173,37 @@ class Graph {
             e.depth = (source.depth == target.depth) ? source.depth : ((source.depth + target.depth) / 2 )
         }
 
-   }
+    }
 
    get_node_from_id (id) {
         return this.nodes.find(n => n.id == id);
-   }
-
-   calculate_node_y_coordinates(nodes) {
-    
-    // 
-    let nNodes = nodes.filter(n => !n.collapsed).length
-    let depths = [... new Set(nodes.map(n => n.depth))]
-    let nDepth = depths.length
-    let verticalspace = (dimensions.height - (depthlabelpadding.top + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom - depthPadding * (nDepth-1))) / nNodes;
-
-    for (let n in nodes) {
-        let y = undefined;
-        if (n == 0) {
-            y = 0
-        } else {
-            if (nodes[n].collapsed) {
-                y = nodes[n - 1].y;
-            } else {
-                y = nodes[n - 1].y + verticalspace;
-            }
-            if (nodes[n - 1].depth != nodes[n].depth) {
-                y += depthPadding;
-            }
-        }
-        nodes[n].y = y;
     }
-   }
+
+    calculate_node_y_coordinates(nodes) {
+    
+        // 
+        let nNodes = nodes.filter(n => !n.collapsed).length
+        let depths = [... new Set(nodes.map(n => n.depth))]
+        let nDepth = depths.length
+        let verticalspace = (dimensions.height - (depthlabelpadding.top + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom - depthPadding * (nDepth-1))) / nNodes;
+
+        for (let n in nodes) {
+            let y = undefined;
+            if (n == 0) {
+                y = 0
+            } else {
+                if (nodes[n].collapsed) {
+                    y = nodes[n - 1].y;
+                } else {
+                    y = nodes[n - 1].y + verticalspace;
+                }
+                if (nodes[n - 1].depth != nodes[n].depth) {
+                    y += depthPadding;
+                }
+            }
+            nodes[n].y = y;
+        }
+    }
 
     calculate_edge_x_coordinates (edges) {
         
@@ -294,6 +293,7 @@ class Graph {
                 .text(filteredNodes[n].label)
                 .attr("fill", d3.schemeObservable10[filteredNodes[n].depth])
                 .on("mouseover", () => {
+
                     d3
                         .select("#nodeline-" + filteredNodes[n].id)
                         .attr("stroke-width", 1)
@@ -408,10 +408,13 @@ class Graph {
                 .attr("fill", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
                 .attr("stroke", "white")
                 .on("click", () => {
+
                     for (let f of filteredEdges.filter(e => e.depth == g)) {
                         f.collapsed = !f.collapsed;
                     }
+
                     this.calculate_edge_x_coordinates(filteredEdges);
+                    
                     for (let f of filteredEdges) {
                         svg
                             .select("#" + f.htmlID)
@@ -537,8 +540,8 @@ class Graph {
                                 .attr("y2", maxY)
                             }
 
-                        })
-
+                        }
+                    )
             }
             
         }
