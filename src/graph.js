@@ -51,6 +51,7 @@ class Graph {
                 
                 this.edges.push(newEdge)
 
+
             }
         }
 
@@ -175,7 +176,7 @@ class Graph {
 
     }
 
-   get_node_from_id (id) {
+    get_node_from_id (id) {
         return this.nodes.find(n => n.id == id);
     }
 
