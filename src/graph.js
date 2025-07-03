@@ -116,6 +116,8 @@ class Graph {
 
    construct_ego_network () {
 
+        this.nodes.map(n => {n.depth = undefined; n.collapsed = false});
+        this.edges.map(e => {e.depth = undefined; e.collapsed = false});
         this.root.depth = 0;
 
         let bfs = (root) => {
@@ -326,8 +328,22 @@ class Graph {
                     }
 
                 })
+                .on("dblclick", () => {
+                    
+                    // clear canvas
+                    svg.selectAll("*").remove();
+                    
+                    // recalculate ego network with new ego
+                    this.root = filteredNodes[n]                    
+                    this.construct_ego_network()
+                    this.sort_nodes();
 
-            const radius = d3.scaleLinear([0, Math.max.apply(0, filteredNodes.map(n => n.neighbors.length))], [0, 1])
+                    // TODO: do not just redraw but animate the transition
+                    this.draw_biofabric(svg)
+
+                })
+
+            const radius = d3.scaleLinear([0, Math.max.apply(0, filteredNodes.map(n => n.neighbors.length))], [0, 1.5])
 
             //
             nodeG
@@ -338,8 +354,6 @@ class Graph {
                 .attr("cy", filteredNodes[n].y)
                 .attr("r", radius(filteredNodes[n].neighbors.length))
                 .attr("fill", d3.schemeObservable10[filteredNodes[n].depth])
-
-            
 
         }
         
