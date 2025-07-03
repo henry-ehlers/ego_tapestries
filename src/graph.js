@@ -57,7 +57,7 @@ class Graph {
 
         this.root = this.nodes[1];
         this.maxDepth = 3;
-        this.nodes.map(n => n.depth = undefined);
+        this.nodes.map(n => {n.depth = undefined; n.collapsed = false});
         this.edges.map(e => {e.depth = undefined; e.collapsed = false});
         this.construct_ego_network();
         this.sort_nodes();
@@ -181,22 +181,27 @@ class Graph {
    calculate_node_y_coordinates(nodes) {
     
     // 
+    let nNodes = nodes.filter(n => !n.collapsed).length
     let depths = [... new Set(nodes.map(n => n.depth))]
     let nDepth = depths.length
-
-    //
-    let verticalspace = (dimensions.height - (depthlabelpadding.top + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom - depthPadding * (nDepth-1))) / nodes.length;
+    let verticalspace = (dimensions.height - (depthlabelpadding.top + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom - depthPadding * (nDepth-1))) / nNodes;
 
     for (let n in nodes) {
-        if (n != 0 && nodes[n-1].depth != nodes[n].depth) {
-            nodes[n].y =  nodes[n - 1].y + depthPadding;
-        } else if (n != 0 && nodes[n-1].depth == nodes[n].depth) {
-            nodes[n].y =  nodes[n - 1].y + verticalspace;
+        let y = undefined;
+        if (n == 0) {
+            y = 0
         } else {
-            nodes[n].y = 0;
+            if (nodes[n].collapsed) {
+                y = nodes[n - 1].y;
+            } else {
+                y = nodes[n - 1].y + verticalspace;
+            }
+            if (nodes[n - 1].depth != nodes[n].depth) {
+                y += depthPadding;
+            }
         }
+        nodes[n].y = y;
     }
-
    }
 
     calculate_edge_x_coordinates (edges) {
@@ -206,8 +211,9 @@ class Graph {
         let nDepths = depths.length;
         let horizontalspace = (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepths-1))) / (nEdges);
 
+        //
         for (let e in edges){
-            let xcoordinate = 0;
+            let xcoordinate = undefined;
             if (e == 0) {
                 xcoordinate = 0;
             } else {
@@ -261,7 +267,7 @@ class Graph {
         //
         for (let n in filteredNodes) {
             
-            // TODO: make lines 
+            // 
             innerG
                 .append("line")
                 .attr("id", "nodeline-" + filteredNodes[n].id)
@@ -446,6 +452,78 @@ class Graph {
                     .attr("r", 3)
                     .attr("fill", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
                     .attr("stroke", "white")
+                    .on("click", () => {
+
+                        for (let v of filteredNodes.filter(n => n.depth == g)) {
+                            v.collapsed = !v.collapsed;
+                        }
+
+                        this.calculate_node_y_coordinates(filteredNodes);
+
+                        for (let v in filteredNodes) {
+
+                            // Collapse Node Glyphs
+                            nodeG
+                                .select("#" + "nodeglyph-" + filteredNodes[v].id)
+                                .transition()
+                                .duration(100)
+                                .attr("cy", filteredNodes[v].y)
+
+                            // Collapse Node Text
+                            nodeG
+                                .select("#" + "nodetext-" + filteredNodes[v].id)
+                                .transition()
+                                .duration(100)
+                                .attr("y", filteredNodes[v].y)
+                                .text(filteredNodes[v].collapsed ? "" : filteredNodes[v].label)
+                            
+                            // Update Node Lines
+                            innerG
+                                .select("#" + "nodeline-" + filteredNodes[v].id)
+                                .transition()
+                                .duration(100)
+                                .attr("y1", filteredNodes[v].y)
+                                .attr("y2", filteredNodes[v].y)
+
+                        }
+
+                        for (let e in filteredEdges) {
+                            
+                            let endpoints = [...filteredEdges[e].endpoints];
+                            let source = filteredNodes.find(n => n.id == parseInt(endpoints[0]));
+                            let target = filteredNodes.find(n => n.id == parseInt(endpoints[1]));
+
+                            innerG
+                                .select("#" + "edgeline-" + filteredEdges[e].id)
+                                .transition()
+                                .duration(100)
+                                .attr("y1", source.y)
+                                .attr("y2", target.y)
+                                
+                        }
+
+                        for (let d of depths) {
+
+                            let newDepthNodes = filteredNodes.filter(n => n.depth == d);
+                            let newYCoordinate = newDepthNodes.map(n => n.y).reduce((a,b) => a + b, 0)/newDepthNodes.length
+                            let minY = Math.min.apply(0, newDepthNodes.map(n => n.y))
+                            let maxY = Math.max.apply(0, newDepthNodes.map(n => n.y))
+
+                            nodeDepthG
+                                .select("#" + "nodeDepthCircle-" + d.toString().replace(".", "-"))
+                                .transition()
+                                .duration(100)
+                                .attr("cy", newYCoordinate)
+
+                            nodeDepthG
+                                .select("#nodeDepthLine-" + d.toString().replace(".", "-"))
+                                .transition()
+                                .duration(100)
+                                .attr("y1", minY)
+                                .attr("y2", maxY)
+                            }
+
+                        })
 
             }
             
