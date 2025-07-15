@@ -606,6 +606,18 @@ class Graph {
                                 .duration(100)
                                 .attr("y1", source.y)
                                 .attr("y2", target.y)
+
+                            innerG
+                                .select("#" + "edgecirclesource-" + filteredEdges[e].id)
+                                .transition()
+                                .duration(100)
+                                .attr("cy", source.y)
+
+                            innerG
+                                .select("#" + "edgecircletarget-" + filteredEdges[e].id)
+                                .transition()
+                                .duration(100)
+                                .attr("cy", target.y)
                                 
                         }
 
