@@ -1,5 +1,5 @@
 async function init () {
-    let data = await d3.json("./data/miserables.edges.json")
+    let data = await d3.json("./data/bio-grid-mouse.edges.json")
     let graph = new Graph(data);
 
     let svg = d3.select("body")

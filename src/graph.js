@@ -72,8 +72,8 @@ class Graph {
 
    sort_nodes () {
         this.nodes.sort((a,b) => {
-            if (a.depth == undefined) return 1
-            if (b.depth == undefined) return -1
+            // if (a.depth == undefined) return 1
+            // if (b.depth == undefined) return -1
             if (a.depth > b.depth) {
                 return 1
             } else if (a.depth < b.depth) {
@@ -92,8 +92,8 @@ class Graph {
 
     sort_edges (edges) {
         edges.sort((a,b) => {
-            if (a.depth == undefined) return 1
-            if (b.depth == undefined) return -1
+            // if (a.depth == undefined) return 1
+            // if (b.depth == undefined) return -1
             if (a.depth > b.depth) {
                 return 1
             } else if (a.depth < b.depth) {
@@ -282,7 +282,9 @@ class Graph {
         let filteredEdges = this.sort_edges(this.edges.filter(e => filteredNodesIDs.includes([...e.endpoints][0]) && filteredNodesIDs.includes([...e.endpoints][1])))
         
         // TODO: CLEAN THIS MESS UP
-        let depths = [... new Set(filteredEdges.map(e => e.depth))];
+        let edgeDepths = new Set(filteredEdges.map(e => e.depth));
+        let nodeDepths = new Set(filteredNodes.map(v => v.depth));
+        let depths = [...edgeDepths.union(nodeDepths)].filter(d => d != 0)
         let nDepth = depths.length
         let nEdges = filteredEdges.length
         let horizontalspace = (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepth-1))) / (nEdges);
@@ -441,94 +443,121 @@ class Graph {
         }
 
         for (let g of depths) {
-            
+
+            console.log("g", g)
+
             let depthEdges = filteredEdges.filter(e => e.depth == g);
             let xcenter = depthEdges.map(e => e.xcoordinate).reduce((a,b) => a + b, 0)/depthEdges.length
+
             let depthNodes = filteredNodes.filter(n => n.depth == g)
             let ycenter = depthNodes.map(n => n.y).reduce((a,b) => a + b, 0)/depthNodes.length
 
-            edgeDepthG
-                .append("line")
-                .attr("id", "depthline-" + g.toString().replace(".", "-"))
-                .attr("class", "depthline")
-                .attr("x1", Math.min.apply(0, depthEdges.map(e => e.xcoordinate)))
-                .attr("x2", Math.max.apply(0, depthEdges.map(e => e.xcoordinate)))
-                .attr("y1", 0)
-                .attr("y2", 0)
-                .attr("stroke", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
-                .attr("stroke-linecap", "round")
+            console.log(xcenter, ycenter)
 
-            edgeDepthG
-                .append("circle")
-                .attr("id", "depthcircle-" + g.toString().replace(".", "-"))
-                .attr("class", "depthcircle")
-                .attr("cx", xcenter)
-                .attr("cy", 0)
-                .attr("r", 3)
-                .attr("fill", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
-                .attr("stroke", "white")
-                .on("click", () => {
+            if (!isNaN(xcenter)) {
 
-                    for (let f of filteredEdges.filter(e => e.depth == g)) {
+                edgeDepthG
+                    .append("line")
+                    .attr("id", "depthline-" + g.toString().replace(".", "-"))
+                    .attr("class", "depthline")
+                    .attr("x1", Math.min.apply(0, depthEdges.map(e => e.xcoordinate)))
+                    .attr("x2", Math.max.apply(0, depthEdges.map(e => e.xcoordinate)))
+                    .attr("y1", 0)
+                    .attr("y2", 0)
+                    .attr("stroke", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
+                    .attr("stroke-linecap", "round")
 
-                        switch (f.state) {
-                            case ("uncompressed"):
-                                f.state = "partially compressed";
-                                break;
-                            case ("partially compressed"):
-                                f.state = "fully compressed";
-                                break;
-                            case ("fully compressed"):
-                                f.state = "uncompressed";
-                                break;
+                edgeDepthG
+                    .append("circle")
+                    .attr("id", "depthcircle-" + g.toString().replace(".", "-"))
+                    .attr("class", "depthcircle")
+                    .attr("cx", xcenter)
+                    .attr("cy", 0)
+                    .attr("r", 3)
+                    .attr("fill", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
+                    .attr("stroke", "white")
+                    .on("click", () => {
+
+                        for (let f of filteredEdges.filter(e => e.depth == g)) {
+
+                            switch (f.state) {
+                                case ("uncompressed"):
+                                    f.state = "partially compressed";
+                                    break;
+                                case ("partially compressed"):
+                                    f.state = "fully compressed";
+                                    break;
+                                case ("fully compressed"):
+                                    f.state = "uncompressed";
+                                    break;
+                            }
+                        }
+
+                        this.calculate_edge_x_coordinates(filteredEdges);
+                        
+                        for (let f of filteredEdges) {
+                            svg
+                                .select("#" + f.htmlID)
+                                .transition()
+                                .duration(100)
+                                .attr("x1", f.xcoordinate)
+                                .attr("x2", f.xcoordinate)
+
+                            svg
+                                .select("#edgecirclesource-" + f.id)
+                                .transition()
+                                .duration(100)
+                                .attr("cx", f.xcoordinate)
+
+                            svg
+                                .select("#edgecircletarget-" + f.id)
+                                .transition()
+                                .duration(100)
+                                .attr("cx", f.xcoordinate)
+                        }
+
+                        for (let d of depths) {
+
+                            let newDepthEdges = filteredEdges.filter(e => e.depth == d);
+                            let newxcenter = newDepthEdges.map(e => e.xcoordinate).reduce((a,b) => a + b, 0)/newDepthEdges.length
+                            let minX = Math.min.apply(0, newDepthEdges.map(e => e.xcoordinate))
+                            let maxX = Math.max.apply(0, newDepthEdges.map(e => e.xcoordinate))
+
+                            svg
+                                .select("#" + "depthcircle-" + d.toString().replace(".", "-"))
+                                .transition()
+                                .duration(100)
+                                .attr("cx", newxcenter)
+
+                            svg
+                                .select("#depthline-" + d.toString().replace(".", "-"))
+                                .transition()
+                                .duration(100)
+                                .attr("x1", minX)
+                                .attr("x2", maxX)
                         }
                     }
+                )
 
-                    this.calculate_edge_x_coordinates(filteredEdges);
-                    
-                    for (let f of filteredEdges) {
-                        svg
-                            .select("#" + f.htmlID)
-                            .transition()
-                            .duration(100)
-                            .attr("x1", f.xcoordinate)
-                            .attr("x2", f.xcoordinate)
+            } else {
 
-                        svg
-                            .select("#edgecirclesource-" + f.id)
-                            .transition()
-                            .duration(100)
-                            .attr("cx", f.xcoordinate)
+                // TODO: this does not work if final layer has no edges
+                let prevLayerX = Math.max.apply(0, filteredEdges.filter(e => e.depth == (g - 0.5)).map(ee => ee.xcoordinate))
+                let nextLayerX = Math.min.apply(0, filteredEdges.filter(e => e.depth == (g + 0.5)).map(ee => ee.xcoordinate))
+                
+                
+                edgeDepthG
+                    .append("circle")
+                    .attr("id", "depthcircle-" + g.toString().replace(".", "-"))
+                    .attr("class", "depthcircle")
+                    .attr("cx", (prevLayerX + nextLayerX) / 2) 
+                    .attr("cy", 0)
+                    .attr("r", 2.2)
+                    .attr("stroke", ((g % 1) == 0.5) ? "#333" : d3.schemeObservable10[g])
+                    .attr("fill", "white")
 
-                        svg
-                            .select("#edgecircletarget-" + f.id)
-                            .transition()
-                            .duration(100)
-                            .attr("cx", f.xcoordinate)
-                    }
-
-                    for (let d of depths) {
-
-                        let newDepthEdges = filteredEdges.filter(e => e.depth == d);
-                        let newxcenter = newDepthEdges.map(e => e.xcoordinate).reduce((a,b) => a + b, 0)/newDepthEdges.length
-                        let minX = Math.min.apply(0, newDepthEdges.map(e => e.xcoordinate))
-                        let maxX = Math.max.apply(0, newDepthEdges.map(e => e.xcoordinate))
-
-                        svg
-                            .select("#" + "depthcircle-" + d.toString().replace(".", "-"))
-                            .transition()
-                            .duration(100)
-                            .attr("cx", newxcenter)
-
-                        svg
-                            .select("#depthline-" + d.toString().replace(".", "-"))
-                            .transition()
-                            .duration(100)
-                            .attr("x1", minX)
-                            .attr("x2", maxX)
-                    }
-                }
-            )
+            }
+            
 
             if (g % 1 != 0.5) {
 
