@@ -43,6 +43,12 @@ class Graph {
                     return Math.min(source_index, target_index)
                 }
 
+                newEdge.get_bottommost_index = () => {
+                    let source_index = this.nodes.indexOf(this.get_node_from_id(newEdge.get_source()))
+                    let target_index = this.nodes.indexOf(this.get_node_from_id(newEdge.get_target()))
+                    return Math.max(source_index, target_index)
+                }
+
                 newEdge.get_length = () => {
                     let source_index = this.nodes.indexOf(this.get_node_from_id(newEdge.get_source()))
                     let target_index = this.nodes.indexOf(this.get_node_from_id(newEdge.get_target()))
@@ -117,7 +123,7 @@ class Graph {
    construct_ego_network () {
 
         this.nodes.map(n => {n.depth = undefined; n.state = "uncompressed"});
-        this.edges.map(e => {e.depth = undefined; e.state = "uncompressed"});
+        this.edges.map(e => {e.depth = undefined; e.state = "partially compressed"});
         this.root.depth = 0;
 
         let bfs = (root) => {
@@ -211,19 +217,54 @@ class Graph {
         let nEdges = edges.filter(e => e.state == "uncompressed").length
         let depths = [... new Set(edges.map(e => e.depth))]
         let nDepths = depths.length;
-        let horizontalspace = (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepths-1))) / (nEdges);
-
+        //let horizontalspace = (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepths-1))) / (nEdges);
+        let horizontalspace = 5;
         //
         for (let e in edges){
+            
             let xcoordinate = undefined;
+            
             if (e == 0) {
+
                 xcoordinate = 0;
+
             } else {
-                if (edges[e].state != "uncompressed") {
+
+                if (edges[e].state == "fully compressed") {
+
                     xcoordinate = edges[e - 1].xcoordinate;
-                } else {
+                
+                } else if (edges[e].state == "uncompressed") {
+                
                     xcoordinate = edges[e - 1].xcoordinate + horizontalspace;
+                
+                } else {
+                    
+                    if (edges[e].depth != edges[e - 1].depth) {
+
+                        xcoordinate = edges[e - 1].xcoordinate + horizontalspace;
+
+
+                    } else {
+
+                        let currtopMostNode = edges[e].get_topmost_index();
+                        let prevtopMostNode = edges[e - 1].get_topmost_index();
+
+                        if (currtopMostNode == prevtopMostNode) {
+
+                            xcoordinate = edges[e - 1].xcoordinate;
+
+                        } else {
+
+                            xcoordinate = edges[e - 1].xcoordinate + horizontalspace;
+
+                        }
+
+                    }
+                    
+                    
                 }
+
                 if (edges[e - 1].depth != edges[e].depth) {
                     xcoordinate += depthPadding;
                 }
@@ -364,6 +405,24 @@ class Graph {
             let source = filteredNodes.find(n => n.id == parseInt(endpoints[0]));
             let target = filteredNodes.find(n => n.id == parseInt(endpoints[1]));
 
+            innerG
+                .append("circle")
+                .attr("id", "edgecirclesource-" + filteredEdges[e].id)
+                .attr("class", "edgecircle")
+                .attr("cx", filteredEdges[e].xcoordinate)
+                .attr("cy", source.y)
+                .attr("r", 1)
+                .attr("fill", ((filteredEdges[e].depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[filteredEdges[e].depth])
+
+            innerG
+                .append("circle")
+                .attr("id", "edgecircletarget-" + filteredEdges[e].id)
+                .attr("class", "edgecircle")
+                .attr("cx", filteredEdges[e].xcoordinate)
+                .attr("cy", target.y)
+                .attr("r", 1)
+                .attr("fill", ((filteredEdges[e].depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[filteredEdges[e].depth])
+
             // TODO: make stroke-width a function of available screen space
             innerG
                 .append("line")
@@ -434,6 +493,18 @@ class Graph {
                             .duration(100)
                             .attr("x1", f.xcoordinate)
                             .attr("x2", f.xcoordinate)
+
+                        svg
+                            .select("#edgecirclesource-" + f.id)
+                            .transition()
+                            .duration(100)
+                            .attr("cx", f.xcoordinate)
+
+                        svg
+                            .select("#edgecircletarget-" + f.id)
+                            .transition()
+                            .duration(100)
+                            .attr("cx", f.xcoordinate)
                     }
 
                     for (let d of depths) {
