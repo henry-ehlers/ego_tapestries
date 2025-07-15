@@ -57,8 +57,8 @@ class Graph {
 
         this.root = this.nodes[1];
         this.maxDepth = 3;
-        this.nodes.map(n => {n.depth = undefined; n.collapsed = false});
-        this.edges.map(e => {e.depth = undefined; e.collapsed = false});
+        this.nodes.map(n => {n.depth = undefined; n.state = "uncompressed"});
+        this.edges.map(e => {e.depth = undefined; e.state = "uncompressed"});
         this.construct_ego_network();
         this.sort_nodes();
 
@@ -116,8 +116,8 @@ class Graph {
 
    construct_ego_network () {
 
-        this.nodes.map(n => {n.depth = undefined; n.collapsed = false});
-        this.edges.map(e => {e.depth = undefined; e.collapsed = false});
+        this.nodes.map(n => {n.depth = undefined; n.state = "uncompressed"});
+        this.edges.map(e => {e.depth = undefined; e.state = "uncompressed"});
         this.root.depth = 0;
 
         let bfs = (root) => {
@@ -183,7 +183,7 @@ class Graph {
     calculate_node_y_coordinates(nodes) {
     
         // 
-        let nNodes = nodes.filter(n => !n.collapsed).length
+        let nNodes = nodes.filter(n => n.state == "uncompressed").length
         let depths = [... new Set(nodes.map(n => n.depth))]
         let nDepth = depths.length
         let verticalspace = (dimensions.height - (depthlabelpadding.top + whitepadding.top + whitepadding.bottom + labelpadding.top + labelpadding.bottom - depthPadding * (nDepth-1))) / nNodes;
@@ -193,7 +193,7 @@ class Graph {
             if (n == 0) {
                 y = 0
             } else {
-                if (nodes[n].collapsed) {
+                if (nodes[n].state != "uncompressed") {
                     y = nodes[n - 1].y;
                 } else {
                     y = nodes[n - 1].y + verticalspace;
@@ -208,7 +208,7 @@ class Graph {
 
     calculate_edge_x_coordinates (edges) {
         
-        let nEdges = edges.filter(e => !e.collapsed).length
+        let nEdges = edges.filter(e => e.state == "uncompressed").length
         let depths = [... new Set(edges.map(e => e.depth))]
         let nDepths = depths.length;
         let horizontalspace = (dimensions.width - (whitepadding.left + whitepadding.right + labelpadding.left + labelpadding.right + nodelabelpadding + nodecirclepadding + depthPadding * (nDepths-1))) / (nEdges);
@@ -219,7 +219,7 @@ class Graph {
             if (e == 0) {
                 xcoordinate = 0;
             } else {
-                if (edges[e].collapsed) {
+                if (edges[e].state != "uncompressed") {
                     xcoordinate = edges[e - 1].xcoordinate;
                 } else {
                     xcoordinate = edges[e - 1].xcoordinate + horizontalspace;
@@ -411,7 +411,18 @@ class Graph {
                 .on("click", () => {
 
                     for (let f of filteredEdges.filter(e => e.depth == g)) {
-                        f.collapsed = !f.collapsed;
+
+                        switch (f.state) {
+                            case ("uncompressed"):
+                                f.state = "partially compressed";
+                                break;
+                            case ("partially compressed"):
+                                f.state = "fully compressed";
+                                break;
+                            case ("fully compressed"):
+                                f.state = "uncompressed";
+                                break;
+                        }
                     }
 
                     this.calculate_edge_x_coordinates(filteredEdges);
@@ -473,7 +484,14 @@ class Graph {
                     .on("click", () => {
 
                         for (let v of filteredNodes.filter(n => n.depth == g)) {
-                            v.collapsed = !v.collapsed;
+                            switch (v.state) {
+                                case ("uncompressed"):
+                                    v.state = "fully compressed";
+                                    break;
+                                case ("fully compressed"):
+                                    v.state = "uncompressed";
+                                    break;
+                            }
                         }
 
                         this.calculate_node_y_coordinates(filteredNodes);
@@ -493,7 +511,7 @@ class Graph {
                                 .transition()
                                 .duration(100)
                                 .attr("y", filteredNodes[v].y)
-                                .text(filteredNodes[v].collapsed ? "" : filteredNodes[v].label)
+                                .text(filteredNodes[v].state != "uncompressed" ? "" : filteredNodes[v].label)
                             
                             // Update Node Lines
                             innerG
