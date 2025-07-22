@@ -1,14 +1,19 @@
 class Edge {
     
+    //
     readonly id: string;
-    readonly endpoints: [string, string];
+    readonly endpoints: [Vertex, Vertex];
     readonly weight: number;
+
+    // 
     depth: number = Infinity;
     state: State = State.Uncompressed;
+    index: number = Infinity;
 
-    constructor (id: string, sourceID: string, targetID: string, weight: number) {
+    // Constructor
+    constructor (id: string, source: Vertex, target: Vertex, weight: number) {
         this.id = id;
-        this.endpoints = [sourceID, targetID];
+        this.endpoints = [source, target];
         this.weight = weight;
     }
 
@@ -17,22 +22,26 @@ class Edge {
         return this.id;
     }
 
-    get_endpoints () : [string, string] {
+    get_endpoints () : [Vertex, Vertex] {
         return this.endpoints;
+    }
+
+    get_endpoint_ids () : Array<string> {
+        return this.endpoints.map(node => node.id);
     }
 
     // Check if Given Node ID maps to Edge's Endpoints
     has_node_id (nodeID: string): boolean {
-        return this.endpoints.includes(nodeID);
+        return (this.get_source().get_id() == nodeID || this.get_target().get_id() == nodeID)
     }
 
     // Get SourceID
-    get_source () : string {
+    get_source () : Vertex {
         return this.endpoints[0];
     }
 
     // Get TargetID
-    get_target () : string {
+    get_target () : Vertex {
         return this.endpoints[1];
     }
 

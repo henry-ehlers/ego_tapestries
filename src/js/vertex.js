@@ -1,12 +1,15 @@
 "use strict";
 class Vertex {
-    // x: number;
     constructor(id, label) {
         this.depth = Infinity;
         this.state = State.Uncompressed;
+        this.index = Infinity;
         this.distance = Infinity;
         this.incidence = [];
         this.adjacency = [];
+        // Geometry
+        this.x = Infinity;
+        this.y = Infinity;
         this.id = id;
         this.label = label;
     }

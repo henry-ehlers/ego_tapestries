@@ -11,7 +11,6 @@ class Graph {
     }
     // Populate Edges and Nodes from Dataset
     load_data(data) {
-        var _a, _b;
         // Initialize IDs of edges and nodes
         let nodeCounter = 0;
         let edgeCounter = 0;
@@ -28,17 +27,17 @@ class Graph {
                 this.nodes.push(new Vertex(nodeID.toString(), entry.target));
             }
             // Get Source and Target ID's from Node List
-            let sourceID = (_a = this.nodes.find(n => n.label == entry.source)) === null || _a === void 0 ? void 0 : _a.get_id();
-            let targetID = (_b = this.nodes.find(n => n.label == entry.target)) === null || _b === void 0 ? void 0 : _b.get_id();
+            let source = this.nodes.find(n => n.label == entry.source);
+            let target = this.nodes.find(n => n.label == entry.target);
             // Check that Source and Target ID's exist in node list
-            if (sourceID == undefined || targetID == undefined) {
-                throw new Error("SourceID or TargetID not found in node list!");
+            if (source == undefined || target == undefined) {
+                throw new Error("Source or Target not found in node list!");
             }
             // Check if Edge already exists in Edge list
-            if (!this.edges.find(e => e.has_node_id(sourceID) && e.has_node_id(targetID))) {
+            if (!this.edges.find(e => e.has_node_id(source.get_id()) && e.has_node_id(target.get_id()))) {
                 // Create new Edge and Add to Edge list
                 let edgeID = edgeCounter++;
-                let newEdge = new Edge(edgeID.toString(), sourceID, targetID, entry.weight);
+                let newEdge = new Edge(edgeID.toString(), source, target, entry.weight);
                 this.edges.push(newEdge);
             }
         }
@@ -67,7 +66,7 @@ class Graph {
                 result.push(vertex);
                 // Get Vertex Incidence and Neighbors
                 vertex.set_incidence(this.edges.filter(edge => edge.has_node_id(vertex.id)));
-                let neighborIDs = vertex.incidence.map(edge => edge.get_endpoints()).flat(1).filter(nodeID => vertex.id != nodeID);
+                let neighborIDs = vertex.incidence.map(edge => edge.get_endpoint_ids()).flat(1).filter(nodeID => vertex.get_id() != nodeID);
                 let adjacency = neighborIDs.map(nodeID => this.nodes.find(node => node.id == nodeID)).filter(node => { if (!node) {
                     throw new Error("Node is Undefined!");
                 } ; return node != undefined; });
@@ -110,11 +109,8 @@ class Graph {
         // Iterate over Edges and Set Edge Depth
         for (let edge of this.edges) {
             // Get Source and Target from Node List
-            let source = this.nodes.find(n => n.id == [...edge.endpoints][0]);
-            let target = this.nodes.find(n => n.id == [...edge.endpoints][1]);
-            if (!source || !target) {
-                throw new Error("Source or Target undefined!");
-            }
+            let source = edge.get_source();
+            let target = edge.get_target();
             // Set Edge Depth as Function of its Incident Nodes' Depths
             edge.depth = (source.depth == target.depth) ? source.depth : ((source.depth + target.depth) / 2);
         }

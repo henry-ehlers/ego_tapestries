@@ -2,13 +2,17 @@ class Vertex {
 
     readonly id: string;
     readonly label: string;
+
     depth: number = Infinity;
     state: State = State.Uncompressed;
+    index: number = Infinity;
     distance: number = Infinity;
     incidence: Array<Edge> = [];
     adjacency: Array<Vertex> = [];
 
-    // x: number;
+    // Geometry
+    x: number = Infinity;
+    y: number = Infinity;
 
     constructor (id: string, label: string) {
         this.id = id;
@@ -34,7 +38,7 @@ class Vertex {
     set_distance (distance: number) : void {
         this.distance = distance;
     }
-    
+
     // Get the Node's Unique ID
     get_id () : string {
         return this.id;

@@ -36,20 +36,20 @@ class Graph {
             }
             
             // Get Source and Target ID's from Node List
-            let sourceID = this.nodes.find(n => n.label == entry.source)?.get_id();
-            let targetID = this.nodes.find(n => n.label == entry.target)?.get_id();
+            let source = this.nodes.find(n => n.label == entry.source);
+            let target = this.nodes.find(n => n.label == entry.target);
 
             // Check that Source and Target ID's exist in node list
-            if (sourceID == undefined || targetID == undefined) {
-                throw new Error("SourceID or TargetID not found in node list!")
+            if (source == undefined || target == undefined) {
+                throw new Error("Source or Target not found in node list!")
             }
 
             // Check if Edge already exists in Edge list
-            if (!this.edges.find(e => e.has_node_id(sourceID) && e.has_node_id(targetID))) {
+            if (!this.edges.find(e => e.has_node_id(source.get_id()) && e.has_node_id(target.get_id()))) {
 
                 // Create new Edge and Add to Edge list
                 let edgeID = edgeCounter++;
-                let newEdge = new Edge(edgeID.toString(), sourceID, targetID, entry.weight)
+                let newEdge = new Edge(edgeID.toString(), source, target, entry.weight)
                 this.edges.push(newEdge)
 
             }
@@ -86,7 +86,7 @@ class Graph {
                 
                 // Get Vertex Incidence and Neighbors
                 vertex.set_incidence(this.edges.filter(edge => edge.has_node_id(vertex.id)))
-                let neighborIDs: Array<string> = vertex.incidence.map(edge => edge.get_endpoints()).flat(1).filter(nodeID => vertex.id != nodeID);
+                let neighborIDs: Array<string> = vertex.incidence.map(edge => edge.get_endpoint_ids()).flat(1).filter(nodeID => vertex.get_id() != nodeID);
                 let adjacency: Array<Vertex> = neighborIDs.map(nodeID => this.nodes.find(node => node.id == nodeID)).filter(node => {if (!node) {throw new Error("Node is Undefined!")}; return node != undefined;});
                 vertex.set_adjacency(adjacency);
 
@@ -140,11 +140,8 @@ class Graph {
         for (let edge of this.edges) {
 
             // Get Source and Target from Node List
-            let source: Vertex | undefined = this.nodes.find(n => n.id == [...edge.endpoints][0])
-            let target: Vertex | undefined = this.nodes.find(n => n.id == [...edge.endpoints][1])
-            if (!source || !target) {
-                throw new Error("Source or Target undefined!")
-            }
+            let source: Vertex = edge.get_source();
+            let target: Vertex = edge.get_target();
 
             // Set Edge Depth as Function of its Incident Nodes' Depths
             edge.depth = (source.depth == target.depth) ? source.depth : ((source.depth + target.depth) / 2 )

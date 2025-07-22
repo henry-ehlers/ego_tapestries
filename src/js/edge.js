@@ -1,10 +1,13 @@
 "use strict";
 class Edge {
-    constructor(id, sourceID, targetID, weight) {
+    // Constructor
+    constructor(id, source, target, weight) {
+        // 
         this.depth = Infinity;
         this.state = State.Uncompressed;
+        this.index = Infinity;
         this.id = id;
-        this.endpoints = [sourceID, targetID];
+        this.endpoints = [source, target];
         this.weight = weight;
     }
     // Get the Edge's Unique ID
@@ -14,9 +17,12 @@ class Edge {
     get_endpoints() {
         return this.endpoints;
     }
+    get_endpoint_ids() {
+        return this.endpoints.map(node => node.id);
+    }
     // Check if Given Node ID maps to Edge's Endpoints
     has_node_id(nodeID) {
-        return this.endpoints.includes(nodeID);
+        return (this.get_source().get_id() == nodeID || this.get_target().get_id() == nodeID);
     }
     // Get SourceID
     get_source() {
