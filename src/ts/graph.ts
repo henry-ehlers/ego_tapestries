@@ -9,6 +9,8 @@ class Graph {
     constructor (data: any) {
         this.load_data(data);
         this.ego = this.nodes[0];
+
+        this.construct_ego_network();
     }
 
     // Populate Edges and Nodes from Dataset
