@@ -14,6 +14,9 @@ class Edge {
     get_id() {
         return this.id;
     }
+    get_depth() {
+        return this.depth;
+    }
     get_endpoints() {
         return this.endpoints;
     }

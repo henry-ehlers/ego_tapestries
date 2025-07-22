@@ -22,6 +22,10 @@ class Edge {
         return this.id;
     }
 
+    get_depth () : number {
+        return this.depth;
+    }
+
     get_endpoints () : [Vertex, Vertex] {
         return this.endpoints;
     }

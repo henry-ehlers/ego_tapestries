@@ -125,4 +125,25 @@ class Graph {
             return node;
         }
     }
+    sort_nodes() {
+        this.nodes.sort((nodeA, nodeB) => {
+            if (nodeA.get_depth() > nodeB.get_depth()) {
+                return 1;
+            }
+            else if (nodeA.get_depth() < nodeB.get_depth()) {
+                return -1;
+            }
+            else {
+                if (nodeA.get_distance() > nodeB.get_distance()) {
+                    return -1;
+                }
+                else if (nodeA.get_distance() < nodeB.get_distance()) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+        });
+    }
 }

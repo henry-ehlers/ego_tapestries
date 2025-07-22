@@ -13,6 +13,19 @@ class Vertex {
         this.id = id;
         this.label = label;
     }
+    get_y() {
+        console.log(this.y);
+        return this.y;
+    }
+    set_y(y) {
+        this.y = y;
+    }
+    get_x() {
+        return this.x;
+    }
+    set_x(x) {
+        this.x = x;
+    }
     set_incidence(incidence) {
         this.incidence = incidence;
     }
@@ -31,6 +44,12 @@ class Vertex {
     // Get the Node's Unique ID
     get_id() {
         return this.id;
+    }
+    get_depth() {
+        return this.depth;
+    }
+    get_distance() {
+        return this.distance;
     }
     // Get the Node's non-unique Label
     get_label() {
