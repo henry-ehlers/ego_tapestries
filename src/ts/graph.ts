@@ -2,17 +2,21 @@ class Graph {
 
     edges: Array<Edge> = [];
     nodes: Array<Vertex> = [];
+    root: string;
+    depth: number;
 
-    constructor (data: any) {
+    constructor (data: any, root: string, depth: number) {
         this.load_data(data);
+        this.root = root;
+        this.depth = depth;
     }
 
     // Populate Edges and Nodes from Dataset
     load_data (data: any) : void {
 
         // Initialize IDs of edges and nodes
-        let nodeCounter = 0;
-        let edgeCounter = 0;
+        let nodeCounter: number = 0;
+        let edgeCounter: number = 0;
 
         // Iterate over Entries in Dataset
         for (let entry of data) {
@@ -46,8 +50,18 @@ class Graph {
                 let newEdge = new Edge(edgeID.toString(), sourceID, targetID, entry.weight)
                 this.edges.push(newEdge)
 
-
             }
         }
     }
+
+    // Get a Node from the Node list using its unique ID
+    get_node_from_id (nodeID: string) : Vertex {
+        let node = this.nodes.find(n => n.id == nodeID);
+        if (node == undefined) {
+            throw new Error ("Node ID not found")
+        } else {
+            return node;
+        }
+    }
+
 }
