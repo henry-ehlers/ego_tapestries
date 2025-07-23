@@ -4,8 +4,13 @@ class BioFabric {
 
     constructor (graph: Graph) {
 
+        //
         this.graph = graph;
+
+        //
         this.sort_edges_degreescending();
+        
+        //
         this.calculate_node_y_coordinates();
 
     }
@@ -60,11 +65,17 @@ class BioFabric {
 
     calculate_node_y_coordinates() : void {
 
-        // 
-        let verticalspace = 5;
-        let depthspace = 10;
-        
         //
+        // let nNodeDepths: number = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))].length;
+        // let nUncompressedNodes: number = this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).filter(node => node.get_state() == State.Uncompressed).length;
+        // let nCompressedNodes: number = this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).filter(node => node.get_state() == State["Fully Compressed"]).length;
+
+        // 
+        // let verticalspace: number = 1 / (nUncompressedNodes - 1);
+        let verticalspace: number = 2;
+        let depthspace: number = 4;
+        
+        // Calculate Y Positions
         for (let nodeIndex = 0; nodeIndex < this.graph.nodes.length; nodeIndex++) {
             let y = undefined;
             if (nodeIndex == 0) {

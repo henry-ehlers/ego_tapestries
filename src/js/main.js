@@ -1,7 +1,7 @@
 async function init () {
 
-    let width = 1000;
-    let height = 2000;
+    let width = 100;
+    let height = 50;
 
     let data = await d3.json("./data/miserables.edges.json")
     let graph = new Graph(data);
@@ -10,6 +10,8 @@ async function init () {
     console.log(graph.edges)
 
     let biofabric = new BioFabric(graph);
+    console.log(biofabric)
+
     let biofabricrenderer = new BioFabricRenderer(biofabric, width, height);
     console.log(biofabric);
 
@@ -19,6 +21,7 @@ async function init () {
         .attr("id", "something")
         .attr("viewBox", "0 0 " + width + " " + height)
         .attr("width", "100%")
+        .attr("height", "100%")
     
     biofabricrenderer.render(svg);
     

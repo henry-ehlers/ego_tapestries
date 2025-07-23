@@ -179,4 +179,8 @@ class Graph {
         )
     }
 
+    get_depth () : number {
+        return this.depth;
+    }
+
 }

@@ -14,7 +14,6 @@ class Vertex {
         this.label = label;
     }
     get_y() {
-        console.log(this.y);
         return this.y;
     }
     set_y(y) {
@@ -44,6 +43,9 @@ class Vertex {
     // Get the Node's Unique ID
     get_id() {
         return this.id;
+    }
+    get_state() {
+        return this.state;
     }
     get_depth() {
         return this.depth;

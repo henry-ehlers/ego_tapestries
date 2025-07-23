@@ -146,4 +146,7 @@ class Graph {
             }
         });
     }
+    get_depth() {
+        return this.depth;
+    }
 }

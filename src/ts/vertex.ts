@@ -20,7 +20,6 @@ class Vertex {
     } 
 
     get_y () : number {
-        console.log(this.y);
         return this.y;
     }
 
@@ -59,6 +58,10 @@ class Vertex {
     // Get the Node's Unique ID
     get_id () : string {
         return this.id;
+    }
+
+    get_state () : State {
+        return this.state;
     }
 
     get_depth () : number {
