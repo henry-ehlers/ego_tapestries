@@ -92,10 +92,10 @@ class BioFabric {
     }
     calculate_edge_x_coordinates() {
         // Get Depths
+        // TOTO: for now only account for EDGE DEPTHS THAT ARE PRESENT -> future should also space for missing edge depths
         let edgeDepths = [...new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()))];
         let nodeDepths = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
         let depths = edgeDepths.concat(nodeDepths);
-        console.log(depths);
         // Determine Unique Compressed and Uncompressed Edges
         let singletonEdges = this.graph.edges.filter(edge => edge.get_state() == State.Singleton && edge.get_depth() <= this.graph.get_depth());
         let uncompressedEdges = this.graph.edges.filter(edge => edge.get_state() == State.Uncompressed && edge.get_depth() <= this.graph.get_depth());
@@ -106,11 +106,6 @@ class BioFabric {
             let topMostNodeIndex = this.get_topmost_node_index(edge);
             partialEdgeNodeTops.add(topMostNodeIndex);
         }
-        // Sizes
-        console.log("N Partial Edges:      " + partialEdgeNodeTops.size);
-        console.log("N Uncompressed Edges: " + uncompressedEdges.length);
-        console.log("N Singleton Edges:    " + singletonEdges.length);
-        console.log("N Depths:             " + edgeDepths.length);
         // Calculate Spacing
         let horizontalSpacingRatio = 1;
         let depthSpaceRatio = 3;

@@ -133,122 +133,163 @@ class BioFabricRenderer {
                 .attr("fill-opacity", "0")
                 .attr("stroke", ((nodeDepth % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepth])
                 .attr("stroke-width", 0.2)
-                .on("click", () => {
+                .on("click", () => 
+                    {
 
-                    // Iterate over all nodes in the current depth and update their state
-                    for (let depthNode of this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepth)) {
-                        switch (depthNode.get_state()) {
-                            case (State["Uncompressed"]):
-                                depthNode.set_state(State["Fully Compressed"])
-                                break;
-                            case (State["Fully Compressed"]):
-                                depthNode.set_state(State["Uncompressed"])
-                                break;
+                        // Iterate over all nodes in the current depth and update their state
+                        for (let depthNode of this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepth)) {
+                            switch (depthNode.get_state()) {
+                                case (State["Uncompressed"]):
+                                    depthNode.set_state(State["Fully Compressed"])
+                                    break;
+                                case (State["Fully Compressed"]):
+                                    depthNode.set_state(State["Uncompressed"])
+                                    break;
+                            }
                         }
-                    }
 
-                    // Recalculcate the Y Coordinates of the now (un)compressed states
-                    this.biofabric.calculate_node_y_coordinates();
+                        // Recalculcate the Y Coordinates of the now (un)compressed states
+                        this.biofabric.calculate_node_y_coordinates();
 
-                    // Iterate over nodes and update the node lines
-                    for (let node of this.biofabric.graph.nodes.filter(node => node.get_depth() <= this.biofabric.graph.get_depth())) {
+                        // Iterate over nodes and update the node lines
+                        for (let node of this.biofabric.graph.nodes.filter(node => node.get_depth() <= this.biofabric.graph.get_depth())) {
+                            
+                            // Update Node Lines
+                            innerG.select("#" + "nodeline-" + node.get_id())
+                                .transition()
+                                .duration(100)
+                                .attr("y1", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
+                                .attr("y2", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
+
+                            // Collapse Node Text
+                            nodeG.select("#" + "nodetext-" + node.get_id())
+                                .transition()
+                                .duration(100)
+                                .attr("y", node.get_y() * (this.canvasHeight * (1 - this.nodeGY)))
+                                .attr("opacity", () => 
+                                    {
+                                        if (node.get_state() == State["Fully Compressed"]) {
+                                            return "0"
+                                        } else {
+                                            return "1"
+                                        }
+                                    }
+                                )
+                        }
+
+                        // Iterate over depths and update their positions
+                        for (let nodeDepth of nodeDepths) {
+
+                            let newDepthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepth);
+                            let newYCoordinate = newDepthNodes.map(node => node.get_y()).reduce((a,b) => a + b, 0)/newDepthNodes.length
+                            let minY = Math.min.apply(0, newDepthNodes.map(node => node.get_y()))
+                            let maxY = Math.max.apply(0, newDepthNodes.map(node => node.get_y()))
+
+                            nodeDepthG.select("#" + "nodeDepthCircle-" + nodeDepth.toString().replace(".", "-") + "G")
+                                .transition()
+                                .duration(100)
+                                .attr("transform", "translate(0," + newYCoordinate * (this.canvasHeight * (1 - this.innerY)) + ")")
+
+                            nodeDepthG.select("#nodeDepthLine-" + nodeDepth.toString().replace(".", "-"))
+                                .transition()
+                                .duration(100)
+                                .attr("y1", minY * (this.canvasHeight * (1 - this.innerY)))
+                                .attr("y2", maxY * (this.canvasHeight * (1 - this.innerY)))
+                        }
                         
-                        // Update Node Lines
-                        innerG.select("#" + "nodeline-" + node.get_id())
+                        d3.select("#" + "nodeDepthCircleIcon-" + nodeDepth.toString().replace(".", "-"))
                             .transition()
                             .duration(100)
-                            .attr("y1", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
-                            .attr("y2", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
-
-                        // Collapse Node Text
-                        nodeG.select("#" + "nodetext-" + node.get_id())
-                            .transition()
-                            .duration(100)
-                            .attr("y", node.get_y() * (this.canvasHeight * (1 - this.nodeGY)))
                             .attr("opacity", () => 
                                 {
-                                    if (node.get_state() == State["Fully Compressed"]) {
-                                        return "0"
-                                    } else {
+                                    if (depthNodes[0].get_state() != State["Uncmpressed"]) {
                                         return "1"
+                                    } else {
+                                        return "0"
                                     }
-                                }
-                            )
-                    }
-
-                    // Iterate over depths and update their positions
-                    for (let nodeDepth of nodeDepths) {
-
-                        let newDepthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepth);
-                        let newYCoordinate = newDepthNodes.map(node => node.get_y()).reduce((a,b) => a + b, 0)/newDepthNodes.length
-                        let minY = Math.min.apply(0, newDepthNodes.map(node => node.get_y()))
-                        let maxY = Math.max.apply(0, newDepthNodes.map(node => node.get_y()))
-
-                        nodeDepthG.select("#" + "nodeDepthCircle-" + nodeDepth.toString().replace(".", "-") + "G")
-                            .transition()
-                            .duration(100)
-                            .attr("transform", "translate(0," + newYCoordinate * (this.canvasHeight * (1 - this.innerY)) + ")")
-
-                        nodeDepthG.select("#nodeDepthLine-" + nodeDepth.toString().replace(".", "-"))
-                            .transition()
-                            .duration(100)
-                            .attr("y1", minY * (this.canvasHeight * (1 - this.innerY)))
-                            .attr("y2", maxY * (this.canvasHeight * (1 - this.innerY)))
-                    }
-                    
-                    d3.select("#" + "nodeDepthCircleIcon-" + nodeDepth.toString().replace(".", "-"))
-                        .transition()
-                        .duration(100)
-                        .attr("opacity", () => 
+                                })
+                            .attr("d", () => 
                             {
-                                if (depthNodes[0].get_state() != State["Uncmpressed"]) {
-                                    return "1"
-                                } else {
-                                    return "0"
+                                let curve = d3.line().curve(d3.curveBasisClosed)
+                                if (depthNodes[0].get_state() == State["Singleton"]) {
+                                    return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
                                 }
-                            })
-                        .attr("d", () => 
-                        {
-                            let curve = d3.line().curve(d3.curveBasisClosed)
-                            if (depthNodes[0].get_state() == State["Singleton"]) {
-                                return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
+                                if (depthNodes[0].get_state() == State["Partially Compressed"]) {
+                                    return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]])
+                                } else if (depthNodes[0].get_state() == State["Fully Compressed"]) {
+                                    return curve([[0, 0.7], [-0.7, 0], [0, -0.7], [0.7, 0]])
+                                } else if (depthNodes[0].get_state() == State["Uncompressed"]) {
+                                    return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
+                                }
                             }
-                            if (depthNodes[0].get_state() == State["Partially Compressed"]) {
-                                return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]])
-                            } else if (depthNodes[0].get_state() == State["Fully Compressed"]) {
-                                return curve([[0, 0.7], [-0.7, 0], [0, -0.7], [0.7, 0]])
-                            } else if (depthNodes[0].get_state() == State["Uncompressed"]) {
-                                return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
-                            }
+                        )
+
+                        for (let edge of this.biofabric.graph.edges.filter(edge => edge.get_depth() <= this.biofabric.graph.get_depth())) {
+
+                            innerG
+                                .select("#" + "edgeline-" + edge.get_id())
+                                .transition()
+                                .duration(100)
+                                .attr("y1", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                                .attr("y2", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
+
+                            innerG
+                                .select("#" + "edgeCircleTarget-" + edge.get_id())
+                                .transition()
+                                .duration(100)
+                                .attr("cy", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
+
+                            innerG
+                                .select("#" + "edgeCircleSource-" + edge.get_id())
+                                .transition()
+                                .duration(100)
+                                .attr("cy", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                                
                         }
-                    )
-                }
+                    }
                 )
-                .style("cursor", "pointer")
-
-                
-
+                .style("cursor", "pointer")                
         }
 
         // Iterate over all Edges in Depth Limit
-        for (let edgeIndex in this.biofabric.graph.edges.filter(edge => (edge.get_depth() <= this.biofabric.graph.get_depth()))) {
+        for (let edge of this.biofabric.graph.edges.filter(edge => (edge.get_depth() <= this.biofabric.graph.get_depth()))) {
 
             // Get Indicies of Curent Edge's Termini Nodes
-            let topNodeIndex = this.biofabric.get_topmost_node_index(this.biofabric.graph.edges[edgeIndex]);
-            let lowNodeIndex = this.biofabric.get_bottommost_node_index(this.biofabric.graph.edges[edgeIndex]);
+            let topNodeIndex = this.biofabric.get_topmost_node_index(edge);
+            let lowNodeIndex = this.biofabric.get_bottommost_node_index(edge);
 
             // Append an Edge Line
             innerG
                 .append("line")
-                .attr("id", "edgeline-" + this.biofabric.graph.edges[edgeIndex].get_id())
+                .attr("id", "edgeline-" + edge.get_id())
                 .attr("class", "edgeline")
                 .attr("y1", this.biofabric.graph.nodes[topNodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("y2", this.biofabric.graph.nodes[lowNodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
-                .attr("x1", this.biofabric.graph.edges[edgeIndex].get_x() * (this.canvasWidth * (1 - this.innerX)))
-                .attr("x2", this.biofabric.graph.edges[edgeIndex].get_x() * (this.canvasWidth * (1 - this.innerX)))
-                .attr("stroke", "black")
+                .attr("x1", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
+                .attr("x2", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
+                .attr("stroke", ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
                 .attr("stroke-width", 0.25)
                 .attr("stroke-linecap", "round")
+
+            innerG
+                .append("circle")
+                .attr("id", "edgeCircleSource-" + edge.get_id())
+                .attr('class', "edgecircle")
+                .attr("cy", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
+                .attr("r", "0.2")
+                .attr("stroke-width", "0")
+                .attr("fill",  ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
+
+            innerG
+                .append("circle")
+                .attr("id", "edgeCircleTarget-" + edge.get_id())
+                .attr('class', "edgecircle")
+                .attr("cy", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
+                .attr("r", "0.2")
+                .attr("stroke-width", "0")
+                .attr("fill",  ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
         }
     }
 
