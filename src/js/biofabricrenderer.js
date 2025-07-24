@@ -354,7 +354,7 @@ class BioFabricRenderer {
                             }
                         }
                     )
-                    .attr("id", "nodeDepthCircleIcon-" + depth.toString().replace(".", "-"))
+                    .attr("id", "edgeDepthCircleIcon-" + depth.toString().replace(".", "-"))
                     .attr('fill', ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
 
             edgeDepthCircleG.append("circle")
@@ -439,6 +439,33 @@ class BioFabricRenderer {
                                 .attr("x2", maxX * this.canvasWidth * (1 - this.edgeDepthX))
 
                         }
+
+                        d3.select("#" + "edgeDepthCircleIcon-" + depth.toString().replace(".", "-"))
+                            .transition()
+                            .duration(100)
+                            .attr("opacity", () => 
+                                {
+                                    if (depthEdges[0].get_state() != State["Uncmpressed"]) {
+                                        return "1"
+                                    } else {
+                                        return "0"
+                                    }
+                                })
+                            .attr("d", () => 
+                            {
+                                let curve = d3.line().curve(d3.curveBasisClosed)
+                                if (depthEdges[0].get_state() == State["Singleton"]) {
+                                    return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
+                                }
+                                if (depthEdges[0].get_state() == State["Partially Compressed"]) {
+                                    return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]])
+                                } else if (depthEdges[0].get_state() == State["Fully Compressed"]) {
+                                    return curve([[0, 0.7], [-0.7, 0], [0, -0.7], [0.7, 0]])
+                                } else if (depthEdges[0].get_state() == State["Uncompressed"]) {
+                                    return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
+                                }
+                            }
+                        )
                     }
                 )
         }
