@@ -47,7 +47,7 @@ class BioFabricRenderer {
 
             // Append a Node Line
             innerG.append("line")
-                .attr("id", "nodeline-" + node.get_id())
+                .attr("id", "nodeLine-" + node.get_id())
                 .attr("class", "nodeline")
                 .attr("x1", 0)
                 .attr("x2", this.canvasWidth * (0.95 * (1 - this.innerX)))
@@ -59,7 +59,7 @@ class BioFabricRenderer {
 
             // Add Node Text
             nodeG.append("text")
-                .attr("id", "nodetext-" + node.get_id())
+                .attr("id", "nodeText-" + node.get_id())
                 .attr("class", "nodetext")
                 .style("font-size", "0.5pt")
                 .attr("x", 0.95 * this.canvasWidth * (this.innerX - this.nodeGX))
@@ -160,14 +160,14 @@ class BioFabricRenderer {
                         for (let node of this.biofabric.graph.nodes.filter(node => node.get_depth() <= this.biofabric.graph.get_depth())) {
                             
                             // Update Node Lines
-                            innerG.select("#" + "nodeline-" + node.get_id())
+                            innerG.select("#" + "nodeLine-" + node.get_id())
                                 .transition()
                                 .duration(100)
                                 .attr("y1", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
                                 .attr("y2", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                             // Collapse Node Text
-                            nodeG.select("#" + "nodetext-" + node.get_id())
+                            nodeG.select("#" + "nodeText-" + node.get_id())
                                 .transition()
                                 .duration(100)
                                 .attr("y", node.get_y() * (this.canvasHeight * (1 - this.nodeGY)))
@@ -232,7 +232,7 @@ class BioFabricRenderer {
                         for (let edge of this.biofabric.graph.edges.filter(edge => edge.get_depth() <= this.biofabric.graph.get_depth())) {
 
                             innerG
-                                .select("#" + "edgeline-" + edge.get_id())
+                                .select("#" + "edgeLine-" + edge.get_id())
                                 .transition()
                                 .duration(100)
                                 .attr("y1", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
@@ -266,8 +266,8 @@ class BioFabricRenderer {
             // Append an Edge Line
             innerG
                 .append("line")
-                .attr("id", "edgeline-" + edge.get_id())
-                .attr("class", "edgeline")
+                .attr("id", "edgeLine-" + edge.get_id())
+                .attr("class", "edgeLine")
                 .attr("y1", this.biofabric.graph.nodes[topNodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("y2", this.biofabric.graph.nodes[lowNodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("x1", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
@@ -304,8 +304,8 @@ class BioFabricRenderer {
             let xcenter = depthEdges.map(edge => edge.get_x()).reduce((a,b) => a + b, 0)/depthEdges.length
 
             edgeDepthG.append("line")
-                .attr("id", "depthline-" + depth.toString().replace(".", "-"))
-                .attr("class", "depthline")
+                .attr("id", "edgeDepthLine-" + depth.toString().replace(".", "-"))
+                .attr("class", "edgeDepthLine")
                 .attr("x1", Math.min.apply(0, depthEdges.map(edge => edge.get_x())) * this.canvasWidth * (1 - this.edgeDepthX))
                 .attr("x2", Math.max.apply(0, depthEdges.map(edge => edge.get_x())) * this.canvasWidth * (1 - this.edgeDepthX))
                 .attr("y1", 0)
@@ -316,7 +316,7 @@ class BioFabricRenderer {
 
             let edgeDepthCircleG = edgeDepthG
                 .append("g")
-                .attr("id", "edgeDepthCircleG-" + depth.toString().replace(".", "-") + "G")
+                .attr("id", "edgeDepthCircle-" + depth.toString().replace(".", "-") + "G")
                 .attr("transform", "translate(" + (xcenter * this.canvasWidth * (1 - this.edgeDepthX)) + "," + (0) + ")")
 
             edgeDepthCircleG.append("circle")
@@ -351,7 +351,7 @@ class BioFabricRenderer {
 
             edgeDepthCircleG.append("circle")
                 .attr("id", "edgeDepthCircle-" + depth.toString().replace(".", "-"))
-                .attr("class", "depthcircle")
+                .attr("class", "depthCircle")
                 .attr("cx", 0)
                 .attr("cy", 0)
                 .attr("stroke-width", 0.2)
@@ -359,6 +359,72 @@ class BioFabricRenderer {
                 .attr("fill", "white")
                 .attr('fill-opacity', 0)
                 .attr("stroke", ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
+                .style("cursor", "pointer")      
+                .on("click", () => 
+                    {
+                        // Set the New States (Un/Fully/Partially Compressed) for all edges in clicked Depth
+                        for (let edge of this.biofabric.graph.edges.filter(edge => edge.get_depth() == depth)) {
+                            switch (edge.get_state()) {
+                                case (State["Uncompressed"]):
+                                    edge.set_state(State["Partially Compressed"]);
+                                    break;
+                                case (State["Partially Compressed"]):
+                                    edge.set_state(State["Fully Compressed"]);
+                                    break;
+                                case (State["Fully Compressed"]):
+                                    edge.set_state(State["Uncompressed"]);
+                                    break;
+                            }
+                        }
+
+                        // Recalculate the X coordinates of the now partially/un/fully compressed edges
+                        this.biofabric.calculate_edge_x_coordinates();
+
+                        // Iterate over all edges (and their circle termini) and update their x coordinates
+                        for (let edge of this.biofabric.graph.edges.filter(edge => edge.get_depth() <= this.biofabric.graph.get_depth())) {
+
+                            innerG.select("#edgeLine-" + edge.get_id())
+                                .transition()
+                                .duration(100)
+                                .attr("x1", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
+                                .attr("x2", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
+
+                            innerG.select("#edgeCircleSource-" + edge.get_id())
+                                .transition()
+                                .duration(100)
+                                .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
+
+                            innerG.select("#edgeCircleTarget-" + edge.get_id())
+                                .transition()
+                                .duration(100)
+                                .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
+
+                        }
+
+                        // Iterate over all depth circles and lines and update their positions
+                        for (let edgeDepth of edgeDepths) {
+
+                            let newDepthEdges = this.biofabric.graph.edges.filter(edge => edge.get_depth() == edgeDepth);
+                            let newXCenter = newDepthEdges.map(edge => edge.get_x()).reduce((a,b) => a + b, 0)/newDepthEdges.length;
+                            let minX = Math.min.apply(0, newDepthEdges.map(edge => edge.get_x()));
+                            let maxX = Math.max.apply(0, newDepthEdges.map(edge => edge.get_x()));
+
+                            svg
+                                .select("#" + "edgeDepthCircle-" + edgeDepth.toString().replace(".", "-") + "G")
+                                .transition()
+                                .duration(100)
+                                .attr("transform", "translate(" + (newXCenter * this.canvasWidth * (1 - this.edgeDepthX)) + ",0)")
+
+                            svg
+                                .select("#edgeDepthLine-" + edgeDepth.toString().replace(".", "-"))
+                                .transition()
+                                .duration(100)
+                                .attr("x1", minX * this.canvasWidth * (1 - this.edgeDepthX))
+                                .attr("x2", maxX * this.canvasWidth * (1 - this.edgeDepthX))
+
+                        }
+                    }
+                )
         }
     }
 
