@@ -230,26 +230,26 @@ class BioFabricRenderer {
 
         }
 
-        // // Iterate over all Edges in Depth Limit
-        // for (let edgeIndex in this.biofabric.graph.edges.filter(edge => (edge.get_depth() <= this.biofabric.graph.get_depth()))) {
+        // Iterate over all Edges in Depth Limit
+        for (let edgeIndex in this.biofabric.graph.edges.filter(edge => (edge.get_depth() <= this.biofabric.graph.get_depth()))) {
 
-        //     // Get Indicies of Curent Edge's Termini Nodes
-        //     let topNodeIndex = this.biofabric.get_topmost_node_index(this.biofabric.graph.edges[edgeIndex]);
-        //     let lowNodeIndex = this.biofabric.get_bottommost_node_index(this.biofabric.graph.edges[edgeIndex]);
+            // Get Indicies of Curent Edge's Termini Nodes
+            let topNodeIndex = this.biofabric.get_topmost_node_index(this.biofabric.graph.edges[edgeIndex]);
+            let lowNodeIndex = this.biofabric.get_bottommost_node_index(this.biofabric.graph.edges[edgeIndex]);
 
-        //     // Append an Edge Line
-        //     innerG
-        //         .append("line")
-        //         .attr("id", "edgeline-" + this.biofabric.graph.edges[edgeIndex].get_id())
-        //         .attr("class", "edgeline")
-        //         .attr("y1", this.biofabric.graph.nodes[topNodeIndex].get_y() * (this.canvasHeight * (1 - this.get_y())))
-        //         .attr("y2", this.biofabric.graph.nodes[lowNodeIndex].get_y() * (this.canvasHeight * (1 - this.get_y())))
-        //         .attr("x1", this.biofabric.graph.edges[edgeIndex].get_x() * (this.canvasWidth * (1 - this.get_x())))
-        //         .attr("x2", this.biofabric.graph.edges[edgeIndex].get_x() * (this.canvasWidth * (1 - this.get_x())))
-        //         .attr("stroke", "red")
-        //         .attr("stroke-width", 0.25)
-        //         .attr("stroke-linecap", "round")
-        // }
+            // Append an Edge Line
+            innerG
+                .append("line")
+                .attr("id", "edgeline-" + this.biofabric.graph.edges[edgeIndex].get_id())
+                .attr("class", "edgeline")
+                .attr("y1", this.biofabric.graph.nodes[topNodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
+                .attr("y2", this.biofabric.graph.nodes[lowNodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
+                .attr("x1", this.biofabric.graph.edges[edgeIndex].get_x() * (this.canvasWidth * (1 - this.innerX)))
+                .attr("x2", this.biofabric.graph.edges[edgeIndex].get_x() * (this.canvasWidth * (1 - this.innerX)))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.25)
+                .attr("stroke-linecap", "round")
+        }
     }
 
     // Update

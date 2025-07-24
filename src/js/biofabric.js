@@ -91,9 +91,14 @@ class BioFabric {
         }
     }
     calculate_edge_x_coordinates() {
+        // Get Depths
+        let edgeDepths = [...new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()))];
+        let nodeDepths = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
+        let depths = edgeDepths.concat(nodeDepths);
+        console.log(depths);
         // Determine Unique Compressed and Uncompressed Edges
+        let singletonEdges = this.graph.edges.filter(edge => edge.get_state() == State.Singleton && edge.get_depth() <= this.graph.get_depth());
         let uncompressedEdges = this.graph.edges.filter(edge => edge.get_state() == State.Uncompressed && edge.get_depth() <= this.graph.get_depth());
-        let fullyCompressedEdges = this.graph.edges.filter(edge => edge.get_state() == State["Fully Compressed"] && edge.get_depth() <= this.graph.get_depth());
         // Get Unique Partially Compressed Edges' Origin Nodes
         let partiallyCompressedEdges = this.graph.edges.filter(edge => edge.get_state() == State["Partially Compressed"] && edge.get_depth() <= this.graph.get_depth());
         let partialEdgeNodeTops = new Set();
@@ -101,45 +106,55 @@ class BioFabric {
             let topMostNodeIndex = this.get_topmost_node_index(edge);
             partialEdgeNodeTops.add(topMostNodeIndex);
         }
+        // Sizes
+        console.log("N Partial Edges:      " + partialEdgeNodeTops.size);
+        console.log("N Uncompressed Edges: " + uncompressedEdges.length);
+        console.log("N Singleton Edges:    " + singletonEdges.length);
+        console.log("N Depths:             " + edgeDepths.length);
         // Calculate Spacing
-        let nUncompressedEdges = uncompressedEdges.length;
-        let nFullyCompressedEdges = fullyCompressedEdges.length;
-        let nPartiallyCompressedEdges = [...partialEdgeNodeTops].length;
-        let spacing = 0.99 / ((nUncompressedEdges - 1));
-        let horizontalspace = 1 * spacing;
-        let depthpadding = 1 * spacing;
+        let horizontalSpacingRatio = 1;
+        let depthSpaceRatio = 3;
+        if (horizontalSpacingRatio > depthSpaceRatio) {
+            throw new Error("Horizontal Spacing May Not Exceed Depth Spacing!");
+        }
+        let spacingUnit = 0.95 / (horizontalSpacingRatio * (singletonEdges.length + uncompressedEdges.length + partialEdgeNodeTops.size - edgeDepths.length - (depthSpaceRatio - horizontalSpacingRatio)) + depthSpaceRatio * edgeDepths.length - 1);
+        let horizontalspace = horizontalSpacingRatio * spacingUnit;
+        let depthspace = depthSpaceRatio * spacingUnit;
         // Iterate over all Edges and Set x coordinate as function of previous edge's x coodinat
         for (let edgeIndex = 0; edgeIndex < this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).length; edgeIndex++) {
-            let x = undefined;
+            let x = Infinity;
             if (edgeIndex == 0) {
                 x = 0;
             }
             else {
-                if (this.graph.edges[edgeIndex].get_state() == State["Fully Compressed"]) {
-                    x = this.graph.edges[edgeIndex - 1].get_x();
-                }
-                else if (this.graph.edges[edgeIndex].get_state() == State.Uncompressed) {
-                    x = this.graph.edges[edgeIndex - 1].get_x() + horizontalspace;
-                }
-                else {
-                    if (this.graph.edges[edgeIndex].get_depth() != this.graph.edges[edgeIndex - 1].get_depth()) {
+                if (this.graph.edges[edgeIndex - 1].get_depth() == this.graph.edges[edgeIndex].get_depth()) {
+                    if (this.graph.edges[edgeIndex].get_state() == State["Fully Compressed"]) {
+                        x = this.graph.edges[edgeIndex - 1].get_x();
+                    }
+                    else if (this.graph.edges[edgeIndex].get_state() == State.Uncompressed) {
                         x = this.graph.edges[edgeIndex - 1].get_x() + horizontalspace;
                     }
                     else {
-                        let currtopMostNode = this.get_topmost_node_index(this.graph.edges[edgeIndex]);
-                        let prevtopMostNode = this.get_topmost_node_index(this.graph.edges[edgeIndex - 1]);
-                        if (currtopMostNode == prevtopMostNode) {
-                            x = this.graph.edges[edgeIndex - 1].get_x();
+                        if (this.graph.edges[edgeIndex].get_depth() != this.graph.edges[edgeIndex - 1].get_depth()) {
+                            x = this.graph.edges[edgeIndex - 1].get_x() + horizontalspace;
                         }
                         else {
-                            x = this.graph.edges[edgeIndex - 1].get_x() + horizontalspace;
+                            let currtopMostNode = this.get_topmost_node_index(this.graph.edges[edgeIndex]);
+                            let prevtopMostNode = this.get_topmost_node_index(this.graph.edges[edgeIndex - 1]);
+                            if (currtopMostNode == prevtopMostNode) {
+                                x = this.graph.edges[edgeIndex - 1].get_x();
+                            }
+                            else {
+                                x = this.graph.edges[edgeIndex - 1].get_x() + horizontalspace;
+                            }
                         }
                     }
                 }
-                if (this.graph.edges[edgeIndex - 1].get_depth() != this.graph.edges[edgeIndex].get_depth()) {
-                    x += depthpadding;
+                else {
+                    x = this.graph.edges[edgeIndex - 1].get_x() + depthspace;
                 }
             }
+            console.log(x);
             this.graph.edges[edgeIndex].set_x(x);
         }
     }

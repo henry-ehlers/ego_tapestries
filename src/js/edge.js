@@ -38,6 +38,9 @@ class Edge {
     get_state() {
         return this.state;
     }
+    set_state(state) {
+        this.state = state;
+    }
     get_endpoints() {
         return this.endpoints;
     }

@@ -17,6 +17,7 @@ class Graph {
 
         // Sort Nodes Based on Hop + Weighted Distanced to Ego
         this.identify_singleton_nodes();
+        this.identify_singleton_edges();
         this.sort_nodes();
     }
 
@@ -71,6 +72,17 @@ class Graph {
                 continue
             }
             depthNodes[0].set_state(State.Singleton)
+        }
+    }
+
+    identify_singleton_edges () : void {
+        let depths: Array<number> = [...new Set(this.edges.map(edge => edge.get_depth()))]
+        for (let depth of depths) {
+            let depthEdges: Array<Edge> = this.edges.filter(edge => edge.get_depth() == depth)
+            if (depthEdges.length != 1) {
+                continue
+            }
+            depthEdges[0].set_state(State.Singleton)
         }
     }
 

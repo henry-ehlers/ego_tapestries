@@ -54,6 +54,10 @@ class Edge {
         return this.state;
     }
 
+    set_state (state: State): void {
+        this.state = state;
+    }
+
     get_endpoints () : [Vertex, Vertex] {
         return this.endpoints;
     }
