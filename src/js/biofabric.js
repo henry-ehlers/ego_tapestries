@@ -87,7 +87,6 @@ class BioFabric {
                 }
             }
             // Set Y Coordinate
-            console.log("Node " + nodeIndex + " -> " + y);
             this.graph.nodes[nodeIndex].set_y(y);
         }
     }
