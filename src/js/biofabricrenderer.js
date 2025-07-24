@@ -13,6 +13,10 @@ class BioFabricRenderer {
         // NodeDepthG (x,y)
         this.nodeDepthX = 0.025
         this.nodeDepthY = 0.2
+
+        // Node G (x,y)
+        this.nodeGX = 0.05
+        this.nodeGY = 0.2
     }
 
     // Renderer
@@ -26,6 +30,10 @@ class BioFabricRenderer {
         // G that contains the Graph Drawing
         let innerG = svg.append("g")
             .attr("transform", "translate(" + (this.canvasWidth * this.innerX) + "," + (this.canvasHeight * this.innerY) + ")")
+        
+        // G that contains the Node Information
+        let nodeG = svg.append("g")
+            .attr("transform", "translate(" + (this.canvasWidth * this.nodeGX) + "," + (this.canvasHeight * this.nodeGY) + ")")
 
         // Iterate over all Nodes in Depth Limit
         for (let nodeIndex in this.biofabric.graph.nodes.filter(node => (node.get_depth() <= this.biofabric.graph.get_depth()))) {
@@ -41,6 +49,18 @@ class BioFabricRenderer {
                 .attr("stroke", "#eee")
                 .attr("stroke-width", 0.25)
                 .attr("stroke-linecap", "round")
+
+            // Add Node Text
+            nodeG.append("text")
+                .attr("id", "nodetext-" + this.biofabric.graph.nodes[nodeIndex].get_id())
+                .attr("class", "nodetext")
+                .style("font-size", "0.5pt")
+                .attr("x", this.canvasWidth * 0.4)
+                .attr("y", this.biofabric.graph.nodes[nodeIndex].get_y() * (this.canvasHeight * (1 - this.nodeGY)))
+                .attr("text-anchor", "end")
+                .attr("dominant-baseline", "middle")
+                .text(this.biofabric.graph.nodes[nodeIndex].get_label())
+                .attr("fill", d3.schemeObservable10[this.biofabric.graph.nodes[nodeIndex].get_depth()])
         }
 
         // Get Unique Node Depths
@@ -71,15 +91,15 @@ class BioFabricRenderer {
                 .attr("id", "nodeDepthCircle-" + nodeDepth.toString().replace(".", "-") + "G")
                 .attr("transform", "translate(" + (0) + "," + (depthY * (this.canvasHeight * (1 - this.innerY))) + ")")
             
+            // Node Depth Circle Background Color
             nodeDepthCircleG.append("circle")
                 .attr("cx", 0)
                 .attr("cy", 0)
                 .attr("fill", "white")
                 .attr("r", 0.8)
 
-
-            nodeDepthCircleG
-                    .append("path")
+            // Node Depth Circles Icon Paths
+            nodeDepthCircleG.append("path")
                     .attr('opacity', () => 
                             {
                                 if (depthNodes[0].get_state() != State["Uncmpressed"]) {
@@ -102,8 +122,8 @@ class BioFabricRenderer {
                     .attr("id", "nodeDepthCircleIcon-" + nodeDepth.toString().replace(".", "-"))
                     .attr('fill', ((nodeDepth % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepth])
 
-            nodeDepthCircleG
-                .append("circle")
+            // Node Depth Circles
+            nodeDepthCircleG.append("circle")
                 .attr("id", "nodeDepthCircle-" + nodeDepth.toString().replace(".", "-"))
                 .attr("class", "nodeDepthCircle")
                 .attr("cx", 0)
