@@ -17,6 +17,10 @@ class BioFabricRenderer {
         // Node G (x,y)
         this.nodeGX = 0.05
         this.nodeGY = 0.2
+
+        // EdgeDepthG (x,y)
+        this.edgeDepthX = 0.2
+        this.edgeDepthY = 0.05
     }
 
     // Renderer
@@ -26,6 +30,9 @@ class BioFabricRenderer {
         let nodeDepthG = svg.append("g")
             .attr("transform", "translate(" + (this.canvasWidth * this.nodeDepthX) + "," + (this.canvasHeight * this.nodeDepthY) + ")")
         
+        let edgeDepthG = svg
+            .append("g")
+            .attr("transform", "translate(" + (this.canvasWidth * this.edgeDepthX) + "," + (this.canvasHeight * this.edgeDepthY) + ")")
         
         // G that contains the Graph Drawing
         let innerG = svg.append("g")
@@ -36,38 +43,36 @@ class BioFabricRenderer {
             .attr("transform", "translate(" + (this.canvasWidth * this.nodeGX) + "," + (this.canvasHeight * this.nodeGY) + ")")
 
         // Iterate over all Nodes in Depth Limit
-        for (let nodeIndex in this.biofabric.graph.nodes.filter(node => (node.get_depth() <= this.biofabric.graph.get_depth()))) {
+        for (let node of this.biofabric.graph.nodes.filter(node => (node.get_depth() <= this.biofabric.graph.get_depth()))) {
 
             // Append a Node Line
             innerG.append("line")
-                .attr("id", "nodeline-" + this.biofabric.graph.nodes[nodeIndex].get_id())
+                .attr("id", "nodeline-" + node.get_id())
                 .attr("class", "nodeline")
                 .attr("x1", 0)
                 .attr("x2", this.canvasWidth * (0.95 * (1 - this.innerX)))
-                .attr("y1", this.biofabric.graph.nodes[nodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
-                .attr("y2", this.biofabric.graph.nodes[nodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
+                .attr("y1", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
+                .attr("y2", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("stroke", "#eee")
                 .attr("stroke-width", 0.25)
                 .attr("stroke-linecap", "round")
 
             // Add Node Text
             nodeG.append("text")
-                .attr("id", "nodetext-" + this.biofabric.graph.nodes[nodeIndex].get_id())
+                .attr("id", "nodetext-" + node.get_id())
                 .attr("class", "nodetext")
                 .style("font-size", "0.5pt")
                 .attr("x", 0.95 * this.canvasWidth * (this.innerX - this.nodeGX))
-                .attr("y", this.biofabric.graph.nodes[nodeIndex].get_y() * (this.canvasHeight * (1 - this.nodeGY)))
+                .attr("y", node.get_y() * (this.canvasHeight * (1 - this.nodeGY)))
                 .attr("text-anchor", "end")
                 .attr("dominant-baseline", "middle")
-                .text(this.biofabric.graph.nodes[nodeIndex].get_label())
-                .attr("fill", d3.schemeObservable10[this.biofabric.graph.nodes[nodeIndex].get_depth()])
+                .text(node.get_label())
+                .attr("fill", d3.schemeObservable10[node.get_depth()])
         }
 
-        // Get Unique Node Depths
+        // Iterate over unique node Depths        
         let nodeDepths = [...new Set(this.biofabric.graph.nodes.filter(node => node.get_depth() <= this.biofabric.graph.get_depth()).map(node => node.get_depth()))];
-
-        // Iterate over unique node Depths
-        for (let nodeDepth in nodeDepths) {
+        for (let nodeDepth of nodeDepths) {
 
             // Calculcate Y Position of Depth Circles
             let depthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepth);
@@ -290,6 +295,70 @@ class BioFabricRenderer {
                 .attr("r", "0.2")
                 .attr("stroke-width", "0")
                 .attr("fill",  ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
+        }
+
+        let edgeDepths = [...new Set(this.biofabric.graph.edges.filter(edge => (edge.get_depth() <= this.biofabric.graph.get_depth())).map(edge => edge.get_depth()))]
+        for (let depth of edgeDepths) {
+
+            let depthEdges = this.biofabric.graph.edges.filter(edge => edge.get_depth() == depth);
+            let xcenter = depthEdges.map(edge => edge.get_x()).reduce((a,b) => a + b, 0)/depthEdges.length
+
+            edgeDepthG.append("line")
+                .attr("id", "depthline-" + depth.toString().replace(".", "-"))
+                .attr("class", "depthline")
+                .attr("x1", Math.min.apply(0, depthEdges.map(edge => edge.get_x())) * this.canvasWidth * (1 - this.edgeDepthX))
+                .attr("x2", Math.max.apply(0, depthEdges.map(edge => edge.get_x())) * this.canvasWidth * (1 - this.edgeDepthX))
+                .attr("y1", 0)
+                .attr("y2", 0)
+                .attr("stroke", ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
+                .attr("stroke-linecap", "round")
+                .attr("stroke-width", 0.2)
+
+            let edgeDepthCircleG = edgeDepthG
+                .append("g")
+                .attr("id", "edgeDepthCircleG-" + depth.toString().replace(".", "-") + "G")
+                .attr("transform", "translate(" + (xcenter * this.canvasWidth * (1 - this.edgeDepthX)) + "," + (0) + ")")
+
+            edgeDepthCircleG.append("circle")
+                .attr("cx", 0)
+                .attr("cy", 0)
+                .attr("fill", "white")
+                .attr("r", 0.8)
+            
+            // Edge Depth Circles Icon Paths
+            edgeDepthCircleG.append("path")
+                    .attr('opacity', () => 
+                            {
+                                if (depthEdges[0].get_state() != State["Uncmpressed"]) {
+                                    return "1"
+                                } else {
+                                    return "0"
+                                }
+                            }
+                        )
+                    .attr("d", () => 
+                        {
+                            let curve = d3.line().curve(d3.curveBasisClosed)
+                            if (depthEdges[0].get_state() == State["Singleton"]) {
+                                return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
+                            } else {
+                                return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
+                            }
+                        }
+                    )
+                    .attr("id", "nodeDepthCircleIcon-" + depth.toString().replace(".", "-"))
+                    .attr('fill', ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
+
+            edgeDepthCircleG.append("circle")
+                .attr("id", "edgeDepthCircle-" + depth.toString().replace(".", "-"))
+                .attr("class", "depthcircle")
+                .attr("cx", 0)
+                .attr("cy", 0)
+                .attr("stroke-width", 0.2)
+                .attr("r", 0.5)
+                .attr("fill", "white")
+                .attr('fill-opacity', 0)
+                .attr("stroke", ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
         }
     }
 
