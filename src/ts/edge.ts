@@ -10,11 +10,31 @@ class Edge {
     state: State = State.Uncompressed;
     index: number = Infinity;
 
+    //
+    x: number = Infinity;
+    y: number = Infinity;
+
     // Constructor
     constructor (id: string, source: Vertex, target: Vertex, weight: number) {
         this.id = id;
         this.endpoints = [source, target];
         this.weight = weight;
+    }
+
+    set_x (x: number) : void {
+        this.x = x;
+    }
+
+    set_y (y: number) : void {
+        this.y = y;
+    }
+
+    get_x () : number {
+        return this.x;
+    }
+
+    get_y () : number {
+        return this.y;
     }
 
     // Get the Edge's Unique ID
@@ -24,6 +44,10 @@ class Edge {
 
     get_depth () : number {
         return this.depth;
+    }
+
+    get_state () : State {
+        return this.state;
     }
 
     get_endpoints () : [Vertex, Vertex] {

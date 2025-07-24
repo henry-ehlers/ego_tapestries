@@ -6,9 +6,24 @@ class Edge {
         this.depth = Infinity;
         this.state = State.Uncompressed;
         this.index = Infinity;
+        //
+        this.x = Infinity;
+        this.y = Infinity;
         this.id = id;
         this.endpoints = [source, target];
         this.weight = weight;
+    }
+    set_x(x) {
+        this.x = x;
+    }
+    set_y(y) {
+        this.y = y;
+    }
+    get_x() {
+        return this.x;
+    }
+    get_y() {
+        return this.y;
     }
     // Get the Edge's Unique ID
     get_id() {
@@ -16,6 +31,9 @@ class Edge {
     }
     get_depth() {
         return this.depth;
+    }
+    get_state() {
+        return this.state;
     }
     get_endpoints() {
         return this.endpoints;

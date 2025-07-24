@@ -19,9 +19,9 @@ async function init () {
         .select("body")
         .append("svg")
         .attr("id", "something")
-        .attr("viewBox", "0 0 " + width + " " + height)
         .attr("width", "100%")
         .attr("height", "100%")
+        .attr("viewBox", "0 0 " + width + " " + height)
     
     biofabricrenderer.render(svg);
     
