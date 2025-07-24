@@ -421,15 +421,15 @@ class BioFabricRenderer {
                         for (let edgeDepth of edgeDepths) {
 
                             let newDepthEdges = this.biofabric.graph.edges.filter(edge => edge.get_depth() == edgeDepth);
-                            let newXCenter = newDepthEdges.map(edge => edge.get_x()).reduce((a,b) => a + b, 0)/newDepthEdges.length;
                             let minX = Math.min.apply(0, newDepthEdges.map(edge => edge.get_x()));
                             let maxX = Math.max.apply(0, newDepthEdges.map(edge => edge.get_x()));
+                            let centerX = (minX + maxX) / 2;
 
                             svg
                                 .select("#" + "edgeDepthCircle-" + edgeDepth.toString().replace(".", "-") + "G")
                                 .transition()
                                 .duration(100)
-                                .attr("transform", "translate(" + (newXCenter * this.canvasWidth * (1 - this.edgeDepthX)) + ",0)")
+                                .attr("transform", "translate(" + (centerX * this.canvasWidth * (1 - this.edgeDepthX)) + ",0)")
 
                             svg
                                 .select("#edgeDepthLine-" + edgeDepth.toString().replace(".", "-"))
