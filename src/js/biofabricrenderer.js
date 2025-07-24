@@ -154,13 +154,26 @@ class BioFabricRenderer {
                     for (let node of this.biofabric.graph.nodes.filter(node => node.get_depth() <= this.biofabric.graph.get_depth())) {
                         
                         // Update Node Lines
-                        innerG
-                            .select("#" + "nodeline-" + node.get_id())
+                        innerG.select("#" + "nodeline-" + node.get_id())
                             .transition()
                             .duration(100)
                             .attr("y1", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
                             .attr("y2", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
 
+                        // Collapse Node Text
+                        nodeG.select("#" + "nodetext-" + node.get_id())
+                            .transition()
+                            .duration(100)
+                            .attr("y", node.get_y() * (this.canvasHeight * (1 - this.nodeGY)))
+                            .attr("opacity", () => 
+                                {
+                                    if (node.get_state() == State["Fully Compressed"]) {
+                                        return "0"
+                                    } else {
+                                        return "1"
+                                    }
+                                }
+                            )
                     }
 
                     // Iterate over depths and update their positions
