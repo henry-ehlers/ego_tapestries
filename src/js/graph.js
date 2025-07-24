@@ -4,10 +4,15 @@ class Graph {
     constructor(data) {
         this.edges = [];
         this.nodes = [];
-        this.depth = 2;
+        this.depth = 3;
+        // Load Data
         this.load_data(data);
+        // Construct the Ego Network
         this.ego = this.nodes[0];
         this.construct_ego_network();
+        // Sort Nodes Based on Hop + Weighted Distanced to Ego
+        this.identify_singleton_nodes();
+        this.sort_nodes();
     }
     // Populate Edges and Nodes from Dataset
     load_data(data) {
@@ -40,6 +45,16 @@ class Graph {
                 let newEdge = new Edge(edgeID.toString(), source, target, entry.weight);
                 this.edges.push(newEdge);
             }
+        }
+    }
+    identify_singleton_nodes() {
+        let depths = [...new Set(this.nodes.map(node => node.get_depth()))];
+        for (let depth of depths) {
+            let depthNodes = this.nodes.filter(node => node.get_depth() == depth);
+            if (depthNodes.length != 1) {
+                continue;
+            }
+            depthNodes[0].set_state(State.Singleton);
         }
     }
     // Breadth First Search
@@ -103,7 +118,7 @@ class Graph {
         // Reset the Ego Network
         this.nodes.map(node => node.reset());
         this.edges.map(edge => edge.reset());
-        this.ego.depth = 0;
+        this.ego.set_depth(0);
         // Traverse the Network for newly selected ego
         this.breadth_first_search();
         // Iterate over Edges and Set Edge Depth
@@ -112,7 +127,7 @@ class Graph {
             let source = edge.get_source();
             let target = edge.get_target();
             // Set Edge Depth as Function of its Incident Nodes' Depths
-            edge.depth = (source.depth == target.depth) ? source.depth : ((source.depth + target.depth) / 2);
+            edge.set_depth((source.depth == target.depth) ? source.depth : ((source.depth + target.depth) / 2));
         }
     }
     // Get a Node from the Node list using its unique ID

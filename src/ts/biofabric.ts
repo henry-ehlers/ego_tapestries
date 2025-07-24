@@ -66,48 +66,47 @@ class BioFabric {
 
     calculate_node_y_coordinates() : void {
 
-        // Determine the number of lines that must be drawn
-        let nNodeDepths: number = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))].length;
-        let nUncompressedNodes: number = this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).filter(node => node.get_state() == State.Uncompressed).length;
+        // Determine the Depths Nodes in the Drawing
+        let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
+        let uncompressedNodes: Array<Vertex> = this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).filter(node => node.get_state() == State.Uncompressed );
 
         // Calculcate the Spacing of Node's Y coordinate in percentage of available space
-        let spacing: number = 0.99 / ((nUncompressedNodes - 1) + (nNodeDepths - 1));
-        let verticalspace: number = 1 * spacing;
-        let depthspace: number = 2 * spacing;
+        let verticalSpacingRatio: number = 1;
+        let depthSpaceRatio: number = 2;
+        let spacing: number = 0.95 / ( (verticalSpacingRatio * (uncompressedNodes.length)) + (depthSpaceRatio * (nodeDepths.length ) - 1) );
+        let verticalspace: number = verticalSpacingRatio * spacing;
+        let depthspace: number = depthSpaceRatio * spacing;
         
         // Calculate Nodes' Y Positions depending on Previous Node
-        for (let nodeIndex = 0; nodeIndex < this.graph.nodes.length; nodeIndex++) {
-            let y = undefined;
+        for (let nodeIndex = 0; nodeIndex < this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).length; nodeIndex++) {
+            let y: number = Infinity;
             if (nodeIndex == 0) {
                 y = 0
             } else {
-                if (this.graph.nodes[nodeIndex].state != State.Uncompressed) {
-                    y = this.graph.nodes[nodeIndex - 1].y;
+                if (this.graph.nodes[nodeIndex - 1].get_depth() == this.graph.nodes[nodeIndex].get_depth()) {
+                    if (this.graph.nodes[nodeIndex].get_state() == State["Fully Compressed"]) {
+                        y = this.graph.nodes[nodeIndex - 1].get_y();
+                    } else {
+                        y = this.graph.nodes[nodeIndex - 1].get_y() + verticalspace;
+                    }
                 } else {
-                    y = this.graph.nodes[nodeIndex - 1].y + verticalspace;
-                }
-                if (this.graph.nodes[nodeIndex - 1].depth != this.graph.nodes[nodeIndex].depth) {
-                    y += depthspace;
+                    y = this.graph.nodes[nodeIndex - 1].get_y() + depthspace;
                 }
             }
 
             // Set Y Coordinate
+            console.log("Node " + nodeIndex + " -> " + y);
             this.graph.nodes[nodeIndex].set_y(y);
         }
     }
 
     calculate_edge_x_coordinates () : void {
-        
-        // Determine Unique Depths
-        let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
-        let edgeDepths: Array<number> = [...new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()))];
-        let depths: Array<number> = nodeDepths.concat(edgeDepths);
 
         // Determine Unique Compressed and Uncompressed Edges
         let uncompressedEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State.Uncompressed && edge.get_depth() <= this.graph.get_depth());
         let fullyCompressedEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State["Fully Compressed"] && edge.get_depth() <= this.graph.get_depth());
 
-        // Get Unique Partially Compressed Edges
+        // Get Unique Partially Compressed Edges' Origin Nodes
         let partiallyCompressedEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State["Partially Compressed"] && edge.get_depth() <= this.graph.get_depth());
         let partialEdgeNodeTops: Set<number> = new Set();
         for (let edge of partiallyCompressedEdges) {
@@ -119,12 +118,12 @@ class BioFabric {
         let nUncompressedEdges: number = uncompressedEdges.length
         let nFullyCompressedEdges: number = fullyCompressedEdges.length
         let nPartiallyCompressedEdges: number = [...partialEdgeNodeTops].length
-        let spacing: number = 0.99 / ((nUncompressedEdges - 1) + (nFullyCompressedEdges - 1) + (nPartiallyCompressedEdges - 1));
+        let spacing: number = 0.99 / ((nUncompressedEdges - 1));
         let horizontalspace: number = 1 * spacing;
-        let depthpadding: number = 2 * spacing;
+        let depthpadding: number = 1 * spacing;
 
         // Iterate over all Edges and Set x coordinate as function of previous edge's x coodinat
-        for (let edgeIndex = 0; edgeIndex < this.graph.edges.length; edgeIndex++) {
+        for (let edgeIndex = 0; edgeIndex < this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).length; edgeIndex++) {
             let x = undefined;
             if (edgeIndex == 0) {
                 x = 0;

@@ -32,6 +32,9 @@ class Edge {
     get_depth() {
         return this.depth;
     }
+    set_depth(depth) {
+        this.depth = depth;
+    }
     get_state() {
         return this.state;
     }
