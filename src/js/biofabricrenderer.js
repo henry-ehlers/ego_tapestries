@@ -253,7 +253,15 @@ class BioFabricRenderer {
                         }
                     }
                 )
-                .style("cursor", "pointer")                
+                .style("cursor", () => 
+                    {
+                        if (depthNodes[0].get_state() == State["Singleton"]) {
+                            return "default";
+                        } else {
+                            return "pointer";
+                        }
+                    }
+                )                
         }
 
         // Iterate over all Edges in Depth Limit
@@ -359,7 +367,15 @@ class BioFabricRenderer {
                 .attr("fill", "white")
                 .attr('fill-opacity', 0)
                 .attr("stroke", ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
-                .style("cursor", "pointer")      
+                .style("cursor", () => 
+                    {
+                        if (depthEdges[0].get_state() == State["Singleton"]) {
+                            return "default"
+                        } else {
+                            return "pointer"
+                        }
+                    }
+                )      
                 .on("click", () => 
                     {
                         // Set the New States (Un/Fully/Partially Compressed) for all edges in clicked Depth
