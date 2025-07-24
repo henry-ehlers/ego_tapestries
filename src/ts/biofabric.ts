@@ -104,12 +104,16 @@ class BioFabric {
         // Get Depths
         // TOTO: for now only account for EDGE DEPTHS THAT ARE PRESENT -> future should also space for missing edge depths
         let edgeDepths: Array<number> = [...new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()))];
-        let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
-        let depths: Array<number> = edgeDepths.concat(nodeDepths);
+        // let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
+        // let depths: Array<number> = edgeDepths.concat(nodeDepths);
 
         // Determine Unique Compressed and Uncompressed Edges
         let singletonEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State.Singleton && edge.get_depth() <= this.graph.get_depth());
         let uncompressedEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State.Uncompressed && edge.get_depth() <= this.graph.get_depth());
+        
+        // Get Unique fully compressed edges
+        let fullyCompressedEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State["Fully Compressed"] && edge.get_depth() <= this.graph.get_depth());
+        let fulllyCompressedEdgeDepths: Set<number> = new Set(fullyCompressedEdges.map(edge => edge.get_depth()));
 
         // Get Unique Partially Compressed Edges' Origin Nodes
         let partiallyCompressedEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State["Partially Compressed"] && edge.get_depth() <= this.graph.get_depth());
@@ -119,13 +123,19 @@ class BioFabric {
             partialEdgeNodeTops.add(topMostNodeIndex)
         }
 
+        // Prints
+        console.log("Singleton Edges: " + singletonEdges.length);
+        console.log("Uncompressed Edges: " + uncompressedEdges.length);
+        console.log("Partially Compressed Edges: " + partialEdgeNodeTops.size)
+        console.log("Fully Compressed Edges: " + fulllyCompressedEdgeDepths.size)
+
         // Calculate Spacing
         let horizontalSpacingRatio: number = 1;
         let depthSpaceRatio: number = 3;
         if (horizontalSpacingRatio > depthSpaceRatio) {
             throw new Error("Horizontal Spacing May Not Exceed Depth Spacing!");
         }
-        let spacingUnit: number = 0.95 / (horizontalSpacingRatio*(singletonEdges.length + uncompressedEdges.length + partialEdgeNodeTops.size - edgeDepths.length - (depthSpaceRatio - horizontalSpacingRatio)) + depthSpaceRatio*edgeDepths.length - 1);
+        let spacingUnit: number = 0.95 / (horizontalSpacingRatio*(singletonEdges.length + uncompressedEdges.length + partialEdgeNodeTops.size + fulllyCompressedEdgeDepths.size - edgeDepths.length - (depthSpaceRatio - horizontalSpacingRatio)) + depthSpaceRatio*edgeDepths.length - 1);
         let horizontalspace: number = horizontalSpacingRatio * spacingUnit;
         let depthspace: number = depthSpaceRatio * spacingUnit;
 
