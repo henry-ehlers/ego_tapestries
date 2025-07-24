@@ -19,29 +19,26 @@ class BioFabricRenderer {
     render(svg) {
 
         // G for the Depth Circles of the Nodes
-        let nodeDepthG = svg
-            .append("g")
+        let nodeDepthG = svg.append("g")
             .attr("transform", "translate(" + (this.canvasWidth * this.nodeDepthX) + "," + (this.canvasHeight * this.nodeDepthY) + ")")
         
         
         // G that contains the Graph Drawing
-        let innerG = svg
-            .append("g")
+        let innerG = svg.append("g")
             .attr("transform", "translate(" + (this.canvasWidth * this.innerX) + "," + (this.canvasHeight * this.innerY) + ")")
 
         // Iterate over all Nodes in Depth Limit
         for (let nodeIndex in this.biofabric.graph.nodes.filter(node => (node.get_depth() <= this.biofabric.graph.get_depth()))) {
 
             // Append a Node Line
-            innerG
-                .append("line")
+            innerG.append("line")
                 .attr("id", "nodeline-" + this.biofabric.graph.nodes[nodeIndex].get_id())
                 .attr("class", "nodeline")
                 .attr("x1", 0)
                 .attr("x2", this.canvasWidth * (0.95 * (1 - this.innerX)))
                 .attr("y1", this.biofabric.graph.nodes[nodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("y2", this.biofabric.graph.nodes[nodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
-                .attr("stroke", "black")
+                .attr("stroke", "#eee")
                 .attr("stroke-width", 0.25)
                 .attr("stroke-linecap", "round")
         }
@@ -57,15 +54,14 @@ class BioFabricRenderer {
             let depthY = depthNodes.map(node => node.get_y()).reduce((a, b) => a + b, 0)/depthNodes.length
             
             // Append a Node Depth Line
-            nodeDepthG
-                .append("line")
+            nodeDepthG.append("line")
                 .attr("id", "nodeDepthLine-" + nodeDepth.toString().replace(".", "-"))
                 .attr("class", "nodeDepthLine")
                 .attr("x1", 0)
                 .attr("x2", 0)
                 .attr("y1", Math.min.apply(0, depthNodes.map(node => node.get_y() * (this.canvasHeight * (1 - this.innerY)))))
                 .attr("y2", Math.max.apply(0, depthNodes.map(node => node.get_y() * (this.canvasHeight * (1 - this.innerY)))))
-                .attr("stroke", "black")
+                .attr("stroke", ((nodeDepth % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepth])
                 .attr("stroke-width", 0.2)
                 .attr("stroke-linecap", "round")
 
@@ -104,6 +100,7 @@ class BioFabricRenderer {
                         }
                     )
                     .attr("id", "nodeDepthCircleIcon-" + nodeDepth.toString().replace(".", "-"))
+                    .attr('fill', ((nodeDepth % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepth])
 
             nodeDepthCircleG
                 .append("circle")
@@ -114,7 +111,7 @@ class BioFabricRenderer {
                 .attr("r", 0.5)
                 .attr("fill", "white")
                 .attr("fill-opacity", "0")
-                .attr("stroke", "black")
+                .attr("stroke", ((nodeDepth % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepth])
                 .attr("stroke-width", 0.2)
                 .on("click", () => {
 
@@ -171,7 +168,6 @@ class BioFabricRenderer {
                         .duration(100)
                         .attr("opacity", () => 
                             {
-                                console.log(depthNodes[0])
                                 if (depthNodes[0].get_state() != State["Uncmpressed"]) {
                                     return "1"
                                 } else {
@@ -181,7 +177,6 @@ class BioFabricRenderer {
                         .attr("d", () => 
                         {
                             let curve = d3.line().curve(d3.curveBasisClosed)
-                            console.log(depthNodes[0])
                             if (depthNodes[0].get_state() == State["Singleton"]) {
                                 return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
                             }
