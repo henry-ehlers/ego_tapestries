@@ -7,7 +7,7 @@ class BioFabricRenderer {
         this.canvasHeight = canvasHeight;
 
         // InnerG (x,y)
-        this.innerX = 0.5
+        this.innerX = 0.2
         this.innerY = 0.2
 
         // NodeDepthG (x,y)
@@ -55,7 +55,7 @@ class BioFabricRenderer {
                 .attr("id", "nodetext-" + this.biofabric.graph.nodes[nodeIndex].get_id())
                 .attr("class", "nodetext")
                 .style("font-size", "0.5pt")
-                .attr("x", this.canvasWidth * 0.4)
+                .attr("x", 0.95 * this.canvasWidth * (this.innerX - this.nodeGX))
                 .attr("y", this.biofabric.graph.nodes[nodeIndex].get_y() * (this.canvasHeight * (1 - this.nodeGY)))
                 .attr("text-anchor", "end")
                 .attr("dominant-baseline", "middle")
