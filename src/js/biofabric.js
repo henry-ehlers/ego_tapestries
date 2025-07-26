@@ -110,15 +110,9 @@ class BioFabric {
         });
     }
     calculate_node_y_coordinates() {
-        // Determine the Depths Nodes in the Drawing
-        let nodeDepths = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
-        let uncompressedNodes = this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).filter(node => node.get_state() == State.Uncompressed);
         // Calculcate the Spacing of Node's Y coordinate in percentage of available space
-        let verticalSpacingRatio = 1;
-        let depthSpaceRatio = 2;
-        let spacing = 0.95 / ((verticalSpacingRatio * (uncompressedNodes.length)) + (depthSpaceRatio * (nodeDepths.length) - 1));
-        let verticalspace = verticalSpacingRatio * spacing;
-        let depthspace = depthSpaceRatio * spacing;
+        let verticalSpace = 1;
+        let depthSpace = 2;
         // Calculate Nodes' Y Positions depending on Previous Node
         for (let nodeIndex = 0; nodeIndex < this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).length; nodeIndex++) {
             let y = Infinity;
@@ -131,15 +125,20 @@ class BioFabric {
                         y = this.graph.nodes[nodeIndex - 1].get_y();
                     }
                     else {
-                        y = this.graph.nodes[nodeIndex - 1].get_y() + verticalspace;
+                        y = this.graph.nodes[nodeIndex - 1].get_y() + verticalSpace;
                     }
                 }
                 else {
-                    y = this.graph.nodes[nodeIndex - 1].get_y() + depthspace;
+                    y = this.graph.nodes[nodeIndex - 1].get_y() + depthSpace;
                 }
             }
             // Set Y Coordinate
             this.graph.nodes[nodeIndex].set_y(y);
+        }
+        // Scale X Coordinates to Percentage
+        let totalLength = Math.max.apply(0, this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_y()));
+        for (let node of this.graph.nodes) {
+            node.set_y(0.95 * (node.get_y() / totalLength));
         }
     }
     calculcate_depth_y_coordinates() {
@@ -153,51 +152,13 @@ class BioFabric {
         }
     }
     calculate_edge_x_coordinates() {
-        // Get Depths
-        // TOTO: for now only account for EDGE DEPTHS THAT ARE PRESENT -> future should also space for missing edge depths
-        let edgeDepths = [...new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()))];
-        let nodeDepths = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
-        //let depths: Array<number> = edgeDepths.concat(nodeDepths);
-        // Determine Unique Compressed/Uncompressed/Empty Edges
-        let singletonEdges = this.graph.edges.filter(edge => edge.get_state() == State.Singleton && edge.get_depth() <= this.graph.get_depth());
-        let uncompressedEdges = this.graph.edges.filter(edge => edge.get_state() == State.Uncompressed && edge.get_depth() <= this.graph.get_depth());
-        let emptyDepths = [];
-        for (let depth of nodeDepths) {
-            let depthEdges = this.graph.edges.filter(edge => edge.get_depth() == depth);
-            if (depthEdges.length == 0) {
-                emptyDepths.push(depth);
-            }
-        }
-        console.log("Empty Depths:");
-        console.log(emptyDepths);
-        // Get Unique fully compressed edges
-        let fullyCompressedEdges = this.graph.edges.filter(edge => edge.get_state() == State["Fully Compressed"] && edge.get_depth() <= this.graph.get_depth());
-        let fulllyCompressedEdgeDepths = new Set(fullyCompressedEdges.map(edge => edge.get_depth()));
-        // Get Unique Partially Compressed Edges' Origin Nodes
-        let partiallyCompressedEdges = this.graph.edges.filter(edge => edge.get_state() == State["Partially Compressed"] && edge.get_depth() <= this.graph.get_depth());
-        let partialEdgeNodeTops = new Set();
-        for (let edge of partiallyCompressedEdges) {
-            let topMostNodeIndex = this.get_topmost_node_index(edge);
-            partialEdgeNodeTops.add(topMostNodeIndex);
-        }
         // Set Spacing Ratios
-        let emptyDepthSpaceRatio = 10;
-        let horizontalSpacingRatio = 1;
-        let depthSpaceRatio = 3;
-        if (horizontalSpacingRatio > depthSpaceRatio) {
-            throw new Error("Horizontal Spacing May Not Exceed Depth Spacing!");
-        }
-        // Calculcate Spacing
-        let emptyDepthTerm = emptyDepthSpaceRatio * emptyDepths.length;
-        let nonEmptyDepthTerm = depthSpaceRatio * (edgeDepths.length - emptyDepths.length + 1);
-        let normalTerm = horizontalSpacingRatio * (singletonEdges.length + uncompressedEdges.length + partialEdgeNodeTops.size + fulllyCompressedEdgeDepths.size - edgeDepths.length - ((edgeDepths.length - emptyDepths.length + 1) - horizontalSpacingRatio));
-        let spacingUnit = 0.95 / (normalTerm + nonEmptyDepthTerm + emptyDepthTerm);
-        let emptyDepthSpace = emptyDepthSpaceRatio * spacingUnit;
-        let horizontalspace = horizontalSpacingRatio * spacingUnit;
-        let depthspace = depthSpaceRatio * spacingUnit;
-        // Iterate over all Edges and Set x coordinate as function of previous edge's x coodinat
+        let emptyDepthSpace = 10;
+        let horizontalspace = 1;
+        let depthspace = 3;
+        // Iterate over all Edges and Set x coordinate as function of previous edge's x coodinate
         for (let edgeIndex = 0; edgeIndex < this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).length; edgeIndex++) {
-            let x = Infinity;
+            let x = 0;
             if (edgeIndex == 0) {
                 x = emptyDepthSpace;
             }
@@ -232,7 +193,7 @@ class BioFabric {
                         x = this.graph.edges[edgeIndex - 1].get_x() + depthspace;
                     }
                     else if (depthDifference > 0.5) {
-                        x = this.graph.edges[edgeIndex - 1].get_x() + emptyDepthSpace;
+                        x = this.graph.edges[edgeIndex - 1].get_x() + (emptyDepthSpace * 2);
                     }
                     else {
                         throw new Error("Edge Sorting is broken!");
@@ -240,6 +201,12 @@ class BioFabric {
                 }
             }
             this.graph.edges[edgeIndex].set_x(x);
+        }
+        // Scale X Coordinates to Percentage
+        let totalLength = Math.max.apply(0, this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_x()));
+        for (let edge of this.graph.edges) {
+            console.log("Edge " + edge.get_id() + " -> " + edge.get_x());
+            edge.set_x(0.95 * (edge.get_x() / totalLength));
         }
     }
 }
