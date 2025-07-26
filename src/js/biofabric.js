@@ -109,11 +109,13 @@ class BioFabric {
             let topMostNodeIndex = this.get_topmost_node_index(edge);
             partialEdgeNodeTops.add(topMostNodeIndex);
         }
-        // Prints
-        console.log("Singleton Edges: " + singletonEdges.length);
-        console.log("Uncompressed Edges: " + uncompressedEdges.length);
-        console.log("Partially Compressed Edges: " + partialEdgeNodeTops.size);
-        console.log("Fully Compressed Edges: " + fulllyCompressedEdgeDepths.size);
+
+        // // Prints
+        // console.log("Singleton Edges: " + singletonEdges.length);
+        // console.log("Uncompressed Edges: " + uncompressedEdges.length);
+        // console.log("Partially Compressed Edges: " + partialEdgeNodeTops.size);
+        // console.log("Fully Compressed Edges: " + fulllyCompressedEdgeDepths.size);
+        
         // Calculate Spacing
         let horizontalSpacingRatio = 1;
         let depthSpaceRatio = 3;
@@ -157,7 +159,6 @@ class BioFabric {
                     x = this.graph.edges[edgeIndex - 1].get_x() + depthspace;
                 }
             }
-            console.log(x);
             this.graph.edges[edgeIndex].set_x(x);
         }
     }

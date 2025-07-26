@@ -1,4 +1,5 @@
 enum State {
+  "Empty",
   "Singleton",
   "Uncompressed",
   "Partially Compressed",
