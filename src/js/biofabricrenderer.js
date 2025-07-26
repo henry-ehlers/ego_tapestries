@@ -91,8 +91,7 @@ class BioFabricRenderer {
                 .attr("stroke-linecap", "round")
 
             // Append a Node Depth Cirlce
-            let nodeDepthCircleG = nodeDepthG
-                .append("g")
+            let nodeDepthCircleG = nodeDepthG.append("g")
                 .attr("id", "nodeDepthCircle-" + nodeDepthIcon.get_depth().toString().replace(".", "-") + "G")
                 .attr("transform", "translate(" + (0) + "," + (nodeDepthIcon.get_y() * (this.canvasHeight * (1 - this.innerY))) + ")")
             
@@ -203,22 +202,23 @@ class BioFabricRenderer {
                                     continue;
                                 }
 
-                                // Update the Positions of the Depth Circle G's which contain the Depth Circles and their Icons
-                                nodeDepthG.select("#" + "nodeDepthCircle-" + nodeDepthIconB.get_depth().toString().replace(".", "-") + "G")
-                                    .transition()
-                                    .duration(100)
-                                    .attr("transform", "translate(0," + nodeDepthIconB.get_y() * (this.canvasHeight * (1 - this.innerY)) + ")")
-
                                 // update the Endpoints of the Depth lines
                                 nodeDepthG.select("#nodeDepthLine-" + nodeDepthIconB.get_depth().toString().replace(".", "-"))
                                     .transition()
                                     .duration(100)
                                     .attr("y1", nodeDepthIconB.get_min_y() * (this.canvasHeight * (1 - this.innerY)))
                                     .attr("y2", nodeDepthIconB.get_max_y() * (this.canvasHeight * (1 - this.innerY)))
+
+                                // Update the Positions of the Depth Circle G's which contain the Depth Circles and their Icons
+                                nodeDepthG.select("#nodeDepthCircle-" + nodeDepthIconB.get_depth().toString().replace(".", "-") + "G")
+                                    .transition()
+                                    .duration(100)
+                                    .attr("transform", "translate(0," + nodeDepthIconB.get_y() * (this.canvasHeight * (1 - this.innerY)) + ")")
+
                             }
                             
                             // Update the Opacity and Shape of the Node Depth Circle Icon
-                            d3.select("#" + "nodeDepthCircleIcon-" + nodeDepthIcon.get_depth().toString().replace(".", "-"))
+                            d3.select("#nodeDepthCircleIcon-" + nodeDepthIcon.get_depth().toString().replace(".", "-"))
                                 .transition()
                                 .duration(100)
                                 .attr("opacity", () => 
@@ -328,6 +328,7 @@ class BioFabricRenderer {
         }
 
         for (let edgeDepth of this.biofabric.edgeDepths) {
+            console.log(edgeDepth)
 
             edgeDepthG.append("line")
                 .attr("id", "edgeDepthLine-" + edgeDepth.get_depth().toString().replace(".", "-"))
@@ -340,8 +341,7 @@ class BioFabricRenderer {
                 .attr("stroke-linecap", "round")
                 .attr("stroke-width", 0.2)
 
-            let edgeDepthCircleG = edgeDepthG
-                .append("g")
+            let edgeDepthCircleG = edgeDepthG.append("g")
                 .attr("id", "edgeDepthCircle-" + edgeDepth.get_depth().toString().replace(".", "-") + "G")
                 .attr("transform", "translate(" + (edgeDepth.get_x() * this.canvasWidth * (1 - this.edgeDepthX)) + "," + (0) + ")")
 
@@ -457,20 +457,24 @@ class BioFabricRenderer {
                             // Iterate over all depth circles and lines and update their positions
                             for (let edgeDepthB of this.biofabric.edgeDepths) {
 
-                                svg.select("#" + "edgeDepthCircle-" + edgeDepthB.get_depth().toString().replace(".", "-") + "G")
-                                    .transition()
-                                    .duration(100)
-                                    .attr("transform", "translate(" + (edgeDepthB.get_x() * this.canvasWidth * (1 - this.edgeDepthX)) + ",0)")
+                                if ((edgeDepthB.get_state() == State["Empty"]) || (edgeDepthB.get_state() == State["Singleton"])) {
+                                    continue;
+                                }
 
-                                svg.select("#edgeDepthLine-" + edgeDepthB.get_depth().toString().replace(".", "-"))
+                                edgeDepthG.select("#edgeDepthLine-" + edgeDepthB.get_depth().toString().replace(".", "-"))
                                     .transition()
                                     .duration(100)
                                     .attr("x1", edgeDepthB.get_min_x() * this.canvasWidth * (1 - this.edgeDepthX))
                                     .attr("x2", edgeDepthB.get_max_x() * this.canvasWidth * (1 - this.edgeDepthX))
 
+                                edgeDepthG.select("#edgeDepthCircle-" + edgeDepthB.get_depth().toString().replace(".", "-") + "G")
+                                    .transition()
+                                    .duration(100)
+                                    .attr("transform", "translate(" + (edgeDepthB.get_x() * this.canvasWidth * (1 - this.edgeDepthX)) + ",0)")
+
                             }
 
-                            d3.select("#" + "edgeDepthCircleIcon-" + edgeDepth.get_depth().toString().replace(".", "-"))
+                            d3.select("#edgeDepthCircleIcon-" + edgeDepth.get_depth().toString().replace(".", "-"))
                                 .transition()
                                 .duration(100)
                                 .attr("opacity", () => 

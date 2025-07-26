@@ -41,9 +41,10 @@ class BioFabric {
     }
     populate_edge_depths() {
         // Get ALL possible depths from current graph
-        let nodeDepths = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
-        let edgeDepths = [...new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()))];
-        let depths = edgeDepths.concat(nodeDepths);
+        let nodeDepths = new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()));
+        let edgeDepths = new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()));
+        let depths = [...new Set([...nodeDepths, ...edgeDepths])];
+        console.log(depths);
         // Iterate over depths and create new depths
         for (let depth of depths) {
             let nEdges = this.graph.edges.filter(edge => edge.get_depth() == depth).length;
