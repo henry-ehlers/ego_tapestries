@@ -1,19 +1,80 @@
 class BioFabric {
 
     graph: Graph;
+    edgeDepths: Array<DepthIcon> = [];
+    nodeDepths: Array<DepthIcon> = [];
 
     constructor (graph: Graph) {
 
-        //
+        // Initialize Biofabric
         this.graph = graph;
+        this.populate_node_depths();
+        this.populate_edge_depths();
 
-        //
+
+        // Sort Edges
         this.sort_edges_degreescending();
-        
-        //
+
+        // Calculcate Y Coordinates
         this.calculate_node_y_coordinates();
+        this.calculcate_depth_y_coordinates();
+
+        // Calculcate X Coordiantes
         this.calculate_edge_x_coordinates();
 
+    }
+
+    populate_node_depths () : void {
+        let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
+        for (let depth of nodeDepths) {
+            let nNodes: number = this.graph.nodes.filter(node => node.get_depth() == depth).length
+            let nodeDepth: DepthIcon = new DepthIcon();
+            nodeDepth.set_depth(depth)
+            switch (nNodes) {
+                case (0):
+                    nodeDepth.set_state(State.Empty)
+                    break;
+                case (1):
+                    nodeDepth.set_state(State.Singleton)
+                    break;
+                default:
+                    nodeDepth.set_state(State.Uncompressed)
+                    break;
+            }
+
+            // Append depth to list of depths
+            this.nodeDepths.push(nodeDepth)
+        }
+
+    }
+
+    populate_edge_depths () : void {
+
+        // Get ALL possible depths from current graph
+        let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
+        let edgeDepths: Array<number> = [...new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()))];
+        let depths: Array<number> = edgeDepths.concat(nodeDepths);
+
+        // Iterate over depths and create new depths
+        for (let depth of depths) {
+            let nEdges: number = this.graph.edges.filter(edge => edge.get_depth() == depth).length
+            let edgeDepth: DepthIcon = new DepthIcon();
+            edgeDepth.set_depth(depth)
+            switch (nEdges) {
+                case (0):
+                    edgeDepth.set_state(State.Empty)
+                    break;
+                case (1):
+                    edgeDepth.set_state(State.Singleton)
+                    break;
+                default:
+                    edgeDepth.set_state(State.Uncompressed)
+                    break;
+            }
+
+            // Append depth to list of depths
+            this.edgeDepths.push(edgeDepth)
+        }
     }
 
     get_edge_length (edge: Edge) : number {
@@ -99,18 +160,38 @@ class BioFabric {
         }
     }
 
+    calculcate_depth_y_coordinates () : void {
+        for (let nodeDepthCircle of this.nodeDepths) {
+            let depth: number = nodeDepthCircle.get_depth()
+            let depthNodes = this.graph.nodes.filter(node => node.get_depth() == depth);
+            nodeDepthCircle.set_min_y(Math.min.apply(0, depthNodes.map(node => node.get_y())));
+            nodeDepthCircle.set_max_y(Math.max.apply(0, depthNodes.map(node => node.get_y())));
+            let centerY = (nodeDepthCircle.get_min_y() + nodeDepthCircle.get_max_y()) / 2;
+            nodeDepthCircle.set_y(centerY);
+        }
+    }
+
     calculate_edge_x_coordinates () : void {
 
         // Get Depths
         // TOTO: for now only account for EDGE DEPTHS THAT ARE PRESENT -> future should also space for missing edge depths
         let edgeDepths: Array<number> = [...new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()))];
-        // let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
-        // let depths: Array<number> = edgeDepths.concat(nodeDepths);
+        let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
+        //let depths: Array<number> = edgeDepths.concat(nodeDepths);
 
-        // Determine Unique Compressed and Uncompressed Edges
+        // Determine Unique Compressed/Uncompressed/Empty Edges
         let singletonEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State.Singleton && edge.get_depth() <= this.graph.get_depth());
         let uncompressedEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State.Uncompressed && edge.get_depth() <= this.graph.get_depth());
-        
+        let emptyDepths: Array<number> = []
+        for (let depth of nodeDepths) {
+            let depthEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_depth() == depth)
+            if (depthEdges.length == 0) {
+                emptyDepths.push(depth)
+            }
+        }
+        console.log("Empty Depths:")
+        console.log(emptyDepths);
+
         // Get Unique fully compressed edges
         let fullyCompressedEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_state() == State["Fully Compressed"] && edge.get_depth() <= this.graph.get_depth());
         let fulllyCompressedEdgeDepths: Set<number> = new Set(fullyCompressedEdges.map(edge => edge.get_depth()));
@@ -123,19 +204,20 @@ class BioFabric {
             partialEdgeNodeTops.add(topMostNodeIndex)
         }
 
-        // Prints
-        console.log("Singleton Edges: " + singletonEdges.length);
-        console.log("Uncompressed Edges: " + uncompressedEdges.length);
-        console.log("Partially Compressed Edges: " + partialEdgeNodeTops.size)
-        console.log("Fully Compressed Edges: " + fulllyCompressedEdgeDepths.size)
-
-        // Calculate Spacing
+        // Set Spacing Ratios
+        let emptyDepthSpaceRatio: number = 10;
         let horizontalSpacingRatio: number = 1;
         let depthSpaceRatio: number = 3;
         if (horizontalSpacingRatio > depthSpaceRatio) {
             throw new Error("Horizontal Spacing May Not Exceed Depth Spacing!");
         }
-        let spacingUnit: number = 0.95 / (horizontalSpacingRatio*(singletonEdges.length + uncompressedEdges.length + partialEdgeNodeTops.size + fulllyCompressedEdgeDepths.size - edgeDepths.length - (depthSpaceRatio - horizontalSpacingRatio)) + depthSpaceRatio*edgeDepths.length - 1);
+
+        // Calculcate Spacing
+        let emptyDepthTerm: number = emptyDepthSpaceRatio * emptyDepths.length;
+        let nonEmptyDepthTerm: number = depthSpaceRatio * (edgeDepths.length - emptyDepths.length + 1);
+        let normalTerm: number = horizontalSpacingRatio * (singletonEdges.length + uncompressedEdges.length + partialEdgeNodeTops.size + fulllyCompressedEdgeDepths.size - edgeDepths.length - ((edgeDepths.length - emptyDepths.length + 1) - horizontalSpacingRatio));
+        let spacingUnit: number = 0.95 / (normalTerm + nonEmptyDepthTerm + emptyDepthTerm);
+        let emptyDepthSpace: number = emptyDepthSpaceRatio * spacingUnit;
         let horizontalspace: number = horizontalSpacingRatio * spacingUnit;
         let depthspace: number = depthSpaceRatio * spacingUnit;
 
@@ -143,7 +225,7 @@ class BioFabric {
         for (let edgeIndex = 0; edgeIndex < this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).length; edgeIndex++) {
             let x: number = Infinity;
             if (edgeIndex == 0) {
-                x = 0;
+                x = emptyDepthSpace;
             } else {
                 if (this.graph.edges[edgeIndex - 1].get_depth() == this.graph.edges[edgeIndex].get_depth()) {
                     if (this.graph.edges[edgeIndex].get_state() == State["Fully Compressed"]) {
@@ -164,10 +246,18 @@ class BioFabric {
                         }
                     }
                 } else {
-                    x = this.graph.edges[edgeIndex - 1].get_x() + depthspace;
+                    let depthDifference: number = this.graph.edges[edgeIndex].get_depth() - (this.graph.edges[edgeIndex-1].get_depth())
+                    console.log("Depth Difference of " + edgeIndex + ": " + depthDifference);
+                    if (depthDifference == 0.5) {
+                        x = this.graph.edges[edgeIndex - 1].get_x() + depthspace;
+                    } else if (depthDifference > 0.5) {
+                        x = this.graph.edges[edgeIndex - 1].get_x() + emptyDepthSpace;
+                    } else {
+                        throw new Error ("Edge Sorting is broken!")
+                    }
+                    
                 }
             }
-            console.log(x);
             this.graph.edges[edgeIndex].set_x(x);
         }
     }

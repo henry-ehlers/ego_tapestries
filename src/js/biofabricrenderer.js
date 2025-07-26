@@ -70,31 +70,31 @@ class BioFabricRenderer {
                 .attr("fill", d3.schemeObservable10[node.get_depth()])
         }
 
-        // Iterate over unique node Depths        
-        let nodeDepths = [...new Set(this.biofabric.graph.nodes.filter(node => node.get_depth() <= this.biofabric.graph.get_depth()).map(node => node.get_depth()))];
-        for (let nodeDepth of nodeDepths) {
-
-            // Calculcate Y Position of Depth Circles
-            let depthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepth);
-            let depthY = depthNodes.map(node => node.get_y()).reduce((a, b) => a + b, 0)/depthNodes.length
+        // Iterate over unique node Depths       
+        let nodeDepthIcons = [...new Set(this.biofabric.nodeDepths.filter(nodeDepth => nodeDepth.get_depth() <= this.biofabric.graph.get_depth()))]
+        for (let nodeDepthIcon of nodeDepthIcons) {
             
+            // Extract Current Depth and its Nodes
+            let depthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepthIcon.get_depth());
+            console.log("Node Depth: " + nodeDepthIcon.get_depth() + " - state: " + nodeDepthIcon.get_state() + " - length: " + depthNodes.length)
+
             // Append a Node Depth Line
             nodeDepthG.append("line")
-                .attr("id", "nodeDepthLine-" + nodeDepth.toString().replace(".", "-"))
+                .attr("id", "nodeDepthLine-" + nodeDepthIcon.get_depth().toString().replace(".", "-"))
                 .attr("class", "nodeDepthLine")
                 .attr("x1", 0)
                 .attr("x2", 0)
                 .attr("y1", Math.min.apply(0, depthNodes.map(node => node.get_y() * (this.canvasHeight * (1 - this.innerY)))))
                 .attr("y2", Math.max.apply(0, depthNodes.map(node => node.get_y() * (this.canvasHeight * (1 - this.innerY)))))
-                .attr("stroke", ((nodeDepth % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepth])
+                .attr("stroke", ((nodeDepthIcon.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepthIcon.get_depth()])
                 .attr("stroke-width", 0.2)
                 .attr("stroke-linecap", "round")
 
             // Append a Node Depth Cirlce
             let nodeDepthCircleG = nodeDepthG
                 .append("g")
-                .attr("id", "nodeDepthCircle-" + nodeDepth.toString().replace(".", "-") + "G")
-                .attr("transform", "translate(" + (0) + "," + (depthY * (this.canvasHeight * (1 - this.innerY))) + ")")
+                .attr("id", "nodeDepthCircle-" + nodeDepthIcon.get_depth().toString().replace(".", "-") + "G")
+                .attr("transform", "translate(" + (0) + "," + (nodeDepthIcon.get_y() * (this.canvasHeight * (1 - this.innerY))) + ")")
             
             // Node Depth Circle Background Color
             nodeDepthCircleG.append("circle")
@@ -107,7 +107,7 @@ class BioFabricRenderer {
             nodeDepthCircleG.append("path")
                     .attr('opacity', () => 
                             {
-                                if (depthNodes[0].get_state() != State["Uncmpressed"]) {
+                                if (nodeDepthIcon.get_state() != State["Uncmpressed"]) {
                                     return "1"
                                 } else {
                                     return "0"
@@ -117,39 +117,49 @@ class BioFabricRenderer {
                     .attr("d", () => 
                         {
                             let curve = d3.line().curve(d3.curveBasisClosed)
-                            if (depthNodes[0].get_state() == State["Singleton"]) {
+                            if (nodeDepthIcon.get_state() == State["Singleton"]) {
                                 return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
                             } else {
                                 return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
                             }
                         }
                     )
-                    .attr("id", "nodeDepthCircleIcon-" + nodeDepth.toString().replace(".", "-"))
-                    .attr('fill', ((nodeDepth % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepth])
+                    .attr("id", "nodeDepthCircleIcon-" + nodeDepthIcon.get_depth().toString().replace(".", "-"))
+                    .attr('fill', ((nodeDepthIcon.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepthIcon.get_depth()])
 
             // Node Depth Circles
             nodeDepthCircleG.append("circle")
-                .attr("id", "nodeDepthCircle-" + nodeDepth.toString().replace(".", "-"))
+                .attr("id", "nodeDepthCircle-" + nodeDepthIcon.get_depth().toString().replace(".", "-"))
                 .attr("class", "nodeDepthCircle")
                 .attr("cx", 0)
                 .attr("cy", 0)
                 .attr("r", 0.5)
                 .attr("fill", "white")
                 .attr("fill-opacity", "0")
-                .attr("stroke", ((nodeDepth % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepth])
+                .attr("stroke", ((nodeDepthIcon.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[nodeDepthIcon.get_depth()])
                 .attr("stroke-width", 0.2)
                 .on("click", () => 
                     {
                         // Check if Depth is not Singleton/Empty -> update drawing if not so
-                        if (depthNodes.length > 1) {
+                        if ((nodeDepthIcon.get_state() != State["Singleton"]) && (nodeDepthIcon.get_state() != State["Empty"])) {
+
+                            // Switch the State of the DepthIcon
+                             switch (nodeDepthIcon.get_state()) {
+                                case State["Uncompressed"]:
+                                    nodeDepthIcon.set_state(State["Fully Compressed"])
+                                    break;
+                                case State["Fully Compressed"]:
+                                    nodeDepthIcon.set_state(State["Uncompressed"])
+                                    break;
+                             }
 
                             // Iterate over all nodes in the current depth and update their state
                             for (let depthNode of depthNodes) {
                                 switch (depthNode.get_state()) {
-                                    case (State["Uncompressed"]):
+                                    case State["Uncompressed"]:
                                         depthNode.set_state(State["Fully Compressed"])
                                         break;
-                                    case (State["Fully Compressed"]):
+                                    case State["Fully Compressed"]:
                                         depthNode.set_state(State["Uncompressed"])
                                         break;
                                 }
@@ -157,6 +167,7 @@ class BioFabricRenderer {
 
                             // Recalculcate the Y Coordinates of the now (un)compressed states
                             this.biofabric.calculate_node_y_coordinates();
+                            this.biofabric.calculcate_depth_y_coordinates();
 
                             // Iterate over nodes and update the node lines
                             for (let node of this.biofabric.graph.nodes.filter(node => node.get_depth() <= this.biofabric.graph.get_depth())) {
@@ -168,7 +179,7 @@ class BioFabricRenderer {
                                     .attr("y1", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
                                     .attr("y2", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
 
-                                // Collapse Node Text
+                                // (Un)collapse Node Text
                                 nodeG.select("#" + "nodeText-" + node.get_id())
                                     .transition()
                                     .duration(100)
@@ -185,57 +196,55 @@ class BioFabricRenderer {
                             }
 
                             // Iterate over depths and update their positions
-                            for (let nodeDepth of nodeDepths) {
+                            for (let nodeDepthIconB of nodeDepthIcons) {
 
                                 // Get all Nodes for Given Depth -> Skip if Singleton or Empty
-                                let newDepthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepth);
-                                if ((newDepthNodes.length == 0) || (newDepthNodes.length == 1)) {
+                                if ((nodeDepthIconB.get_state() == State["Empty"]) || (nodeDepthIconB.get_state() == State["Singleton"])) {
                                     continue;
                                 }
 
-                                // Calculcate New Y Coordinates for Depth Circles
-                                let newYCoordinate = newDepthNodes.map(node => node.get_y()).reduce((a,b) => a + b, 0)/newDepthNodes.length
-                                let minY = Math.min.apply(0, newDepthNodes.map(node => node.get_y()))
-                                let maxY = Math.max.apply(0, newDepthNodes.map(node => node.get_y()))
-
                                 // Update the Positions of the Depth Circle G's which contain the Depth Circles and their Icons
-                                nodeDepthG.select("#" + "nodeDepthCircle-" + nodeDepth.toString().replace(".", "-") + "G")
+                                nodeDepthG.select("#" + "nodeDepthCircle-" + nodeDepthIconB.get_depth().toString().replace(".", "-") + "G")
                                     .transition()
                                     .duration(100)
-                                    .attr("transform", "translate(0," + newYCoordinate * (this.canvasHeight * (1 - this.innerY)) + ")")
+                                    .attr("transform", "translate(0," + nodeDepthIconB.get_y() * (this.canvasHeight * (1 - this.innerY)) + ")")
 
                                 // update the Endpoints of the Depth lines
-                                nodeDepthG.select("#nodeDepthLine-" + nodeDepth.toString().replace(".", "-"))
+                                nodeDepthG.select("#nodeDepthLine-" + nodeDepthIconB.get_depth().toString().replace(".", "-"))
                                     .transition()
                                     .duration(100)
-                                    .attr("y1", minY * (this.canvasHeight * (1 - this.innerY)))
-                                    .attr("y2", maxY * (this.canvasHeight * (1 - this.innerY)))
+                                    .attr("y1", nodeDepthIconB.get_min_y() * (this.canvasHeight * (1 - this.innerY)))
+                                    .attr("y2", nodeDepthIconB.get_max_y() * (this.canvasHeight * (1 - this.innerY)))
                             }
                             
                             // Update the Opacity and Shape of the Node Depth Circle Icon
-                            d3.select("#" + "nodeDepthCircleIcon-" + nodeDepth.toString().replace(".", "-"))
+                            d3.select("#" + "nodeDepthCircleIcon-" + nodeDepthIcon.get_depth().toString().replace(".", "-"))
                                 .transition()
                                 .duration(100)
                                 .attr("opacity", () => 
                                     {
-                                        if (depthNodes[0].get_state() != State["Uncmpressed"]) {
-                                            return "1"
-                                        } else {
+                                        if (nodeDepthIcon.get_state() == State["Uncompressed"]) {
+                                            console.log("State Uncompressed")
                                             return "0"
+                                        } else {
+                                            console.log("State Uncompressed")
+                                            return "1"
                                         }
                                     })
                                 .attr("d", () => 
                                 {
                                     let curve = d3.line().curve(d3.curveBasisClosed)
-                                    if (depthNodes[0].get_state() == State["Singleton"]) {
-                                        return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
-                                    } else if (depthNodes[0].get_state() == State["Partially Compressed"]) {
-                                        return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]])
-                                    } else if (depthNodes[0].get_state() == State["Fully Compressed"]) {
-                                        return curve([[0, 0.7], [-0.7, 0], [0, -0.7], [0.7, 0]])
-                                    } else if (depthNodes[0].get_state() == State["Uncompressed"]) {
-                                        return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
-                                    }
+                                    switch (nodeDepthIcon.get_state()) {
+                                        case State["Singleton"]:
+                                            return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]]);
+                                        case State["Partially Compressed"]:
+                                            return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]]);
+                                        case State["Fully Compressed"]:
+                                            return curve([[0, 0.7], [-0.7, 0], [0, -0.7], [0.7, 0]]);
+                                        case State["Uncompressed"]:
+                                            return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]]);
+
+                                    }          
                                 }
                             )
 
@@ -393,10 +402,9 @@ class BioFabricRenderer {
                 .on("click", () => 
                     {
 
-
                         // Ensure Current Depth's EdgeSet is not Singleton or Empty
                         if (depthEdges.length > 1) {
-                            
+
                             // Set the New States (Un/Fully/Partially Compressed) for all edges in clicked Depth
                             for (let edge of depthEdges) {
                                 switch (edge.get_state()) {
