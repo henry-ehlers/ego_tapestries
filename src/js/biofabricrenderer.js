@@ -327,28 +327,23 @@ class BioFabricRenderer {
                 .attr("fill",  ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
         }
 
-        let edgeDepths = [...new Set(this.biofabric.graph.edges.filter(edge => (edge.get_depth() <= this.biofabric.graph.get_depth())).map(edge => edge.get_depth()))]
-        for (let depth of edgeDepths) {
-
-            // Get all Edges of the current Depth and calculcate their x center coordinate
-            let depthEdges = this.biofabric.graph.edges.filter(edge => edge.get_depth() == depth);
-            let xcenter = depthEdges.map(edge => edge.get_x()).reduce((a,b) => a + b, 0)/depthEdges.length
+        for (let edgeDepth of this.biofabric.edgeDepths) {
 
             edgeDepthG.append("line")
-                .attr("id", "edgeDepthLine-" + depth.toString().replace(".", "-"))
+                .attr("id", "edgeDepthLine-" + edgeDepth.get_depth().toString().replace(".", "-"))
                 .attr("class", "edgeDepthLine")
-                .attr("x1", Math.min.apply(0, depthEdges.map(edge => edge.get_x())) * this.canvasWidth * (1 - this.edgeDepthX))
-                .attr("x2", Math.max.apply(0, depthEdges.map(edge => edge.get_x())) * this.canvasWidth * (1 - this.edgeDepthX))
+                .attr("x1", edgeDepth.get_min_x() * this.canvasWidth * (1 - this.edgeDepthX))
+                .attr("x2", edgeDepth.get_max_x() * this.canvasWidth * (1 - this.edgeDepthX))
                 .attr("y1", 0)
                 .attr("y2", 0)
-                .attr("stroke", ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
+                .attr("stroke", ((edgeDepth.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edgeDepth.get_depth()])
                 .attr("stroke-linecap", "round")
                 .attr("stroke-width", 0.2)
 
             let edgeDepthCircleG = edgeDepthG
                 .append("g")
-                .attr("id", "edgeDepthCircle-" + depth.toString().replace(".", "-") + "G")
-                .attr("transform", "translate(" + (xcenter * this.canvasWidth * (1 - this.edgeDepthX)) + "," + (0) + ")")
+                .attr("id", "edgeDepthCircle-" + edgeDepth.get_depth().toString().replace(".", "-") + "G")
+                .attr("transform", "translate(" + (edgeDepth.get_x() * this.canvasWidth * (1 - this.edgeDepthX)) + "," + (0) + ")")
 
             edgeDepthCircleG.append("circle")
                 .attr("cx", 0)
@@ -360,7 +355,7 @@ class BioFabricRenderer {
             edgeDepthCircleG.append("path")
                     .attr('opacity', () => 
                             {
-                                if (depthEdges[0].get_state() != State["Uncmpressed"]) {
+                                if (edgeDepth.get_state() != State["Uncmpressed"]) {
                                     return "1"
                                 } else {
                                     return "0"
@@ -370,18 +365,18 @@ class BioFabricRenderer {
                     .attr("d", () => 
                         {
                             let curve = d3.line().curve(d3.curveBasisClosed)
-                            if (depthEdges[0].get_state() == State["Singleton"]) {
+                            if (edgeDepth.get_state() == State["Singleton"]) {
                                 return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
                             } else {
                                 return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
                             }
                         }
                     )
-                    .attr("id", "edgeDepthCircleIcon-" + depth.toString().replace(".", "-"))
-                    .attr('fill', ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
-
+                    .attr("id", "edgeDepthCircleIcon-" + edgeDepth.get_depth().toString().replace(".", "-"))
+                    .attr('fill', ((edgeDepth.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edgeDepth.get_depth()])
+                
             edgeDepthCircleG.append("circle")
-                .attr("id", "edgeDepthCircle-" + depth.toString().replace(".", "-"))
+                .attr("id", "edgeDepthCircle-" + edgeDepth.get_depth().toString().replace(".", "-"))
                 .attr("class", "depthCircle")
                 .attr("cx", 0)
                 .attr("cy", 0)
@@ -389,10 +384,10 @@ class BioFabricRenderer {
                 .attr("r", 0.5)
                 .attr("fill", "white")
                 .attr('fill-opacity', 0)
-                .attr("stroke", ((depth % 1) == 0.5) ? "#333" : d3.schemeObservable10[depth])
+                .attr("stroke", ((edgeDepth.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edgeDepth.get_depth()])
                 .style("cursor", () => 
                     {
-                        if (depthEdges[0].get_state() == State["Singleton"]) {
+                        if (edgeDepth.get_state() == State["Singleton"] || edgeDepth.get_state() == State["Empty"]) {
                             return "default"
                         } else {
                             return "pointer"
@@ -403,10 +398,24 @@ class BioFabricRenderer {
                     {
 
                         // Ensure Current Depth's EdgeSet is not Singleton or Empty
-                        if (depthEdges.length > 1) {
+                        if (edgeDepth.get_state() != State["Singleton"] && edgeDepth.get_state() != State["Empty"]) {
+                            
+                            // Switch the State of the DepthIcon
+                            switch (edgeDepth.get_state()) {
+                                case State["Uncompressed"]:
+                                    edgeDepth.set_state(State["Partially Compressed"])
+                                    break;
+                                case State["Partially Compressed"]:
+                                    edgeDepth.set_state(State["Fully Compressed"])
+                                    break;
+                                case State["Fully Compressed"]:
+                                    edgeDepth.set_state(State["Uncompressed"])
+                                    break;
+                                }
+
 
                             // Set the New States (Un/Fully/Partially Compressed) for all edges in clicked Depth
-                            for (let edge of depthEdges) {
+                            for (let edge of this.biofabric.graph.edges.filter(edge => edge.get_depth() == edgeDepth.get_depth())) {
                                 switch (edge.get_state()) {
                                     case (State["Uncompressed"]):
                                         edge.set_state(State["Partially Compressed"]);
@@ -422,6 +431,7 @@ class BioFabricRenderer {
 
                             // Recalculate the X coordinates of the now partially/un/fully compressed edges
                             this.biofabric.calculate_edge_x_coordinates();
+                            this.biofabric.calculcate_depth_x_coordinates();
 
                             // Iterate over all edges (and their circle termini) and update their x coordinates
                             for (let edge of this.biofabric.graph.edges.filter(edge => edge.get_depth() <= this.biofabric.graph.get_depth())) {
@@ -445,34 +455,27 @@ class BioFabricRenderer {
                             }
 
                             // Iterate over all depth circles and lines and update their positions
-                            for (let edgeDepth of edgeDepths) {
+                            for (let edgeDepthB of this.biofabric.edgeDepths) {
 
-                                let newDepthEdges = this.biofabric.graph.edges.filter(edge => edge.get_depth() == edgeDepth);
-                                let minX = Math.min.apply(0, newDepthEdges.map(edge => edge.get_x()));
-                                let maxX = Math.max.apply(0, newDepthEdges.map(edge => edge.get_x()));
-                                let centerX = (minX + maxX) / 2;
-
-                                svg
-                                    .select("#" + "edgeDepthCircle-" + edgeDepth.toString().replace(".", "-") + "G")
+                                svg.select("#" + "edgeDepthCircle-" + edgeDepthB.get_depth().toString().replace(".", "-") + "G")
                                     .transition()
                                     .duration(100)
-                                    .attr("transform", "translate(" + (centerX * this.canvasWidth * (1 - this.edgeDepthX)) + ",0)")
+                                    .attr("transform", "translate(" + (edgeDepthB.get_x() * this.canvasWidth * (1 - this.edgeDepthX)) + ",0)")
 
-                                svg
-                                    .select("#edgeDepthLine-" + edgeDepth.toString().replace(".", "-"))
+                                svg.select("#edgeDepthLine-" + edgeDepthB.get_depth().toString().replace(".", "-"))
                                     .transition()
                                     .duration(100)
-                                    .attr("x1", minX * this.canvasWidth * (1 - this.edgeDepthX))
-                                    .attr("x2", maxX * this.canvasWidth * (1 - this.edgeDepthX))
+                                    .attr("x1", edgeDepthB.get_min_x() * this.canvasWidth * (1 - this.edgeDepthX))
+                                    .attr("x2", edgeDepthB.get_max_x() * this.canvasWidth * (1 - this.edgeDepthX))
 
                             }
 
-                            d3.select("#" + "edgeDepthCircleIcon-" + depth.toString().replace(".", "-"))
+                            d3.select("#" + "edgeDepthCircleIcon-" + edgeDepth.get_depth().toString().replace(".", "-"))
                                 .transition()
                                 .duration(100)
                                 .attr("opacity", () => 
                                     {
-                                        if (depthEdges[0].get_state() != State["Uncmpressed"]) {
+                                        if (edgeDepth.get_state() != State["Uncmpressed"]) {
                                             return "1"
                                         } else {
                                             return "0"
@@ -481,14 +484,14 @@ class BioFabricRenderer {
                                 .attr("d", () => 
                                 {
                                     let curve = d3.line().curve(d3.curveBasisClosed)
-                                    if (depthEdges[0].get_state() == State["Singleton"]) {
+                                    if (edgeDepth.get_state() == State["Singleton"]) {
                                         return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
                                     }
-                                    if (depthEdges[0].get_state() == State["Partially Compressed"]) {
+                                    if (edgeDepth.get_state() == State["Partially Compressed"]) {
                                         return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]])
-                                    } else if (depthEdges[0].get_state() == State["Fully Compressed"]) {
+                                    } else if (edgeDepth.get_state() == State["Fully Compressed"]) {
                                         return curve([[0, 0.7], [-0.7, 0], [0, -0.7], [0.7, 0]])
-                                    } else if (depthEdges[0].get_state() == State["Uncompressed"]) {
+                                    } else if (edgeDepth.get_state() == State["Uncompressed"]) {
                                         return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
                                     }
                                 }
