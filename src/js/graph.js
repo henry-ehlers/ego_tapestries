@@ -15,6 +15,9 @@ class Graph {
         this.identify_singleton_edges();
         this.sort_nodes();
     }
+    set_ego(node) {
+        this.ego = node;
+    }
     // Populate Edges and Nodes from Dataset
     load_data(data) {
         // Initialize IDs of edges and nodes

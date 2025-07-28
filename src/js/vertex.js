@@ -61,6 +61,9 @@ class Vertex {
     reset() {
         this.depth = Infinity;
         this.state = State.Uncompressed;
+        this.index = Infinity;
+        this.distance = Infinity;
         this.incidence = [];
+        this.adjacency = [];
     }
 }

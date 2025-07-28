@@ -2,6 +2,8 @@ class BioFabricRenderer {
 
     // Constructor
     constructor(biofabric, canvasWidth, canvasHeight) {
+
+        //
         this.biofabric = biofabric;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -68,6 +70,47 @@ class BioFabricRenderer {
                 .attr("dominant-baseline", "middle")
                 .text(node.get_label())
                 .attr("fill", d3.schemeObservable10[node.get_depth()])
+                .on("dblclick", () => {
+                    
+                    // clear canvas
+                    svg.selectAll("*").remove();
+                    
+                    // recalculate ego network with new ego
+                    this.biofabric.graph.set_ego(node);                 
+                    this.biofabric.graph.construct_ego_network();
+                    console.log("Constructed Ego Network")
+
+                    // Sort Nodes Based on Hop + Weighted Distanced to Ego
+                    this.biofabric.graph.identify_singleton_nodes();
+                    this.biofabric.graph.identify_singleton_edges();
+                    this.biofabric.graph.sort_nodes();
+                    console.log("Sorted Nodes")
+
+                    // Repopulate depth icons
+                    this.biofabric.populate_node_depths();
+                    this.biofabric.populate_edge_depths();
+                    console.log("Populated Edge/Node Depths")
+
+                    // Sort Edges, Depths
+                    this.biofabric.sort_edges_degreescending();
+                    this.biofabric.sort_edge_depth_icons();
+                    this.biofabric.sort_node_depth_icons();
+                    console.log("Sort Edges and Edge/Node Depths")
+
+                    // Calculcate Y Coordinates
+                    this.biofabric.calculate_node_y_coordinates();
+                    this.biofabric.calculcate_depth_y_coordinates();
+                    console.log("Calculated Y Coordinates")
+
+                    // Calculcate X Coordiantes
+                    this.biofabric.calculate_edge_x_coordinates();
+                    this.biofabric.calculcate_depth_x_coordinates();
+                    console.log("Calculated X Coordinates")
+
+                    // TODO: do not just redraw but animate the transition
+                    this.render(svg)
+
+                })
         }
 
         // Iterate over unique node Depths       

@@ -21,6 +21,10 @@ class Graph {
         this.sort_nodes();
     }
 
+    set_ego (node: Vertex) : void {
+        this.ego = node;
+    }
+
     // Populate Edges and Nodes from Dataset
     load_data (data: any) : void {
 

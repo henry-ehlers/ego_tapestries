@@ -14,7 +14,7 @@ class BioFabric {
         // Sort Edges, Depths
         this.sort_edges_degreescending();
         this.sort_edge_depth_icons();
-        this.sort_node_depth_icons;
+        this.sort_node_depth_icons();
 
         // Calculcate Y Coordinates
         this.calculate_node_y_coordinates();
@@ -27,6 +27,7 @@ class BioFabric {
     }
 
     populate_node_depths () : void {
+        this.nodeDepths = [];
         let nodeDepths: Array<number> = [...new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()))];
         for (let depth of nodeDepths) {
             let nNodes: number = this.graph.nodes.filter(node => node.get_depth() == depth).length
@@ -51,6 +52,9 @@ class BioFabric {
     }
 
     populate_edge_depths () : void {
+
+        //
+        this.edgeDepths = [];
 
         // Get ALL possible depths from current graph
         let nodeDepths: Set<number> = new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()));
@@ -255,7 +259,11 @@ class BioFabric {
     }
 
     calculcate_depth_x_coordinates () : void {
-        for  (let depthIndex = 0; depthIndex < this.edgeDepths.filter(depthIcon => depthIcon.get_depth() <= this.graph.get_depth()).length; depthIndex++) {
+        let emptyDepths: Array<number> = []
+        console.log("Graph Depth: " + this.graph.get_depth())
+        console.log(this.edgeDepths.filter(depthIcon => (depthIcon.get_depth() <= this.graph.get_depth())))
+        for  (let depthIndex = 0; depthIndex < this.edgeDepths.filter(depthIcon => (depthIcon.get_depth() <= this.graph.get_depth())).length; depthIndex++) {
+            console.log("Depth Index: " + depthIndex);
             let currEdgeDepthIcon = this.edgeDepths[depthIndex]
             if (depthIndex == 0) {
                 currEdgeDepthIcon.set_x(0);
@@ -263,9 +271,11 @@ class BioFabric {
                 currEdgeDepthIcon.set_max_x(0);
             } else {
                 let depthEdges: Array<Edge> = this.graph.edges.filter(edge => edge.get_depth() == currEdgeDepthIcon.get_depth())
-                if (depthIndex == this.graph.get_depth()) {
+                if (currEdgeDepthIcon.get_depth() == this.graph.get_depth()) {
                     if (depthEdges.length == 0) {
                         currEdgeDepthIcon.set_x(0.95)
+                        currEdgeDepthIcon.set_min_x(0.95)
+                        currEdgeDepthIcon.set_max_x(0.95)
                     } else {
                         currEdgeDepthIcon.set_min_x(Math.min.apply(0, depthEdges.map(edge => edge.get_x())));
                         currEdgeDepthIcon.set_max_x(Math.max.apply(0, depthEdges.map(edge => edge.get_x())));
@@ -273,7 +283,8 @@ class BioFabric {
                     }
                 } else {
                     if (depthEdges.length == 0) {
-                       continue
+                        emptyDepths.push(depthIndex);
+                        continue
                     } else {
                         currEdgeDepthIcon.set_min_x(Math.min.apply(0, depthEdges.map(edge => edge.get_x())));
                         currEdgeDepthIcon.set_max_x(Math.max.apply(0, depthEdges.map(edge => edge.get_x())));
@@ -284,7 +295,8 @@ class BioFabric {
         }
 
         // Iterate over remaining empty Depths and fill in (center) x values
-        for  (let depthIndex = 0; depthIndex < this.edgeDepths.filter(depthIcon => depthIcon.get_depth() <= this.graph.get_depth()).length; depthIndex++) {
+        for  (let depthIndex of emptyDepths) {
+            console.log("Depth Index Part 2: " + depthIndex);
             let currEdgeDepthIcon = this.edgeDepths[depthIndex]
             if (currEdgeDepthIcon.get_x() != Infinity) {
                 continue;
