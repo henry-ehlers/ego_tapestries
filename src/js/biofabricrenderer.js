@@ -346,7 +346,7 @@ class BioFabricRenderer {
                 .attr("x1", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
                 .attr("x2", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
                 .attr("stroke", ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
-                .attr("stroke-width", 0.25)
+                .attr("stroke-width", 30 / this.biofabric.graph.edges.filter(e => e.get_depth() <= this.biofabric.graph.get_depth()).length)
                 .attr("stroke-linecap", "round")
 
             innerG
@@ -355,7 +355,7 @@ class BioFabricRenderer {
                 .attr('class', "edgecircle")
                 .attr("cy", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
-                .attr("r", "0.2")
+                .attr("r", 30 / this.biofabric.graph.edges.filter(e => e.get_depth() <= this.biofabric.graph.get_depth()).length)
                 .attr("stroke-width", "0")
                 .attr("fill",  ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
 
@@ -365,7 +365,7 @@ class BioFabricRenderer {
                 .attr('class', "edgecircle")
                 .attr("cy", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
-                .attr("r", "0.2")
+                .attr("r", 30 / this.biofabric.graph.edges.filter(e => e.get_depth() <= this.biofabric.graph.get_depth()).length)
                 .attr("stroke-width", "0")
                 .attr("fill",  ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
         }
@@ -407,16 +407,34 @@ class BioFabricRenderer {
                         )
                     .attr("d", () => 
                         {
-                            let curve = d3.line().curve(d3.curveBasisClosed)
-                            if (edgeDepth.get_state() == State["Singleton"]) {
+                            if (edgeDepth.get_state() == State["Empty"]) {
+                                let curve = d3.line();
+                                return curve([[-0.3, -0.3], [0, 0], [0.3, 0.3], [0, 0], [-0.3, 0.3], [0, 0], [0.3, -0.3]])
+                            } else if (edgeDepth.get_state() == State["Singleton"]) {
+                                let curve = d3.line().curve(d3.curveBasisClosed)
                                 return curve([[0, 0.2], [-0.2, 0], [0, -0.2], [0.2, 0]])
                             } else {
+                                let curve = d3.line().curve(d3.curveBasisClosed)
                                 return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
                             }
                         }
                     )
                     .attr("id", "edgeDepthCircleIcon-" + edgeDepth.get_depth().toString().replace(".", "-"))
-                    .attr('fill', ((edgeDepth.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edgeDepth.get_depth()])
+                    .attr("stroke",((edgeDepth.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edgeDepth.get_depth()])
+                    .attr("stroke-width", () => {
+                        if (edgeDepth.get_state() == State["Empty"]) {
+                            return 0.2
+                        } else {
+                            return 0
+                        }
+                    })
+                    .attr('fill', () => {
+                        if (edgeDepth.get_state() == State["Empty"]) {
+                            return "none"
+                        } else {
+                            return ((edgeDepth.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edgeDepth.get_depth()]
+                        }
+                    })
                 
             edgeDepthCircleG.append("circle")
                 .attr("id", "edgeDepthCircle-" + edgeDepth.get_depth().toString().replace(".", "-"))
@@ -441,7 +459,7 @@ class BioFabricRenderer {
                     {
 
                         // Ensure Current Depth's EdgeSet is not Singleton or Empty
-                        if (edgeDepth.get_state() != State["Singleton"] && edgeDepth.get_state() != State["Empty"]) {
+                        if ((edgeDepth.get_state() != State["Singleton"]) && (edgeDepth.get_state() != State["Empty"])) {
                             
                             // Switch the State of the DepthIcon
                             switch (edgeDepth.get_state()) {
