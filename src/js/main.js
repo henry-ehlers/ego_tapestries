@@ -9,12 +9,6 @@ async function init () {
     console.log(graph.nodes)
     console.log(graph.edges)
 
-    let biofabric = new BioFabric(graph);
-    console.log(biofabric)
-
-    let biofabricrenderer = new BioFabricRenderer(biofabric, width, height);
-    console.log(biofabric);
-
     let svg = d3
         .select("body")
         .append("svg")
@@ -22,8 +16,14 @@ async function init () {
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("viewBox", "0 0 " + width + " " + height)
-    
-    biofabricrenderer.render(svg);
+
+    // let biofabric = new BioFabric(graph);
+    // let biofabricrenderer = new BioFabricRenderer(biofabric, width, height);
+    // biofabricrenderer.render(svg);
+
+    let linear = new Linear(graph);
+    let linearrenderer = new LinearRenderer(linear, width, height);
+    linearrenderer.render(svg)
     
 }
 
