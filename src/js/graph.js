@@ -100,9 +100,11 @@ export class Graph {
                 // Get Vertex Incidence and Neighbors
                 vertex.set_incidence(this.edges.filter(edge => edge.has_node_id(vertex.id)));
                 let neighborIDs = vertex.incidence.map(edge => edge.get_endpoint_ids()).flat(1).filter(nodeID => vertex.get_id() != nodeID);
-                let adjacency = neighborIDs.map(nodeID => this.nodes.find(node => node.id == nodeID)).filter(node => { if (!node) {
-                    throw new Error("Node is Undefined!");
-                } ; return node != undefined; });
+                let adjacency = neighborIDs.map(nodeID => this.nodes.find(node => node.id == nodeID)).filter(node => {
+                    if (!node) {
+                        throw new Error("Node is Undefined!");
+                    }; return node != undefined;
+                });
                 vertex.set_adjacency(adjacency);
                 // Iterate over node in Adjacency
                 for (let neighbor of adjacency) {

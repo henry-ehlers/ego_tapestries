@@ -28,10 +28,10 @@ export class LinearRenderer {
     // Renderer
     render(svg) {
 
-         // G that contains the Graph Drawing
+        // G that contains the Graph Drawing
         let innerG = svg.append("g")
             .attr("transform", "translate(" + (this.CANVASWIDTH * this.INNERX) + "," + (this.CANVASHEIGHT * this.INNERY) + ")")
-        
+
 
         // Draw Edge Arcs
         for (let edge of this.LINEAR.graph.edges.filter(edge => edge.get_depth() <= this.LINEAR.graph.get_depth())) {
@@ -46,7 +46,7 @@ export class LinearRenderer {
             let arc = (edge.get_depth() % 1) == 0.5 ? this.arc_generator(radiusX, radiusX, false) : this.arc_generator(radiusX, radiusX, true)
 
             innerG.append("path")
-                .attr("d", arc) 
+                .attr("d", arc)
                 .attr("transform", "translate(" + (offsetX + radiusX) + "," + 0 + ")")
                 .attr("stroke-width", 0.25)
                 .attr("stroke", ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
@@ -55,7 +55,7 @@ export class LinearRenderer {
 
         // Draw Node Circles
         for (let node of this.LINEAR.graph.nodes.filter(node => (node.get_depth() <= this.LINEAR.graph.get_depth()))) {
-            
+
             innerG.append("circle")
                 .attr("cx", node.get_x() * (this.CANVASWIDTH * (1 - this.INNERX)))
                 .attr("cy", 0)
@@ -79,7 +79,7 @@ export class LinearRenderer {
                 .outerRadius(outerRadius)
                 .innerRadius(innerRadius)
                 .startAngle(3 * Math.PI / 2)
-                .endAngle(Math.PI/2);
+                .endAngle(Math.PI / 2);
         }
         return arcGenerator
     }

@@ -2,7 +2,7 @@ import { Graph } from './graph.js';
 import { BioFabric } from './biofabric.js';
 import { BioFabricRenderer } from './biofabricrenderer.js';
 
-async function init () {
+async function init() {
 
     let width = 100;
     let height = 50;
@@ -28,7 +28,7 @@ async function init () {
     //let linear = new Linear(graph);
     //let linearrenderer = new LinearRenderer(linear, width, height);
     //linearrenderer.render(svg)
-    
+
 }
 
 init();
