@@ -1,5 +1,6 @@
 "use strict";
-var State;
+
+export var State;
 (function (State) {
     State[State["Empty"] = 0] = "Empty";
     State[State["Singleton"] = 1] = "Singleton";

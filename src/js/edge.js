@@ -1,5 +1,7 @@
 "use strict";
-class Edge {
+import { State } from './state.js';
+
+export class Edge {
     // Constructor
     constructor(id, source, target, weight) {
         // 

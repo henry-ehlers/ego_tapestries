@@ -1,5 +1,9 @@
 "use strict";
-class BioFabric {
+import { DepthIcon } from './depthicon.js';
+import { State } from './state.js';
+
+
+export class BioFabric {
     constructor(graph) {
         this.edgeDepths = [];
         this.nodeDepths = [];

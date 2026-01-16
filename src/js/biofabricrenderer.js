@@ -1,4 +1,7 @@
-class BioFabricRenderer {
+
+import { State } from './state.js';
+
+export class BioFabricRenderer {
 
     // Constructor
     constructor(biofabric, canvasWidth, canvasHeight) {

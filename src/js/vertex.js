@@ -1,5 +1,7 @@
 "use strict";
-class Vertex {
+import { State } from './state.js';
+
+export class Vertex {
     constructor(id, label) {
         this.depth = Infinity;
         this.state = State.Uncompressed;

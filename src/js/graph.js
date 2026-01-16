@@ -1,5 +1,9 @@
 "use strict";
-class Graph {
+import { Vertex } from './vertex.js';
+import { State } from './state.js';
+import { Edge } from './edge.js';
+
+export class Graph {
     // Constructor
     constructor(data) {
         this.edges = [];

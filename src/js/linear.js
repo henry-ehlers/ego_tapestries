@@ -1,5 +1,6 @@
 "use strict";
-class Linear {
+
+export class Linear {
     constructor(graph) {
         this.edgeDepths = [];
         this.nodeDepths = [];

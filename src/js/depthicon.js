@@ -1,5 +1,7 @@
 "use strict";
-class DepthIcon {
+import { State } from './state.js';
+
+export class DepthIcon {
     constructor() {
         //
         this.minX = Infinity;

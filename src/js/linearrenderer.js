@@ -1,4 +1,4 @@
-class LinearRenderer {
+export class LinearRenderer {
 
     // Constructor
     constructor(linear, canvasWidth, canvasHeight) {

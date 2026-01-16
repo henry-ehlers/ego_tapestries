@@ -1,3 +1,7 @@
+import { Graph } from './graph.js';
+import { BioFabric } from './biofabric.js';
+import { BioFabricRenderer } from './biofabricrenderer.js';
+
 async function init () {
 
     let width = 100;
