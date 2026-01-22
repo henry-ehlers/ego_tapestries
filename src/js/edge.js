@@ -3,7 +3,12 @@ import { State } from './state.js';
 
 export class Edge {
     // Constructor
-    constructor(id, source, target, weight) {
+    constructor(id, source, target, attrs) {
+        // if attrs is not an object throw error
+        if (typeof attrs !== 'object' || attrs === null) {
+            throw new Error('attrs must be an object');
+        }
+
         // 
         this.depth = Infinity;
         this.state = State.Uncompressed;
@@ -13,7 +18,7 @@ export class Edge {
         this.y = Infinity;
         this.id = id;
         this.endpoints = [source, target];
-        this.weight = weight;
+        this.attrs = attrs;
     }
     set_x(x) {
         this.x = x;

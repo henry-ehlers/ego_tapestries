@@ -50,7 +50,7 @@ export class Graph {
             if (!this.edges.find(e => e.has_node_id(source.get_id()) && e.has_node_id(target.get_id()))) {
                 // Create new Edge and Add to Edge list
                 let edgeID = edgeCounter++;
-                let newEdge = new Edge(edgeID.toString(), source, target, entry.weight);
+                let newEdge = new Edge(edgeID.toString(), source, target, entry.attrs);
                 this.edges.push(newEdge);
             }
         }
@@ -111,7 +111,7 @@ export class Graph {
                     // Set Depth of Neighbor
                     neighbor.set_depth(neighbor.depth < vertex.depth + 1 ? neighbor.depth : vertex.depth + 1);
                     // Get weight of neighbor node
-                    let neighborWeight = (_a = this.edges.find(edge => edge.has_node_id(neighbor.get_id()) && edge.has_node_id(vertex.get_id()))) === null || _a === void 0 ? void 0 : _a.weight;
+                    let neighborWeight = (_a = this.edges.find(edge => edge.has_node_id(neighbor.get_id()) && edge.has_node_id(vertex.get_id()))) === null || _a === void 0 ? void 0 : _a.attrs.weight;
                     if (!neighborWeight) {
                         throw new Error("Weight is undefined!");
                     }

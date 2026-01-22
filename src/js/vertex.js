@@ -2,7 +2,11 @@
 import { State } from './state.js';
 
 export class Vertex {
-    constructor(id, label) {
+    constructor(id, label, attrs = {}) {
+        if (typeof attrs !== 'object' || attrs === null) {
+            throw new Error('attrs must be an object');
+        }
+        
         this.depth = Infinity;
         this.state = State.Uncompressed;
         this.index = Infinity;
@@ -14,6 +18,7 @@ export class Vertex {
         this.y = Infinity;
         this.id = id;
         this.label = label;
+        this.attrs = attrs;
     }
     get_y() {
         return this.y;
