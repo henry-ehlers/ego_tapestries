@@ -2,6 +2,8 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { State } from './state.js';
 
+const transitionDuration = 300;
+
 export class BioFabricRenderer {
 
     // Constructor
@@ -218,14 +220,14 @@ export class BioFabricRenderer {
                             // Update Node Lines
                             innerG.select("#" + "nodeLine-" + node.get_id())
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("y1", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
                                 .attr("y2", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                             // (Un)collapse Node Text
                             nodeG.select("#" + "nodeText-" + node.get_id())
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("y", node.get_y() * (this.canvasHeight * (1 - this.nodeGY)))
                                 .attr("opacity", () => {
                                     if (node.get_state() == State["Fully Compressed"]) {
@@ -248,14 +250,14 @@ export class BioFabricRenderer {
                             // update the Endpoints of the Depth lines
                             nodeDepthG.select("#nodeDepthLine-" + nodeDepthIconB.get_depth().toString().replace(".", "-"))
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("y1", nodeDepthIconB.get_min_y() * (this.canvasHeight * (1 - this.innerY)))
                                 .attr("y2", nodeDepthIconB.get_max_y() * (this.canvasHeight * (1 - this.innerY)))
 
                             // Update the Positions of the Depth Circle G's which contain the Depth Circles and their Icons
                             nodeDepthG.select("#nodeDepthCircle-" + nodeDepthIconB.get_depth().toString().replace(".", "-") + "G")
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("transform", "translate(0," + nodeDepthIconB.get_y() * (this.canvasHeight * (1 - this.innerY)) + ")")
 
                         }
@@ -263,7 +265,7 @@ export class BioFabricRenderer {
                         // Update the Opacity and Shape of the Node Depth Circle Icon
                         d3.select("#nodeDepthCircleIcon-" + nodeDepthIcon.get_depth().toString().replace(".", "-"))
                             .transition()
-                            .duration(100)
+                            .duration(transitionDuration)
                             .attr("opacity", () => {
                                 if (nodeDepthIcon.get_state() == State["Uncompressed"]) {
                                     console.log("State Uncompressed")
@@ -294,20 +296,20 @@ export class BioFabricRenderer {
                             innerG
                                 .select("#" + "edgeLine-" + edge.get_id())
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("y1", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
                                 .attr("y2", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                             innerG
                                 .select("#" + "edgeCircleTarget-" + edge.get_id())
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("cy", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                             innerG
                                 .select("#" + "edgeCircleSource-" + edge.get_id())
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("cy", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                         }
@@ -492,18 +494,18 @@ export class BioFabricRenderer {
 
                             innerG.select("#edgeLine-" + edge.get_id())
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("x1", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
                                 .attr("x2", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
 
                             innerG.select("#edgeCircleSource-" + edge.get_id())
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
 
                             innerG.select("#edgeCircleTarget-" + edge.get_id())
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
 
                         }
@@ -517,20 +519,20 @@ export class BioFabricRenderer {
 
                             edgeDepthG.select("#edgeDepthLine-" + edgeDepthB.get_depth().toString().replace(".", "-"))
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("x1", edgeDepthB.get_min_x() * this.canvasWidth * (1 - this.edgeDepthX))
                                 .attr("x2", edgeDepthB.get_max_x() * this.canvasWidth * (1 - this.edgeDepthX))
 
                             edgeDepthG.select("#edgeDepthCircle-" + edgeDepthB.get_depth().toString().replace(".", "-") + "G")
                                 .transition()
-                                .duration(100)
+                                .duration(transitionDuration)
                                 .attr("transform", "translate(" + (edgeDepthB.get_x() * this.canvasWidth * (1 - this.edgeDepthX)) + ",0)")
 
                         }
 
                         d3.select("#edgeDepthCircleIcon-" + edgeDepth.get_depth().toString().replace(".", "-"))
                             .transition()
-                            .duration(100)
+                            .duration(transitionDuration)
                             .attr("opacity", () => {
                                 if (edgeDepth.get_state() != State["Uncmpressed"]) {
                                     return "1"
