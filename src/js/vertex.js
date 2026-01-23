@@ -2,11 +2,12 @@
 import { State } from './state.js';
 
 export class Vertex {
+
     constructor(id, label, attrs = {}) {
         if (typeof attrs !== 'object' || attrs === null) {
             throw new Error('attrs must be an object');
         }
-        
+
         this.depth = Infinity;
         this.state = State.Uncompressed;
         this.index = Infinity;
@@ -20,50 +21,62 @@ export class Vertex {
         this.label = label;
         this.attrs = attrs;
     }
+
     get_y() {
         return this.y;
     }
+
     set_y(y) {
         this.y = y;
     }
+
     get_x() {
         return this.x;
     }
+
     set_x(x) {
         this.x = x;
     }
+
     set_incidence(incidence) {
         this.incidence = incidence;
     }
+
     set_adjacency(adjacency) {
         this.adjacency = adjacency;
     }
+
     set_state(state) {
         this.state = state;
     }
+
     set_depth(depth) {
         this.depth = depth;
     }
+
     set_distance(distance) {
         this.distance = distance;
     }
-    // Get the Node's Unique ID
+
     get_id() {
         return this.id;
     }
+
     get_state() {
         return this.state;
     }
     get_depth() {
         return this.depth;
     }
+
     get_distance() {
         return this.distance;
     }
-    // Get the Node's non-unique Label
+
     get_label() {
         return this.label;
     }
+
     // Reset the Node (to before the construction of an ego network)
     reset() {
         this.depth = Infinity;

@@ -73,18 +73,18 @@ export class BioFabric {
         }
     }
     get_edge_length(edge) {
-        let source_index = this.graph.nodes.indexOf(edge.get_source());
-        let target_index = this.graph.nodes.indexOf(edge.get_target());
+        let source_index = this.graph.nodes.indexOf(edge.get_source_vertex());
+        let target_index = this.graph.nodes.indexOf(edge.get_target_vertex());
         return Math.abs(source_index - target_index);
     }
     get_topmost_node_index(edge) {
-        let source_index = this.graph.nodes.indexOf(edge.get_source());
-        let target_index = this.graph.nodes.indexOf(edge.get_target());
+        let source_index = this.graph.nodes.indexOf(edge.get_source_vertex());
+        let target_index = this.graph.nodes.indexOf(edge.get_target_vertex());
         return Math.min(source_index, target_index);
     }
     get_bottommost_node_index(edge) {
-        let source_index = this.graph.nodes.indexOf(edge.get_source());
-        let target_index = this.graph.nodes.indexOf(edge.get_target());
+        let source_index = this.graph.nodes.indexOf(edge.get_source_vertex());
+        let target_index = this.graph.nodes.indexOf(edge.get_target_vertex());
         return Math.max(source_index, target_index);
     }
     sort_edge_depth_icons() {

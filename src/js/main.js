@@ -22,9 +22,13 @@ async function init() {
         .attr("height", "100%")
         .attr("viewBox", "0 0 " + width + " " + height)
 
-    let biofabric = new BioFabric(graph);
-    let biofabricrenderer = new BioFabricRenderer(biofabric, width, height);
-    biofabricrenderer.render(svg);
+    const rendererType = "biofabric";
+
+    if (rendererType === "biofabric") {
+        let biofabric = new BioFabric(graph);
+        let biofabricrenderer = new BioFabricRenderer(biofabric, width, height);
+        biofabricrenderer.render(svg);
+    }
 
     //let linear = new Linear(graph);
     //let linearrenderer = new LinearRenderer(linear, width, height);

@@ -297,20 +297,20 @@ export class BioFabricRenderer {
                                 .select("#" + "edgeLine-" + edge.get_id())
                                 .transition()
                                 .duration(transitionDuration)
-                                .attr("y1", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
-                                .attr("y2", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                                .attr("y1", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                                .attr("y2", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                             innerG
                                 .select("#" + "edgeCircleTarget-" + edge.get_id())
                                 .transition()
                                 .duration(transitionDuration)
-                                .attr("cy", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                                .attr("cy", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                             innerG
                                 .select("#" + "edgeCircleSource-" + edge.get_id())
                                 .transition()
                                 .duration(transitionDuration)
-                                .attr("cy", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                                .attr("cy", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                         }
                     }
@@ -352,7 +352,7 @@ export class BioFabricRenderer {
                 .append("circle")
                 .attr("id", "edgeCircleSource-" + edge.get_id())
                 .attr('class', "edgecircle")
-                .attr("cy", edge.get_source().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                .attr("cy", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
                 .attr("r", 30 / this.biofabric.graph.edges.filter(e => e.get_depth() <= this.biofabric.graph.get_depth()).length)
                 .attr("stroke-width", "0")
@@ -362,7 +362,7 @@ export class BioFabricRenderer {
                 .append("circle")
                 .attr("id", "edgeCircleTarget-" + edge.get_id())
                 .attr('class', "edgecircle")
-                .attr("cy", edge.get_target().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                .attr("cy", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
                 .attr("r", 30 / this.biofabric.graph.edges.filter(e => e.get_depth() <= this.biofabric.graph.get_depth()).length)
                 .attr("stroke-width", "0")

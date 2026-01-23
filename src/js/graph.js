@@ -40,17 +40,17 @@ export class Graph {
                 this.nodes.push(new Vertex(nodeID.toString(), entry.target));
             }
             // Get Source and Target ID's from Node List
-            let source = this.nodes.find(n => n.label == entry.source);
-            let target = this.nodes.find(n => n.label == entry.target);
+            let sourceVertex = this.nodes.find(n => n.label == entry.source);
+            let targetVertex = this.nodes.find(n => n.label == entry.target);
             // Check that Source and Target ID's exist in node list
-            if (source == undefined || target == undefined) {
+            if (sourceVertex == undefined || targetVertex == undefined) {
                 throw new Error("Source or Target not found in node list!");
             }
             // Check if Edge already exists in Edge list
-            if (!this.edges.find(e => e.has_node_id(source.get_id()) && e.has_node_id(target.get_id()))) {
+            if (!this.edges.find(e => e.has_node_id(sourceVertex.get_id()) && e.has_node_id(targetVertex.get_id()))) {
                 // Create new Edge and Add to Edge list
                 let edgeID = edgeCounter++;
-                let newEdge = new Edge(edgeID.toString(), source, target, entry.attrs);
+                let newEdge = new Edge(edgeID.toString(), sourceVertex, targetVertex, entry.attrs);
                 this.edges.push(newEdge);
             }
         }
@@ -144,8 +144,8 @@ export class Graph {
         // Iterate over Edges and Set Edge Depth
         for (let edge of this.edges) {
             // Get Source and Target from Node List
-            let source = edge.get_source();
-            let target = edge.get_target();
+            let source = edge.get_source_vertex();
+            let target = edge.get_target_vertex();
             // Set Edge Depth as Function of its Incident Nodes' Depths
             edge.set_depth((source.depth == target.depth) ? source.depth : ((source.depth + target.depth) / 2));
         }
