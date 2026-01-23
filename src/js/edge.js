@@ -18,10 +18,10 @@ export class Edge {
 
         this.id = id;
 
-        // source ID
-        this.source = source_vertex.get_id();
-        // target ID
-        this.target = target_vertex.get_id();
+        // source ID as string
+        this.source = source_vertex.get_id().toString();
+        // target ID as string
+        this.target = target_vertex.get_id().toString();
         // endpoint vertices objects
         this.endpoints = [source_vertex, target_vertex];
 
