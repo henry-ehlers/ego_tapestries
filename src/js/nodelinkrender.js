@@ -41,12 +41,16 @@ export class NodeLinkRenderer {
             .join("line");
 
         const node = mainG.append("g")
-            .attr("fill", "#ff6600")
+            .attr("fill", "#15ff00")
             .selectAll("circle")
             .data(this.nodes)
             .join("circle")
             .attr("r", nodeRadius)
             .call(drag(simulation));
+
+        // adjust colors based on depth
+        node.attr("fill", ({index: i}) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);
+        link.attr("stroke", ({index: i}) => d3.schemeObservable10[this.edges[i].get_depth()]);
 
         function ticked() {
             link
