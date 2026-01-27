@@ -7,71 +7,83 @@ export class NodeLinkRenderer {
         this.nodelink = nodelink;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+
+        this.nodes = this.nodelink.graph.nodes;
+        this.edges = this.nodelink.graph.edges;
+
+        // AHHH I LOVE IT. Took me hours to figure out.
+        // Default values are infinity for x and y in node and edge classes.
+        // If left unchanged, d3 will try to do math with infinity and result in NaN positions.
+        this.nodes.forEach(node => {
+            node.x = 0;
+            node.y = 0;
+        });
     }
 
     render(svg) {
-        // Create main group for the visualization
-        let mainG = svg.append("g")
-            .attr("class", "nodelink-container");
+        let mainG = svg.append("g");
 
-        const nodes = this.nodelink.graph.nodes;
-        const edges = this.nodelink.graph.edges;
+        const edgeWidth = 0.1;
+        const nodeRadius = 0.3;
 
-        const edgeWidth = Math.max(0.05, Math.min(0.3, 30 / edges.length));
-        const nodeRadius = Math.max(0.3, Math.min(1.0, 50 / nodes.length));
+        const simulation = d3.forceSimulation(this.nodes)
+            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1).distance(2.5))
+            .force("charge", d3.forceManyBody().strength(-1))
+            .force("center", d3.forceCenter(this.canvasWidth / 2, this.canvasHeight / 2))
+            .on("tick", ticked);
 
-        // Render edges first (so they appear behind nodes)
-        const edgeGroup = mainG.append("g")
-            .attr("class", "edges");
+        const link = mainG.append("g")
+            .attr("stroke", "#999")
+            .attr("stroke-opacity", 0.6)
+            .attr("stroke-width", edgeWidth)
+            .selectAll("line")
+            .data(this.edges)
+            .join("line");
 
-        edges.forEach(edge => {
-            edgeGroup.append("line")
-                .attr("id", "edge-" + edge.get_id())
-                .attr("class", "edge")
-                .attr("x1", edge.get_source_vertex().x)
-                .attr("y1", edge.get_source_vertex().y)
-                .attr("x2", edge.get_target_vertex().x)
-                .attr("y2", edge.get_target_vertex().y)
-                .attr("stroke", "#999")
-                .attr("stroke-width", edgeWidth)
-                .attr("stroke-linecap", "round")
-                .attr("opacity", 0.6);
-        });
+        const node = mainG.append("g")
+            .attr("fill", "#ff6600")
+            .selectAll("circle")
+            .data(this.nodes)
+            .join("circle")
+            .attr("r", nodeRadius)
+            .call(drag(simulation));
 
-        // Render nodes
-        const nodeGroup = mainG.append("g")
-            .attr("class", "nodes");
+        function ticked() {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
 
-        nodes.forEach(node => {
-            // Node circle
-            nodeGroup.append("circle")
-                .attr("id", "node-" + node.get_id())
-                .attr("class", "node")
-                .attr("cx", node.x)
-                .attr("cy", node.y)
-                .attr("r", nodeRadius)
-                .attr("fill", d3.schemeObservable10[node.get_depth()])
-                .attr("stroke", "white")
-                .attr("stroke-width", 0.15)
-                .style("cursor", "pointer")
-                .on("dblclick", () => {
-                    // Double-click to make this node the new ego
-                    console.log("Setting new ego:", node.get_label());
-                    this.nodelink.graph.set_ego(node);
-                    this.nodelink.graph.construct_ego_network();
-                    this.nodelink.graph.sort_nodes();
+            node
+                .attr("cx", d => d.x)
+                .attr("cy", d => d.y);
+        }
 
-                    // Reinitialize layout with new ego network
-                    this.nodelink.initializeLayout();
+        function drag(simulation) {
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
 
-                    // Clear and re-render
-                    svg.selectAll("*").remove();
-                    this.render(svg);
-                });
-        });
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
 
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
 
-        // Optional: Add zoom/pan behavior
+            return d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+        }
+
         const zoom = d3.zoom()
             .scaleExtent([0.5, 5])
             .on("zoom", (event) => {

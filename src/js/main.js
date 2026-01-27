@@ -23,7 +23,7 @@ async function init() {
         .attr("id", "something")
         .attr("width", "100%")
         .attr("height", "100%")
-        .attr("viewBox", "0 0 " + width + " " + height)
+        .attr("viewBox", "0 0 " + width + " " + height);
 
     const rendererType = "nodelink"; // "biofabric" or "nodelink"
 
