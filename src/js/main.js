@@ -33,6 +33,7 @@ async function init() {
         biofabricrenderer.render(svg);
     } else if (rendererType === "nodelink") {
         let nodelink = new NodeLink(graph);
+        nodelink.setLayoutType("radial"); // "force", "radial"
         let nodelinkrenderer = new NodeLinkRenderer(nodelink, width, height);
         nodelinkrenderer.render(svg);
     }

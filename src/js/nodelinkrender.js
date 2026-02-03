@@ -1,5 +1,6 @@
 "use strict";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import customRadialForce from './customradialforce.js';
 
 export class NodeLinkRenderer {
 
@@ -26,11 +27,31 @@ export class NodeLinkRenderer {
         const edgeWidth = 0.1;
         const nodeRadius = 0.3;
 
-        const simulation = d3.forceSimulation(this.nodes)
+        // node-link simulation
+        let simulation = d3.forceSimulation(this.nodes)
             .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1.5).distance(1.5))
             .force("charge", d3.forceManyBody().strength(-2))
             .force("center", d3.forceCenter(this.canvasWidth / 2, this.canvasHeight / 2))
             .on("tick", ticked);
+
+        // different forces for radial layout
+        if (this.nodelink.layoutType === "radial") {
+            const radiusBase = Math.min(this.canvasWidth, this.canvasHeight);
+            const canvasXcenter = this.canvasWidth / 2;
+            const canvasYcenter = this.canvasHeight / 2;
+
+            simulation = d3.forceSimulation(this.nodes)
+                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.5).distance(1.5))
+                .force("charge", d3.forceManyBody().strength(-1.5))
+
+                // Use custom radial force to pull nodes into concentric circles based on depth
+                .force("radius0", customRadialForce(radiusBase / 32, canvasXcenter, canvasYcenter, 0).strength(5))
+                .force("radius1", customRadialForce(radiusBase / 16, canvasXcenter, canvasYcenter, 1).strength(5))
+                .force("radius2", customRadialForce(radiusBase / 12, canvasXcenter, canvasYcenter, 2).strength(7))
+                .force("radius3", customRadialForce(radiusBase / 5, canvasXcenter, canvasYcenter, 3).strength(6))
+                .force("radius4", customRadialForce(radiusBase / 3, canvasXcenter, canvasYcenter, 4).strength(6))
+                .on("tick", ticked);
+        }
 
         const link = mainG.append("g")
             .attr("stroke", "#999")
@@ -49,8 +70,8 @@ export class NodeLinkRenderer {
             .call(drag(simulation));
 
         // adjust colors based on depth
-        node.attr("fill", ({index: i}) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);
-        link.attr("stroke", ({index: i}) => d3.schemeObservable10[this.edges[i].get_depth()]);
+        node.attr("fill", ({ index: i }) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);
+        link.attr("stroke", ({ index: i }) => d3.schemeObservable10[this.edges[i].get_depth()]);
 
         function ticked() {
             link
@@ -95,9 +116,5 @@ export class NodeLinkRenderer {
             });
 
         svg.call(zoom);
-    }
-
-    update() {
-        // Placeholder for future updates
     }
 }
