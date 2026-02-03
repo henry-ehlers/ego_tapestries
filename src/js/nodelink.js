@@ -32,7 +32,7 @@ export class NodeLink {
         // Radial layout: ego at center, nodes arranged in concentric circles by depth
         const centerX = 50;
         const centerY = 25;
-        const nodes = this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth());
+        const nodes = this.graph.nodes;
         const maxDepth = Math.max(...nodes.map(n => n.get_depth()));
 
         // Group nodes by depth
@@ -45,14 +45,15 @@ export class NodeLink {
 
         // Position nodes
         for (let depth in depthGroups) {
+            //if (depth > 2) break;
             const nodes = depthGroups[depth];
             const radius = (parseFloat(depth) / maxDepth) * 20;
             const angleStep = (2 * Math.PI) / nodes.length;
 
             nodes.forEach((node, i) => {
                 const angle = i * angleStep;
-                node.x = centerX + radius * Math.cos(angle);
-                node.y = centerY + radius * Math.sin(angle);
+                //node.fx = centerX + radius * Math.cos(angle);
+                // node.fy = centerY + radius * Math.sin(angle);
                 node.vx = 0;
                 node.vy = 0;
             });
