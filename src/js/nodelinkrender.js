@@ -1,6 +1,7 @@
 "use strict";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import customRadialForce from './customradialforce.js';
+import customYforce from "./customYforce.js";
 
 export class NodeLinkRenderer {
 
@@ -55,8 +56,41 @@ export class NodeLinkRenderer {
                 .on("tick", ticked);
         }
 
+        if (this.nodelink.layoutType === "layered") {
+            const layerHeight = this.canvasHeight / (d3.max(this.nodes, d => d.get_depth()) + 1) * 0.9;
+
+            // draw dashed lines for layers
+            for (let depth = 0; depth <= d3.max(this.nodes, d => d.get_depth()); depth++) {
+                mainG.append("line")
+                    .attr("x1", 0 + this.canvasWidth * 0.1)
+                    .attr("y1", layerHeight * (depth + 0.5))
+                    .attr("x2", this.canvasWidth - this.canvasWidth * 0.1)
+                    .attr("y2", layerHeight * (depth + 0.5))
+                    .attr("stroke", "#c5c5c5")
+                    .attr("stroke-width", 0.05)
+                    .attr("stroke-dasharray", "2,3")
+                    .attr("stroke-linecap", "round");
+            }
+
+            simulation = d3.forceSimulation(this.nodes)
+                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1).distance(0.5))
+                .force("charge", d3.forceManyBody().strength(-3))
+                .force("x", d3.forceX(this.canvasWidth / 2).strength(0.2))
+
+
+                // Use custom Y force to pull nodes into horizontal layers based on depth
+                .force("yLayer0", customYforce(layerHeight * 0.5, 0).strength(6))
+                .force("yLayer1", customYforce(layerHeight * 1.5, 1).strength(6))
+                .force("yLayer2", customYforce(layerHeight * 2.5, 2).strength(8))
+                .force("yLayer3", customYforce(layerHeight * 3.5, 3).strength(7))
+                .force("yLayer4", customYforce(layerHeight * 4.5, 4).strength(7))
+                .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(6))
+
+                .on("tick", ticked);
+        }
+
         const link = mainG.append("g")
-            .attr("stroke", "#999")
+            .attr("stroke", "#c5c5c5")
             .attr("stroke-opacity", 0.6)
             .attr("stroke-width", edgeWidth)
             .selectAll("line")
