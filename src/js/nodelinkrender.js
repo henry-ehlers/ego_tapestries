@@ -17,8 +17,8 @@ export class NodeLinkRenderer {
         // Default values are infinity for x and y in node and edge classes.
         // If left unchanged, d3 will try to do math with infinity and result in NaN positions.
         this.nodes.forEach(node => {
-            node.x = 0;
-            node.y = 0;
+            node.x = 25;
+            node.y = 25;
         });
     }
 
@@ -28,14 +28,14 @@ export class NodeLinkRenderer {
         const edgeWidth = 0.1;
         const nodeRadius = 0.3;
 
-        // node-link simulation
+        // force layout
         let simulation = d3.forceSimulation(this.nodes)
             .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1.5).distance(1.5))
             .force("charge", d3.forceManyBody().strength(-2))
             .force("center", d3.forceCenter(this.canvasWidth / 2, this.canvasHeight / 2))
             .on("tick", ticked);
 
-        // different forces for radial layout
+        // modify simulation for radial layout
         if (this.nodelink.layoutType === "radial") {
             const canvasXcenter = this.canvasWidth / 2;
             const canvasYcenter = this.canvasHeight / 2;
@@ -71,6 +71,7 @@ export class NodeLinkRenderer {
                 .on("tick", ticked);
         }
 
+        // modify simulation for layered layout
         if (this.nodelink.layoutType === "layered") {
             const layerHeight = this.canvasHeight / (d3.max(this.nodes, d => d.get_depth()) + 1) * 0.9;
 
@@ -92,7 +93,6 @@ export class NodeLinkRenderer {
                 .force("charge", d3.forceManyBody().strength(-3))
                 .force("x", d3.forceX(this.canvasWidth / 2).strength(0.2))
 
-
                 // Use custom Y force to pull nodes into horizontal layers based on depth
                 .force("yLayer0", customYforce(layerHeight * 0.5, 0).strength(6))
                 .force("yLayer1", customYforce(layerHeight * 1.5, 1).strength(6))
@@ -112,6 +112,15 @@ export class NodeLinkRenderer {
             .data(this.edges)
             .join("line");
 
+        const arc = mainG.append("g")
+            .attr("fill", "none")
+            .attr("stroke", "none")
+            .attr("stroke-opacity", 0.6)
+            .attr("stroke-width", edgeWidth)
+            .selectAll("path")
+            .data(this.edges)
+            .join("path");
+
         const node = mainG.append("g")
             .attr("fill", "#15ff00")
             .selectAll("circle")
@@ -122,7 +131,9 @@ export class NodeLinkRenderer {
 
         // adjust colors based on depth
         node.attr("fill", ({ index: i }) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);
-        link.attr("stroke", ({ index: i }) => d3.schemeObservable10[this.edges[i].get_depth()]);
+        // links between different depths are gray lines. arcs are in color within same depth.
+        link.attr("stroke", ({ index: i }) => (this.edges[i].get_depth() % 1) === 0.5 ? "#9c9c9c" : "none");
+        arc.attr("stroke", ({ index: i }) => d3.schemeObservable10[this.edges[i].get_depth()]);
 
         function ticked() {
             link
@@ -130,6 +141,13 @@ export class NodeLinkRenderer {
                 .attr("y1", d => d.source.y)
                 .attr("x2", d => d.target.x)
                 .attr("y2", d => d.target.y);
+
+            arc.attr("d", d => {
+                const dx = d.target.x - d.source.x;
+                const dy = d.target.y - d.source.y;
+                const dr = Math.sqrt(dx * dx + dy * dy) * 0.8;
+                return `M${d.source.x},${d.source.y} A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+            });
 
             node
                 .attr("cx", d => d.x)
