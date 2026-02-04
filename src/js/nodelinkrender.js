@@ -41,15 +41,17 @@ export class NodeLinkRenderer {
             const canvasYcenter = this.canvasHeight / 2;
 
             simulation = d3.forceSimulation(this.nodes)
-                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.5).distance(1.5))
-                .force("charge", d3.forceManyBody().strength(-1.5))
+                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.6).distance(1.5))
+                .force("charge", d3.forceManyBody().strength(-1))
 
                 // Use custom radial force to pull nodes into concentric circles based on depth
                 .force("radius0", customRadialForce(radiusBase / 32, canvasXcenter, canvasYcenter, 0).strength(5))
-                .force("radius1", customRadialForce(radiusBase / 16, canvasXcenter, canvasYcenter, 1).strength(5))
-                .force("radius2", customRadialForce(radiusBase / 12, canvasXcenter, canvasYcenter, 2).strength(7))
+                .force("radius1", customRadialForce(radiusBase / 20, canvasXcenter, canvasYcenter, 1).strength(5))
+                .force("radius2", customRadialForce(radiusBase / 14, canvasXcenter, canvasYcenter, 2).strength(7))
                 .force("radius3", customRadialForce(radiusBase / 5, canvasXcenter, canvasYcenter, 3).strength(6))
                 .force("radius4", customRadialForce(radiusBase / 3, canvasXcenter, canvasYcenter, 4).strength(6))
+                .force("radius5", customRadialForce(radiusBase / 2.5, canvasXcenter, canvasYcenter, 5).strength(6))
+
                 .on("tick", ticked);
         }
 
