@@ -37,21 +37,36 @@ export class NodeLinkRenderer {
 
         // different forces for radial layout
         if (this.nodelink.layoutType === "radial") {
-            const radiusBase = Math.min(this.canvasWidth, this.canvasHeight);
             const canvasXcenter = this.canvasWidth / 2;
             const canvasYcenter = this.canvasHeight / 2;
 
+            const maxDepth = d3.max(this.nodes, d => d.get_depth());
+            const radiusBase = Math.min(this.canvasWidth, this.canvasHeight / 2) * 1.1;
+            const radiusPerDepth = radiusBase / (maxDepth + 1);
+
+            // draw concentric circles for depth levels
+            for (let depth = 1; depth <= maxDepth; depth++) {
+                mainG.append("circle")
+                    .attr("cx", canvasXcenter)
+                    .attr("cy", canvasYcenter)
+                    .attr("r", radiusPerDepth * (depth))
+                    .attr("stroke", "#c5c5c5")
+                    .attr("stroke-width", 0.05)
+                    .attr("stroke-dasharray", "0.5,0.5")
+                    .attr("fill", "none");
+            }
+
             simulation = d3.forceSimulation(this.nodes)
-                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.6).distance(1.5))
-                .force("charge", d3.forceManyBody().strength(-1))
+                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.5).distance(1.5))
+                .force("charge", d3.forceManyBody().strength(-3))
 
                 // Use custom radial force to pull nodes into concentric circles based on depth
-                .force("radius0", customRadialForce(radiusBase / 32, canvasXcenter, canvasYcenter, 0).strength(5))
-                .force("radius1", customRadialForce(radiusBase / 20, canvasXcenter, canvasYcenter, 1).strength(5))
-                .force("radius2", customRadialForce(radiusBase / 14, canvasXcenter, canvasYcenter, 2).strength(7))
-                .force("radius3", customRadialForce(radiusBase / 5, canvasXcenter, canvasYcenter, 3).strength(6))
-                .force("radius4", customRadialForce(radiusBase / 3, canvasXcenter, canvasYcenter, 4).strength(6))
-                .force("radius5", customRadialForce(radiusBase / 2.5, canvasXcenter, canvasYcenter, 5).strength(6))
+                .force("radius0", customRadialForce(radiusPerDepth * 0, canvasXcenter, canvasYcenter, 0).strength(5))
+                .force("radius1", customRadialForce(radiusPerDepth * 1, canvasXcenter, canvasYcenter, 1).strength(5))
+                .force("radius2", customRadialForce(radiusPerDepth * 2, canvasXcenter, canvasYcenter, 2).strength(7))
+                .force("radius3", customRadialForce(radiusPerDepth * 3, canvasXcenter, canvasYcenter, 3).strength(6))
+                .force("radius4", customRadialForce(radiusPerDepth * 4, canvasXcenter, canvasYcenter, 4).strength(6))
+                .force("radius5", customRadialForce(radiusPerDepth * 5, canvasXcenter, canvasYcenter, 5).strength(6))
 
                 .on("tick", ticked);
         }
@@ -68,7 +83,7 @@ export class NodeLinkRenderer {
                     .attr("y2", layerHeight * (depth + 0.5))
                     .attr("stroke", "#c5c5c5")
                     .attr("stroke-width", 0.05)
-                    .attr("stroke-dasharray", "2,3")
+                    .attr("stroke-dasharray", "0.5,0.5")
                     .attr("stroke-linecap", "round");
             }
 
@@ -90,7 +105,7 @@ export class NodeLinkRenderer {
         }
 
         const link = mainG.append("g")
-            .attr("stroke", "#c5c5c5")
+            .attr("stroke", "#9c9c9c")
             .attr("stroke-opacity", 0.6)
             .attr("stroke-width", edgeWidth)
             .selectAll("line")
