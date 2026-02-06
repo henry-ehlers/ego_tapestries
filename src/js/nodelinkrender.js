@@ -16,9 +16,9 @@ export class NodeLinkRenderer {
         // AHHH I LOVE IT. Took me hours to figure out.
         // Default values are infinity for x and y in node and edge classes.
         // If left unchanged, d3 will try to do math with infinity and result in NaN positions.
-        this.nodes.forEach(node => {
-            node.x = 25;
-            node.y = 25;
+        this.nodes.forEach(n => {
+            n.x = this.canvasWidth / 2 + Math.random() * 10;
+            n.y = this.canvasHeight / 2 - Math.random() * 100;
         });
     }
 
@@ -89,19 +89,20 @@ export class NodeLinkRenderer {
             }
 
             simulation = d3.forceSimulation(this.nodes)
-                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1).distance(0.5))
-                .force("charge", d3.forceManyBody().strength(-3))
+                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.05).distance(1))
+                .force("charge", d3.forceManyBody().strength(-1.2))
                 .force("x", d3.forceX(this.canvasWidth / 2).strength(0.2))
 
                 // Use custom Y force to pull nodes into horizontal layers based on depth
-                .force("yLayer0", customYforce(layerHeight * 0.5, 0).strength(6))
-                .force("yLayer1", customYforce(layerHeight * 1.5, 1).strength(6))
-                .force("yLayer2", customYforce(layerHeight * 2.5, 2).strength(8))
-                .force("yLayer3", customYforce(layerHeight * 3.5, 3).strength(7))
-                .force("yLayer4", customYforce(layerHeight * 4.5, 4).strength(7))
-                .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(6))
-
+                .force("yLayer0", customYforce(layerHeight * 0.5, 0).strength(1.5))
+                .force("yLayer1", customYforce(layerHeight * 1.5, 1).strength(1.5))
+                .force("yLayer2", customYforce(layerHeight * 2.5, 2).strength(1.5))
+                .force("yLayer3", customYforce(layerHeight * 3.5, 3).strength(1.5))
+                .force("yLayer4", customYforce(layerHeight * 4.5, 4).strength(1.5))
+                .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(1.5))
                 .on("tick", ticked);
+
+            simulation.alphaTarget(0.5).restart();
         }
 
         const link = mainG.append("g")
