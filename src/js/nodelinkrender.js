@@ -207,8 +207,8 @@ export class NodeLinkRenderer {
 
     initializeDefaultForceLink() {
         return d3.forceSimulation(this.nodes)
-            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1.5).distance(1.5))
-            .force("charge", d3.forceManyBody().strength(-2))
+            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1).distance(2.5))
+            .force("charge", d3.forceManyBody().strength(-1.5))
             .force("center", d3.forceCenter(this.canvasWidth / 2, this.canvasHeight / 2));
     }
 }
