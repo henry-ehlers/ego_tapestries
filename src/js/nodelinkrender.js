@@ -23,87 +23,14 @@ export class NodeLinkRenderer {
     }
 
     render(svg) {
-        let mainG = svg.append("g");
-
         const edgeWidth = 0.1;
         const nodeRadius = 0.3;
+        let mainG = svg.append("g");
 
         // force layout
-        let simulation = d3.forceSimulation(this.nodes)
-            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1.5).distance(1.5))
-            .force("charge", d3.forceManyBody().strength(-2))
-            .force("center", d3.forceCenter(this.canvasWidth / 2, this.canvasHeight / 2))
-            .on("tick", ticked);
-
-        // modify simulation for radial layout
-        if (this.nodelink.layoutType === "radial") {
-            const canvasXcenter = this.canvasWidth / 2;
-            const canvasYcenter = this.canvasHeight / 2;
-
-            const maxDepth = d3.max(this.nodes, d => d.get_depth());
-            const radiusBase = Math.min(this.canvasWidth, this.canvasHeight / 2) * 1.1;
-            const radiusPerDepth = radiusBase / (maxDepth + 1);
-
-            // draw concentric circles for depth levels
-            for (let depth = 1; depth <= maxDepth; depth++) {
-                mainG.append("circle")
-                    .attr("cx", canvasXcenter)
-                    .attr("cy", canvasYcenter)
-                    .attr("r", radiusPerDepth * (depth))
-                    .attr("stroke", "#c5c5c5")
-                    .attr("stroke-width", 0.05)
-                    .attr("stroke-dasharray", "0.5,0.5")
-                    .attr("fill", "none");
-            }
-
-            simulation = d3.forceSimulation(this.nodes)
-                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.5).distance(1.5))
-                .force("charge", d3.forceManyBody().strength(-3))
-
-                // Use custom radial force to pull nodes into concentric circles based on depth
-                .force("radius0", customRadialForce(radiusPerDepth * 0, canvasXcenter, canvasYcenter, 0).strength(5))
-                .force("radius1", customRadialForce(radiusPerDepth * 1, canvasXcenter, canvasYcenter, 1).strength(5))
-                .force("radius2", customRadialForce(radiusPerDepth * 2, canvasXcenter, canvasYcenter, 2).strength(7))
-                .force("radius3", customRadialForce(radiusPerDepth * 3, canvasXcenter, canvasYcenter, 3).strength(6))
-                .force("radius4", customRadialForce(radiusPerDepth * 4, canvasXcenter, canvasYcenter, 4).strength(6))
-                .force("radius5", customRadialForce(radiusPerDepth * 5, canvasXcenter, canvasYcenter, 5).strength(6))
-
-                .on("tick", ticked);
-        }
-
-        // modify simulation for layered layout
-        if (this.nodelink.layoutType === "layered") {
-            const layerHeight = this.canvasHeight / (d3.max(this.nodes, d => d.get_depth()) + 1) * 0.9;
-
-            // draw dashed lines for layers
-            for (let depth = 0; depth <= d3.max(this.nodes, d => d.get_depth()); depth++) {
-                mainG.append("line")
-                    .attr("x1", 0 + this.canvasWidth * 0.1)
-                    .attr("y1", layerHeight * (depth + 0.5))
-                    .attr("x2", this.canvasWidth - this.canvasWidth * 0.1)
-                    .attr("y2", layerHeight * (depth + 0.5))
-                    .attr("stroke", "#c5c5c5")
-                    .attr("stroke-width", 0.05)
-                    .attr("stroke-dasharray", "0.5,0.5")
-                    .attr("stroke-linecap", "round");
-            }
-
-            simulation = d3.forceSimulation(this.nodes)
-                .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.05).distance(1))
-                .force("charge", d3.forceManyBody().strength(-1.2))
-                .force("x", d3.forceX(this.canvasWidth / 2).strength(0.2))
-
-                // Use custom Y force to pull nodes into horizontal layers based on depth
-                .force("yLayer0", customYforce(layerHeight * 0.5, 0).strength(1.5))
-                .force("yLayer1", customYforce(layerHeight * 1.5, 1).strength(1.5))
-                .force("yLayer2", customYforce(layerHeight * 2.5, 2).strength(1.5))
-                .force("yLayer3", customYforce(layerHeight * 3.5, 3).strength(1.5))
-                .force("yLayer4", customYforce(layerHeight * 4.5, 4).strength(1.5))
-                .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(1.5))
-                .on("tick", ticked);
-
-            simulation.alphaTarget(0.5).restart();
-        }
+        let simulation = this.initializeForceSimulation(mainG);
+        // attach ticked function to update positions on each tick of the simulation
+        simulation.on("tick", ticked);
 
         const link = mainG.append("g")
             .attr("stroke", "#9c9c9c")
@@ -186,5 +113,97 @@ export class NodeLinkRenderer {
             });
 
         svg.call(zoom);
+    }
+
+    initializeForceSimulation(mainG) {
+        switch (this.nodelink.layoutType) {
+            case "force":
+                return this.initializeDefaultForceLink();
+            case "radial":
+                return this.initializeRadialLayout(mainG);
+            case "layered":
+                return this.initializeLayeredLayout(mainG);
+            default:
+                console.warn("Unknown layout type. Defaulting to force-directed.");
+                return this.initializeDefaultForceLink();
+        }
+    }
+
+    initializeLayeredLayout(mainG) {
+        const layerHeight = this.canvasHeight / (d3.max(this.nodes, d => d.get_depth()) + 1) * 0.9;
+
+        // draw dashed lines for layers
+        const depth_lines = mainG.append("g");
+        for (let depth = 0; depth <= d3.max(this.nodes, d => d.get_depth()); depth++) {
+            const y = layerHeight * (depth + 0.5);
+            depth_lines.append("line")
+                .attr("x1", 0 + this.canvasWidth * 0.1)
+                .attr("y1", y)
+                .attr("x2", this.canvasWidth - this.canvasWidth * 0.1)
+                .attr("y2", y)
+                .attr("stroke", "#c5c5c5")
+                .attr("stroke-width", 0.05)
+                .attr("stroke-dasharray", "0.5,0.5")
+                .attr("stroke-linecap", "round");
+        }
+
+        const simulation = d3.forceSimulation(this.nodes)
+            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.05).distance(2))
+            .force("charge", d3.forceManyBody().strength(-0.5))
+            .force("x", d3.forceX(this.canvasWidth / 2).strength(0.05))
+
+            // Use custom Y force to pull nodes into horizontal layers based on depth
+            .force("yLayer0", customYforce(layerHeight * 0.5, 0).strength(1.5))
+            .force("yLayer1", customYforce(layerHeight * 1.5, 1).strength(1.5))
+            .force("yLayer2", customYforce(layerHeight * 2.5, 2).strength(1.5))
+            .force("yLayer3", customYforce(layerHeight * 3.5, 3).strength(1.5))
+            .force("yLayer4", customYforce(layerHeight * 4.5, 4).strength(1.5))
+            .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(1.5));
+
+        simulation.alphaTarget(0.5).restart();
+        return simulation;
+    }
+
+    initializeRadialLayout(mainG) {
+        const canvasXcenter = this.canvasWidth / 2;
+        const canvasYcenter = this.canvasHeight / 2;
+
+        const maxDepth = d3.max(this.nodes, d => d.get_depth());
+        const radiusBase = Math.min(this.canvasWidth, this.canvasHeight / 2) * 1.1;
+        const radiusPerDepth = radiusBase / (maxDepth + 1);
+
+        // draw concentric circles for depth levels
+        const depth_circles = mainG.append("g");
+        for (let depth = 1; depth <= maxDepth; depth++) {
+            depth_circles.append("circle")
+                .attr("cx", canvasXcenter)
+                .attr("cy", canvasYcenter)
+                .attr("r", radiusPerDepth * (depth))
+                .attr("stroke", "#c5c5c5")
+                .attr("stroke-width", 0.05)
+                .attr("stroke-dasharray", "0.5,0.5")
+                .attr("fill", "none");
+        }
+
+        const simulation = d3.forceSimulation(this.nodes)
+            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.5).distance(1.5))
+            .force("charge", d3.forceManyBody().strength(-3))
+
+            // Use custom radial force to pull nodes into concentric circles based on depth
+            .force("radius0", customRadialForce(radiusPerDepth * 0, canvasXcenter, canvasYcenter, 0).strength(5))
+            .force("radius1", customRadialForce(radiusPerDepth * 1, canvasXcenter, canvasYcenter, 1).strength(5))
+            .force("radius2", customRadialForce(radiusPerDepth * 2, canvasXcenter, canvasYcenter, 2).strength(7))
+            .force("radius3", customRadialForce(radiusPerDepth * 3, canvasXcenter, canvasYcenter, 3).strength(6))
+            .force("radius4", customRadialForce(radiusPerDepth * 4, canvasXcenter, canvasYcenter, 4).strength(6))
+            .force("radius5", customRadialForce(radiusPerDepth * 5, canvasXcenter, canvasYcenter, 5).strength(6));
+
+        return simulation;
+    }
+
+    initializeDefaultForceLink() {
+        return d3.forceSimulation(this.nodes)
+            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1.5).distance(1.5))
+            .force("charge", d3.forceManyBody().strength(-2))
+            .force("center", d3.forceCenter(this.canvasWidth / 2, this.canvasHeight / 2));
     }
 }
