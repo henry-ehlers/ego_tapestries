@@ -161,6 +161,10 @@ export class NodeLinkRenderer {
             .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(1.5));
 
         simulation.alphaTarget(0.5).restart();
+        // promise to set it back to 0 after 4 seconds to allow it to stabilize
+        setTimeout(() => {
+            simulation.alphaTarget(0);
+        }, 4000);
         return simulation;
     }
 
@@ -198,7 +202,7 @@ export class NodeLinkRenderer {
             .force("radius5", customRadialForce(radiusPerDepth * 5, canvasXcenter, canvasYcenter, 5).strength(1.5));
 
         simulation.alphaTarget(0.5).restart();
-        // promise to set it back to 0 after 3 seconds to allow it to stabilize
+        // promise to set it back to 0 after 4 seconds to allow it to stabilize
         setTimeout(() => {
             simulation.alphaTarget(0);
         }, 4000);
