@@ -56,7 +56,8 @@ export class NodeLinkRenderer {
             .join("circle")
             .attr("r", nodeRadius)
             .call(drag(simulation))
-            .on("click", (_event, d) => {
+            .style("cursor", "pointer")
+            .on("dblclick", (_event, d) => {
                 // change ego and rerender everything
                 this.nodelink.graph.change_ego_and_reconstruct(d);
                 svg.selectAll("*").remove();
@@ -114,6 +115,10 @@ export class NodeLinkRenderer {
 
         const zoom = d3.zoom()
             .scaleExtent([0.5, 5])
+            .filter(event => {
+                // do not zoom if we double click a circle (handled by dblclick event on node)
+                return !(event.type === "dblclick" && event.target.tagName === "circle");
+            })
             .on("zoom", (event) => {
                 mainG.attr("transform", event.transform);
             });
