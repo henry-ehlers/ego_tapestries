@@ -55,7 +55,13 @@ export class NodeLinkRenderer {
             .data(this.nodes)
             .join("circle")
             .attr("r", nodeRadius)
-            .call(drag(simulation));
+            .call(drag(simulation))
+            .on("click", (_event, d) => {
+                // change ego and rerender everything
+                this.nodelink.graph.change_ego_and_reconstruct(d);
+                svg.selectAll("*").remove();
+                this.render(svg);
+            });
 
         // adjust colors based on depth
         node.attr("fill", ({ index: i }) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);

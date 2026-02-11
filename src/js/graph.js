@@ -19,9 +19,19 @@ export class Graph {
         this.identify_singleton_edges();
         this.sort_nodes();
     }
+
     set_ego(node) {
         this.ego = node;
     }
+
+    change_ego_and_reconstruct(node) {
+        this.set_ego(node);
+        this.construct_ego_network();
+        //this.identify_singleton_nodes();
+        //this.identify_singleton_edges();
+        this.sort_nodes();
+    }
+
     // Populate Edges and Nodes from Dataset
     load_data(data) {
         // Initialize IDs of edges and nodes
@@ -55,6 +65,7 @@ export class Graph {
             }
         }
     }
+
     identify_singleton_nodes() {
         let depths = [...new Set(this.nodes.map(node => node.get_depth()))];
         for (let depth of depths) {
@@ -75,6 +86,7 @@ export class Graph {
             depthEdges[0].set_state(State.Singleton);
         }
     }
+
     // Breadth First Search
     breadth_first_search() {
         var _a;
@@ -133,6 +145,7 @@ export class Graph {
             node.set_distance(shortestPaths[node.get_id()]);
         }
     }
+
     // Construct the Ego Network for the Given Selected Root Node
     construct_ego_network() {
         // Reset the Ego Network
@@ -150,6 +163,7 @@ export class Graph {
             edge.set_depth((source.depth == target.depth) ? source.depth : ((source.depth + target.depth) / 2));
         }
     }
+
     // Get a Node from the Node list using its unique ID
     get_node_from_id(nodeID) {
         let node = this.nodes.find(n => n.id == nodeID);
@@ -160,6 +174,7 @@ export class Graph {
             return node;
         }
     }
+
     sort_nodes() {
         this.nodes.sort((nodeA, nodeB) => {
             if (nodeA.get_depth() > nodeB.get_depth()) {
@@ -181,6 +196,7 @@ export class Graph {
             }
         });
     }
+
     get_depth() {
         return this.depth;
     }
