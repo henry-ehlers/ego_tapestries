@@ -1,5 +1,6 @@
 "use strict";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { State } from './state.js';
 import customRadialForce from './customradialforce.js';
 import customYforce from "./customYforce.js";
 
@@ -59,14 +60,47 @@ export class NodeLinkRenderer {
             .style("cursor", "pointer")
             .on("dblclick", (_event, d) => {
                 // change ego and rerender everything
+                unsetFixedPositions(this.nodes);
                 this.nodelink.graph.change_ego_and_reconstruct(d);
                 svg.selectAll("*").remove();
                 this.render(svg);
+            })
+            .on("click", (_event, d) => {
+                console.log(`Clicked on node ${d.get_label()} with state ${State[d.get_state()]}`);
+                const depth = d.get_depth();
+                const x = d.get_x();
+                const y = d.get_y();
+
+                switch (d.get_state()) {
+                    case State["Uncompressed"]:
+                        this.nodes.filter(n => n.get_depth() === depth).forEach(n => {
+                            n.set_state(State["Fully Compressed"]);
+                            n.oldx = n.get_x();
+                            n.oldy = n.get_y();
+                            n.fx = x;
+                            n.fy = y;
+                        });
+                        break;
+                    case State["Fully Compressed"]:
+                        this.nodes.filter(n => n.get_depth() === depth).forEach(n => {
+                            n.set_state(State["Uncompressed"]);
+                            unsetFixedPositions(this.nodes.filter(n => n.get_depth() === depth));
+                        });
+                        break;
+                }
+                this.easeSimulation(simulation);
             });
 
+        function unsetFixedPositions(nodes) {
+            nodes.forEach(n => {
+                n.fx = null;
+                n.fy = null;
+            });
+        }
+
         // adjust colors based on depth
-        node.attr("fill", ({ index: i }) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);
         // links between different depths are gray lines. arcs are in color within same depth.
+        node.attr("fill", ({ index: i }) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);
         link.attr("stroke", ({ index: i }) => (this.edges[i].get_depth() % 1) === 0.5 ? "#9c9c9c" : "none");
         arc.attr("stroke", ({ index: i }) => d3.schemeObservable10[this.edges[i].get_depth()]);
 
@@ -126,6 +160,14 @@ export class NodeLinkRenderer {
         svg.call(zoom);
     }
 
+    easeSimulation(simulation) {
+        // restart the simulation with a temporary alpha to let the nodes transition to their new positions after state changes
+        simulation.alphaTarget(0.5).restart();
+        setTimeout(() => {
+            simulation.alphaTarget(0);
+        }, 2000);
+    }
+
     initializeForceSimulation(mainG) {
         switch (this.nodelink.layoutType) {
             case "force":
@@ -171,11 +213,7 @@ export class NodeLinkRenderer {
             .force("yLayer4", customYforce(layerHeight * 4.5, 4).strength(1.5))
             .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(1.5));
 
-        simulation.alphaTarget(0.5).restart();
-        // promise to set it back to 0 after 4 seconds to allow it to stabilize
-        setTimeout(() => {
-            simulation.alphaTarget(0);
-        }, 4000);
+        this.easeSimulation(simulation);
         return simulation;
     }
 
@@ -212,11 +250,7 @@ export class NodeLinkRenderer {
             .force("radius4", customRadialForce(radiusPerDepth * 4, canvasXcenter, canvasYcenter, 4).strength(1.5))
             .force("radius5", customRadialForce(radiusPerDepth * 5, canvasXcenter, canvasYcenter, 5).strength(1.5));
 
-        simulation.alphaTarget(0.5).restart();
-        // promise to set it back to 0 after 4 seconds to allow it to stabilize
-        setTimeout(() => {
-            simulation.alphaTarget(0);
-        }, 4000);
+        this.easeSimulation(simulation);
         return simulation;
     }
 
