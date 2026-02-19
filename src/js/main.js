@@ -4,6 +4,8 @@ import { BioFabric } from './biofabric.js';
 import { BioFabricRenderer } from './biofabricrenderer.js';
 import { NodeLink } from './nodelink.js';
 import { NodeLinkRenderer } from './nodelinkrender.js';
+import { Matrix } from './matrix.js';
+import { MatrixRenderer } from './matrixrenderer.js';
 
 
 async function init() {
@@ -25,12 +27,16 @@ async function init() {
         .attr("height", "100%")
         .attr("viewBox", "0 0 " + width + " " + height);
 
-    const rendererType = "nodelink"; // "biofabric" or "nodelink"
+    const rendererType = "matrix"; // "biofabric", "nodelink", or "matrix"
 
     if (rendererType === "biofabric") {
         let biofabric = new BioFabric(graph);
         let biofabricrenderer = new BioFabricRenderer(biofabric, width, height);
         biofabricrenderer.render(svg);
+    } else if (rendererType === "matrix") {
+        let matrix = new Matrix(graph);
+        let matrixrenderer = new MatrixRenderer(matrix, width, height);
+        matrixrenderer.render(svg);
     } else if (rendererType === "nodelink") {
         let nodelink = new NodeLink(graph);
         nodelink.setLayoutType("layered"); // "force", "radial", or "layered"
