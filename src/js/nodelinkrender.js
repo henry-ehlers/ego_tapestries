@@ -58,14 +58,16 @@ export class NodeLinkRenderer {
             .attr("r", nodeRadius)
             .call(drag(simulation))
             .style("cursor", "pointer")
-            .on("dblclick", (_event, d) => {
+            .on("click", (_event, d) => {
                 // change ego and rerender everything
                 unsetFixedPositions(this.nodes);
                 this.nodelink.graph.change_ego_and_reconstruct(d);
                 svg.selectAll("*").remove();
                 this.render(svg);
             })
-            .on("click", (_event, d) => {
+            .on("contextmenu", (event, d) => {
+                // right click
+                event.preventDefault();
                 console.log(`Clicked on node ${d.get_label()} with state ${State[d.get_state()]}`);
                 const depth = d.get_depth();
                 const x = d.get_x();
@@ -91,6 +93,10 @@ export class NodeLinkRenderer {
                 this.easeSimulation(simulation);
             });
 
+        // add labels on hover
+        node.append("title")
+            .text(d => d.get_label());
+
         function unsetFixedPositions(nodes) {
             nodes.forEach(n => {
                 n.fx = null;
@@ -103,6 +109,9 @@ export class NodeLinkRenderer {
         node.attr("fill", ({ index: i }) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);
         link.attr("stroke", ({ index: i }) => (this.edges[i].get_depth() % 1) === 0.5 ? "#9c9c9c" : "none");
         arc.attr("stroke", ({ index: i }) => d3.schemeObservable10[this.edges[i].get_depth()]);
+
+        // todo this is just based on our default dataset.
+        node.filter(d => d.get_label() === "Napoleon").attr("fill", d3.schemeCategory10[0]);
 
         function ticked() {
             link
