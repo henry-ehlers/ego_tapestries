@@ -86,10 +86,13 @@ export class NodeLinkRenderer {
                     case State["Fully Compressed"]:
                         this.nodes.filter(n => n.get_depth() === depth).forEach(n => {
                             n.set_state(State["Uncompressed"]);
+
                             unsetFixedPositions(this.nodes.filter(n => n.get_depth() === depth));
                         });
                         break;
                 }
+                // change radius of nodes in this depth level to indicate compression state
+                node.attr("r", d => d.get_state() === State["Fully Compressed"] ? nodeRadius * 2 : nodeRadius);
                 this.easeSimulation(simulation);
             });
 
