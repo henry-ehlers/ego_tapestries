@@ -46,12 +46,20 @@ export class MatrixRenderer {
         }
 
         // draw colored circles just outside adjacency matrix to indicate nodes and their depth
+        let currentDepth = -1;
+        let currentDepthLeftmostX = -1;
+
         const nodeG = mainG.append("g")
         for (let i = 0; i < n; i++) {
             const node = this.nodes[i];
             const depth = node.get_depth();
             const color = d3.schemeObservable10[depth];
             const radius = cellSize / 4 * 1.1;
+
+            if (depth > currentDepth) {
+                currentDepth = depth;
+                currentDepthLeftmostX = gridX + i * cellSize + cellSize / 2;
+            }
 
             // draw circle to the left of the matrix
             nodeG.append("circle")
@@ -68,9 +76,16 @@ export class MatrixRenderer {
                 })
                 .append("title")
                 .text(node.label);
+
+            // create copy of currentDepthLeftmostX to use in closure for right click event
+            const depthX = currentDepthLeftmostX;
             // draw circle above the matrix
             nodeG.append("circle")
+                .attr("id", `node-${depth}-${node.id}`)
+                .attr("class", `node-depth-${depth}`)
                 .attr("cx", gridX + i * cellSize + cellSize / 2)
+                .attr("oldx", gridX + i * cellSize + cellSize / 2)
+                .attr("compressed", "false")
                 .attr("cy", gridY - cellSize / 2)
                 .attr("r", radius)
                 .attr("fill", color)
@@ -79,6 +94,45 @@ export class MatrixRenderer {
                     this.matrix.change_ego(node);
                     svg.selectAll("*").remove();
                     this.render(svg);
+                })
+                .on("contextmenu", (event, _) => {
+                    // compress/uncompress all nodes of the same depth
+                    // right click
+                    event.preventDefault();
+
+                    // if compressed, move back to original position
+                    const isCompressed = svg.select(`#node-${depth}-${node.id}`).attr("compressed") === "true";
+                    if (isCompressed) {
+                        svg.selectAll(`.node-depth-${depth}`)
+                            .transition()
+                            .duration(300)
+                            .attr("cx", function () { return d3.select(this).attr("oldx"); })
+                            .attr("compressed", "false");
+
+                        // move edge squares back to original position
+                        svg.selectAll(`.edge-depth-${depth}`)
+                            .transition()
+                            .duration(300)
+                            .attr("x", function () { return d3.select(this).attr("oldx"); })
+                            .attr("compressed", "false");
+
+                        return;
+                    }
+
+
+                    // move circles
+                    svg.selectAll(".node-depth-" + depth)
+                        .transition()
+                        .duration(300)
+                        .attr("cx", depthX)
+                        .attr("compressed", "true");
+
+                    // move edge squares
+                    svg.selectAll(".edge-depth-" + depth)
+                        .transition()
+                        .duration(300)
+                        .attr("x", depthX - cellSize / 2 + cellSize / 6)
+                        .attr("compressed", "true");
                 })
                 .append("title")
                 .text(node.label);
@@ -92,10 +146,17 @@ export class MatrixRenderer {
             const depth = edge.get_depth();
             const color = depth % 1 == 0.5 ? "#333" : d3.schemeObservable10[depth];
 
+            const sourceDepth = edge.endpoints[0].get_depth();
+            const targetDepth = edge.endpoints[1].get_depth();
+
             const length = cellSize * 0.666;
 
+            // squares underneath the diagonal
             mainG.append("rect")
+                .attr("class", `edge-depth-${targetDepth}`)
                 .attr("x", gridX + targetIndex * cellSize + cellSize / 6)
+                .attr("oldx", gridX + targetIndex * cellSize + cellSize / 6)
+                .attr("compressed", "false")
                 .attr("y", gridY + sourceIndex * cellSize + cellSize / 6)
                 .attr("width", length)
                 .attr("height", length)
@@ -103,9 +164,12 @@ export class MatrixRenderer {
                 .attr("ry", cellSize / 6)
                 .attr("fill", color);
 
-            // also draw square in transposed position to make matrix symmetric
+            // squares above the diagonal
             mainG.append("rect")
+                .attr("class", `edge-depth-${sourceDepth}`)
                 .attr("x", gridX + sourceIndex * cellSize + cellSize / 6)
+                .attr("oldx", gridX + sourceIndex * cellSize + cellSize / 6)
+                .attr("compressed", "false")
                 .attr("y", gridY + targetIndex * cellSize + cellSize / 6)
                 .attr("width", length)
                 .attr("height", length)
