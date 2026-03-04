@@ -90,16 +90,13 @@ export class MatrixRenderer {
                 .attr("r", radius)
                 .attr("fill", color)
                 .style("cursor", "pointer")
-                .on("click", () => {
+                .on("contextmenu", (event, _) => {
+                    event.preventDefault();
                     this.matrix.change_ego(node);
                     svg.selectAll("*").remove();
                     this.render(svg);
                 })
-                .on("contextmenu", (event, _) => {
-                    // compress/uncompress all nodes of the same depth
-                    // right click
-                    event.preventDefault();
-
+                .on("dblclick", () => {
                     // if compressed, move back to original position
                     const isCompressed = svg.select(`#node-${depth}-${node.id}`).attr("compressed") === "true";
                     if (isCompressed) {

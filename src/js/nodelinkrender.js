@@ -58,16 +58,15 @@ export class NodeLinkRenderer {
             .attr("r", nodeRadius)
             .call(drag(simulation))
             .style("cursor", "pointer")
-            .on("click", (_event, d) => {
+            .on("contextmenu", (event, d) => {
                 // change ego and rerender everything
+                event.preventDefault();
                 unsetFixedPositions(this.nodes);
                 this.nodelink.graph.change_ego_and_reconstruct(d);
                 svg.selectAll("*").remove();
                 this.render(svg);
             })
-            .on("contextmenu", (event, d) => {
-                // right click
-                event.preventDefault();
+            .on("dblclick", (_event, d) => {
                 console.log(`Clicked on node ${d.get_label()} with state ${State[d.get_state()]}`);
                 const depth = d.get_depth();
                 const x = d.get_x();
