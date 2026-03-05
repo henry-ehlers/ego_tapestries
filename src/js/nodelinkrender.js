@@ -58,6 +58,17 @@ export class NodeLinkRenderer {
             .attr("r", nodeRadius)
             .call(drag(simulation))
             .style("cursor", "pointer")
+            .on("click", (event, d) => {
+                // highlight nodes
+                if (d.get_state() === State["Fully Compressed"]) { // toggle highlight all nodes in this depth level
+                    const isHighlighted = d.get_highlighted();
+                    this.nodes.filter(n => n.get_depth() === d.get_depth()).forEach(n => n.set_highlighted(!isHighlighted));
+                    node.filter(n => n.get_depth() === d.get_depth()).classed("highlight", !isHighlighted);
+                } else {
+                    d.get_highlighted() ? d.set_highlighted(false) : d.set_highlighted(true);
+                    d3.select(event.currentTarget).classed("highlight", d.get_highlighted());
+                }
+            })
             .on("contextmenu", (event, d) => {
                 // change ego and rerender everything
                 event.preventDefault();

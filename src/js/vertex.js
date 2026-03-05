@@ -10,6 +10,7 @@ export class Vertex {
 
         this.depth = Infinity;
         this.state = State.Uncompressed;
+        this.isHighlighted = false;
         this.index = Infinity;
         this.distance = Infinity;
         this.incidence = [];
@@ -54,6 +55,10 @@ export class Vertex {
         this.depth = depth;
     }
 
+    set_highlighted(isHighlighted) {
+        this.isHighlighted = isHighlighted;
+    }
+
     set_distance(distance) {
         this.distance = distance;
     }
@@ -65,6 +70,11 @@ export class Vertex {
     get_state() {
         return this.state;
     }
+
+    get_highlighted() {
+        return this.isHighlighted;
+    }
+
     get_depth() {
         return this.depth;
     }
@@ -85,5 +95,6 @@ export class Vertex {
         this.distance = Infinity;
         this.incidence = [];
         this.adjacency = [];
+        this.isHighlighted = false;
     }
 }
