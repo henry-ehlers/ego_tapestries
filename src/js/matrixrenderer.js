@@ -94,6 +94,21 @@ export class MatrixRenderer {
             .attr("r", radius)
             .attr("fill", d => d3.schemeObservable10[d.get_depth()])
             .style("cursor", "pointer")
+            .on("click", (event, d) => {
+                const isHighlighted = d.get_highlighted();
+                const state = d.get_state();
+                if (state === State.Compressed) {
+                    // if compressed, highlight all nodes of the same depth
+                    const nodes = this.nodes.filter(node => node.get_depth() === d.get_depth());
+                    nodes.forEach(node => {
+                        node.set_highlighted(!isHighlighted);
+                    });
+                    topNodeG.selectAll(`.node-depth-${d.get_depth()}`).classed("highlight", !isHighlighted);
+                } else {
+                    d.get_highlighted() ? d.set_highlighted(false) : d.set_highlighted(true);
+                    d3.select(event.currentTarget).classed("highlight", d.get_highlighted());
+                }
+            })
             .on("contextmenu", (event, d) => {
                 event.preventDefault();
                 this.matrix.change_ego(d);
