@@ -68,9 +68,17 @@ export class MatrixRenderer {
                 svg.selectAll("*").remove();
                 this.render(svg);
             })
-            .append("title")
-            .text(d => d.label);
 
+        // add node labels to the left of the circles
+        leftNodeG.selectAll("text")
+            .data(this.nodes)
+            .join("text")
+            .attr("x", gridX - cellSize / 2 - radius - 0.1)
+            .attr("y", (d, i) => gridY + i * cellSize + cellSize / 2 + 0.05)
+            .attr("text-anchor", "end")
+            .attr("font-family", "Arial")
+            .attr("font-size", 0.3)
+            .text(d => d.label);
 
         const topNodeG = mainG.append("g").attr("id", "top-node-g");
         let j = 0;
