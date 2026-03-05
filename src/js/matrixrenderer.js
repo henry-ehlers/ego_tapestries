@@ -103,7 +103,9 @@ export class MatrixRenderer {
             .on("dblclick", (_event, d) => {
                 const state = d.get_state();
                 const depth = d.get_depth();
+
                 if (state === State.Uncompressed) {
+                    // compress nodes and edges of the same depth
                     const nodes = this.nodes.filter(node => node.get_depth() === depth);
                     nodes.forEach(node => {
                         node.set_state(State.Compressed);
@@ -113,13 +115,18 @@ export class MatrixRenderer {
                         .duration(300)
                         .attr("cx", nodes[0].x)
                         .attr("cy", nodes[0].y);
+
                     // move edge squares
                     svg.selectAll(".edge-depth-" + depth)
+                        .each(d => {
+                            d.set_state(State.Compressed);
+                        })
                         .transition()
                         .duration(300)
-                        .attr("x", nodes[0].x - cellSize / 2 + cellSize / 6)
-                        .attr("compressed", "true");
+                        .attr("x", nodes[0].x - cellSize / 2 + cellSize / 6);
+
                 } else if (state === State.Compressed) {
+                    // uncompress nodes and edges of the same depth
                     const nodes = this.nodes.filter(node => node.get_depth() === depth);
                     nodes.forEach(node => {
                         node.set_state(State.Uncompressed);
@@ -132,53 +139,63 @@ export class MatrixRenderer {
 
                     // move edge squares back to original position
                     svg.selectAll(`.edge-depth-${depth}`)
-                        .transition()
+                        .each(d => {
+                            d.set_state(State.Uncompressed);
+                        }
+                        ).transition()
                         .duration(300)
-                        .attr("x", function () { return d3.select(this).attr("oldx"); })
-                        .attr("compressed", "false");
+                        .attr("x", d => d.get_x());
                 }
             })
             .append("title")
             .text(d => d.label);
 
-        // draw squares in cells for edges
-        for (let i = 0; i < this.edges.length; i++) {
-            const edge = this.edges[i];
-            const sourceIndex = this.nodes.indexOf(edge.endpoints[0]);
-            const targetIndex = this.nodes.indexOf(edge.endpoints[1]);
-            const depth = edge.get_depth();
-            const color = depth % 1 == 0.5 ? "#333" : d3.schemeObservable10[depth];
+        const edgeG = mainG.append("g").attr("id", "edge-g");
+        const lowerEdgeG = edgeG.append("g").attr("id", "lower-edge-g");
+        const upperEdgeG = edgeG.append("g").attr("id", "upper-edge-g");
 
-            const sourceDepth = edge.endpoints[0].get_depth();
-            const targetDepth = edge.endpoints[1].get_depth();
+        lowerEdgeG.selectAll("rect")
+            .data(this.edges.map(edge => edge.clone())) // clone edges to avoid modifying original edges when setting x and y
+            .join("rect")
+            .attr("class", d => `edge-depth-${d.endpoints[1].get_depth()}`)
+            .attr("x", d => {
+                const targetIndex = this.nodes.indexOf(d.endpoints[1]);
+                const x = gridX + targetIndex * cellSize + cellSize / 6;
+                d.set_x(x);
+                return x;
+            })
+            .attr("y", d => {
+                const sourceIndex = this.nodes.indexOf(d.endpoints[0]);
+                const y = gridY + sourceIndex * cellSize + cellSize / 6;
+                d.set_y(y);
+                return y;
+            })
+            .attr("width", cellSize * 2 / 3)
+            .attr("height", cellSize * 2 / 3)
+            .attr("rx", cellSize / 6)
+            .attr("ry", cellSize / 6)
+            .attr("fill", d => d.get_depth() % 1 == 0.5 ? "#333" : d3.schemeObservable10[d.get_depth()]);
 
-            const length = cellSize * 0.666;
-
-            // squares underneath the diagonal
-            mainG.append("rect")
-                .attr("class", `edge-depth-${targetDepth}`)
-                .attr("x", gridX + targetIndex * cellSize + cellSize / 6)
-                .attr("oldx", gridX + targetIndex * cellSize + cellSize / 6)
-                .attr("compressed", "false")
-                .attr("y", gridY + sourceIndex * cellSize + cellSize / 6)
-                .attr("width", length)
-                .attr("height", length)
-                .attr("rx", cellSize / 6)
-                .attr("ry", cellSize / 6)
-                .attr("fill", color);
-
-            // squares above the diagonal
-            mainG.append("rect")
-                .attr("class", `edge-depth-${sourceDepth}`)
-                .attr("x", gridX + sourceIndex * cellSize + cellSize / 6)
-                .attr("oldx", gridX + sourceIndex * cellSize + cellSize / 6)
-                .attr("compressed", "false")
-                .attr("y", gridY + targetIndex * cellSize + cellSize / 6)
-                .attr("width", length)
-                .attr("height", length)
-                .attr("rx", cellSize / 6)
-                .attr("ry", cellSize / 6)
-                .attr("fill", color);
-        }
+        upperEdgeG.selectAll("rect")
+            .data(this.edges.map(edge => edge.clone())) // clone edges to avoid modifying original edges when setting x and y
+            .join("rect")
+            .attr("class", d => `edge-depth-${d.endpoints[0].get_depth()}`)
+            .attr("x", d => {
+                const sourceIndex = this.nodes.indexOf(d.endpoints[0]);
+                const x = gridX + sourceIndex * cellSize + cellSize / 6;
+                d.set_x(x);
+                return x;
+            })
+            .attr("y", d => {
+                const targetIndex = this.nodes.indexOf(d.endpoints[1]);
+                const y = gridY + targetIndex * cellSize + cellSize / 6;
+                d.set_y(y);
+                return y;
+            })
+            .attr("width", cellSize * 2 / 3)
+            .attr("height", cellSize * 2 / 3)
+            .attr("rx", cellSize / 6)
+            .attr("ry", cellSize / 6)
+            .attr("fill", d => d.get_depth() % 1 == 0.5 ? "#333" : d3.schemeObservable10[d.get_depth()]);
     }
 }

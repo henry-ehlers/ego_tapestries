@@ -28,6 +28,15 @@ export class Edge {
         this.attrs = attrs;
     }
 
+    clone() {
+        const clonedEdge = new Edge(this.id, this.get_source_vertex(), this.get_target_vertex(), { ...this.attrs });
+        clonedEdge.set_depth(this.depth);
+        clonedEdge.set_state(this.state);
+        clonedEdge.set_x(this.x);
+        clonedEdge.set_y(this.y);
+        return clonedEdge;
+    }
+
     set_x(x) {
         this.x = x;
     }
