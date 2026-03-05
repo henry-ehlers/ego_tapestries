@@ -18,7 +18,7 @@ export class MatrixRenderer {
         const canvasYcenter = this.canvasHeight / 2;
         const cellSize = 0.5;
 
-        let mainG = svg.append("g");
+        const mainG = svg.append("g");
 
         // draw matrix cells grid centered on canvas
         const n = this.nodes.length;
@@ -26,9 +26,11 @@ export class MatrixRenderer {
         const gridX = canvasXcenter - gridSize / 2;
         const gridY = canvasYcenter - gridSize / 2;
 
+
+        const gridG = mainG.append("g").attr("id", "grid-g");
         for (let i = 0; i <= n; i++) {
             // draw vertical lines
-            mainG.append("line")
+            gridG.append("line")
                 .attr("x1", gridX + i * cellSize)
                 .attr("y1", gridY)
                 .attr("x2", gridX + i * cellSize)
@@ -36,7 +38,7 @@ export class MatrixRenderer {
                 .attr("stroke", "lightgray")
                 .attr("stroke-width", 0.05);
             // draw horizontal lines
-            mainG.append("line")
+            gridG.append("line")
                 .attr("x1", gridX)
                 .attr("y1", gridY + i * cellSize)
                 .attr("x2", gridX + gridSize)
@@ -48,7 +50,7 @@ export class MatrixRenderer {
         const radius = cellSize / 4 * 1.1;
 
         // draw circle to the left of the matrix
-        const leftNodeG = mainG.append("g");
+        const leftNodeG = mainG.append("g").attr("id", "left-node-g");
         let i = 0;
 
         leftNodeG.selectAll("circle")
