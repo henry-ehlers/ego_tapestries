@@ -45,95 +45,99 @@ export class MatrixRenderer {
                 .attr("stroke-width", 0.05);
         }
 
-        // draw colored circles just outside adjacency matrix to indicate nodes and their depth
-        let currentDepth = -1;
-        let currentDepthLeftmostX = -1;
+        const radius = cellSize / 4 * 1.1;
 
-        const nodeG = mainG.append("g")
-        for (let i = 0; i < n; i++) {
-            const node = this.nodes[i];
-            const depth = node.get_depth();
-            const color = d3.schemeObservable10[depth];
-            const radius = cellSize / 4 * 1.1;
+        // draw circle to the left of the matrix
+        const leftNodeG = mainG.append("g");
+        let i = 0;
 
-            if (depth > currentDepth) {
-                currentDepth = depth;
-                currentDepthLeftmostX = gridX + i * cellSize + cellSize / 2;
-            }
-
-            // draw circle to the left of the matrix
-            nodeG.append("circle")
-                .attr("cx", gridX - cellSize / 2)
-                .attr("cy", gridY + i * cellSize + cellSize / 2)
-                .attr("r", radius)
-                .attr("fill", color)
-                .style("cursor", "pointer")
-                // change ego
-                .on("click", () => {
-                    this.matrix.change_ego(node);
-                    svg.selectAll("*").remove();
-                    this.render(svg);
-                })
-                .append("title")
-                .text(node.label);
-
-            // create copy of currentDepthLeftmostX to use in closure for right click event
-            const depthX = currentDepthLeftmostX;
-            // draw circle above the matrix
-            nodeG.append("circle")
-                .attr("id", `node-${depth}-${node.id}`)
-                .attr("class", `node-depth-${depth}`)
-                .attr("cx", gridX + i * cellSize + cellSize / 2)
-                .attr("oldx", gridX + i * cellSize + cellSize / 2)
-                .attr("compressed", "false")
-                .attr("cy", gridY - cellSize / 2)
-                .attr("r", radius)
-                .attr("fill", color)
-                .style("cursor", "pointer")
-                .on("contextmenu", (event, _) => {
-                    event.preventDefault();
-                    this.matrix.change_ego(node);
-                    svg.selectAll("*").remove();
-                    this.render(svg);
-                })
-                .on("dblclick", () => {
-                    // if compressed, move back to original position
-                    const isCompressed = svg.select(`#node-${depth}-${node.id}`).attr("compressed") === "true";
-                    if (isCompressed) {
-                        svg.selectAll(`.node-depth-${depth}`)
-                            .transition()
-                            .duration(300)
-                            .attr("cx", function () { return d3.select(this).attr("oldx"); })
-                            .attr("compressed", "false");
-
-                        // move edge squares back to original position
-                        svg.selectAll(`.edge-depth-${depth}`)
-                            .transition()
-                            .duration(300)
-                            .attr("x", function () { return d3.select(this).attr("oldx"); })
-                            .attr("compressed", "false");
-
-                        return;
-                    }
+        leftNodeG.selectAll("circle")
+            .data(this.nodes)
+            .join("circle")
+            .attr("cx", gridX - cellSize / 2)
+            .attr("cy", () => gridY + i++ * cellSize + cellSize / 2) // closure to keep track of i
+            .attr("r", radius)
+            .attr("fill", d => d3.schemeObservable10[d.get_depth()])
+            .style("cursor", "pointer")
+            // change ego
+            .on("contextmenu", (event, node) => {
+                event.preventDefault();
+                this.matrix.change_ego(node);
+                svg.selectAll("*").remove();
+                this.render(svg);
+            })
+            .append("title")
+            .text(d => d.label);
 
 
-                    // move circles
-                    svg.selectAll(".node-depth-" + depth)
+        const topNodeG = mainG.append("g").attr("id", "top-node-g");
+        let j = 0;
+
+        topNodeG.selectAll("circle")
+            .data(this.nodes)
+            .join("circle")
+            .attr("id", d => `node-${d.get_depth()}-${d.get_id()}`)
+            .attr("class", d => `node-depth-${d.get_depth()}`)
+            .attr("cx", d => {
+                // closure can update j
+                const x = gridX + j++ * cellSize + cellSize / 2;
+                d.set_x(x);
+                return x;
+            })
+            .attr("cy", d => {
+                const y = gridY - cellSize / 2;
+                d.set_y(y);
+                return y;
+            })
+            .attr("r", radius)
+            .attr("fill", d => d3.schemeObservable10[d.get_depth()])
+            .style("cursor", "pointer")
+            .on("contextmenu", (event, d) => {
+                event.preventDefault();
+                this.matrix.change_ego(d);
+                svg.selectAll("*").remove();
+                this.render(svg);
+            })
+            .on("dblclick", (_event, d) => {
+                const state = d.get_state();
+                const depth = d.get_depth();
+                if (state === State.Uncompressed) {
+                    const nodes = this.nodes.filter(node => node.get_depth() === depth);
+                    nodes.forEach(node => {
+                        node.set_state(State.Compressed);
+                    });
+                    svg.selectAll(`.node-depth-${depth}`)
                         .transition()
                         .duration(300)
-                        .attr("cx", depthX)
-                        .attr("compressed", "true");
-
+                        .attr("cx", nodes[0].x)
+                        .attr("cy", nodes[0].y);
                     // move edge squares
                     svg.selectAll(".edge-depth-" + depth)
                         .transition()
                         .duration(300)
-                        .attr("x", depthX - cellSize / 2 + cellSize / 6)
+                        .attr("x", nodes[0].x - cellSize / 2 + cellSize / 6)
                         .attr("compressed", "true");
-                })
-                .append("title")
-                .text(node.label);
-        }
+                } else if (state === State.Compressed) {
+                    const nodes = this.nodes.filter(node => node.get_depth() === depth);
+                    nodes.forEach(node => {
+                        node.set_state(State.Uncompressed);
+                    });
+                    topNodeG.selectAll(`.node-depth-${depth}`)
+                        .transition()
+                        .duration(300)
+                        .attr("cx", d => d.x)
+                        .attr("cy", d => d.y);
+
+                    // move edge squares back to original position
+                    svg.selectAll(`.edge-depth-${depth}`)
+                        .transition()
+                        .duration(300)
+                        .attr("x", function () { return d3.select(this).attr("oldx"); })
+                        .attr("compressed", "false");
+                }
+            })
+            .append("title")
+            .text(d => d.label);
 
         // draw squares in cells for edges
         for (let i = 0; i < this.edges.length; i++) {

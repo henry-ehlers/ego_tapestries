@@ -27,7 +27,7 @@ async function init() {
         .attr("height", "100%")
         .attr("viewBox", "0 0 " + width + " " + height);
 
-    const rendererType = "nodelink"; // "biofabric", "nodelink", or "matrix"
+    const rendererType = "matrix"; // "biofabric", "nodelink", or "matrix"
 
     if (rendererType === "biofabric") {
         let biofabric = new BioFabric(graph);
