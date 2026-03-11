@@ -13,6 +13,20 @@ export class MatrixRenderer {
         this.edges = this.matrix.graph.edges;
     }
 
+    calculate_node_x_coordinate(node) {
+        const canvasXcenter = this.canvasWidth / 2;
+        const canvasYcenter = this.canvasHeight / 2;
+        const cellSize = 0.5;
+
+        const n = this.matrix.effective_node_count();
+        const gridSize = cellSize * n;
+        const gridX = canvasXcenter - gridSize / 2;
+
+        const virtual_x = node.get_x();
+        const x = gridX + virtual_x * cellSize + cellSize / 2;
+        return x;
+    }
+
     render(svg) {
         const canvasXcenter = this.canvasWidth / 2;
         const canvasYcenter = this.canvasHeight / 2;
@@ -21,7 +35,7 @@ export class MatrixRenderer {
         const mainG = svg.append("g");
 
         // draw matrix cells grid centered on canvas
-        const n = this.nodes.length;
+        const n = this.matrix.effective_node_count();
         const gridSize = cellSize * n;
         const gridX = canvasXcenter - gridSize / 2;
         const gridY = canvasYcenter - gridSize / 2;
@@ -31,6 +45,7 @@ export class MatrixRenderer {
         for (let i = 0; i <= n; i++) {
             // draw vertical lines
             gridG.append("line")
+                .attr("class", "vertical-grid-line")
                 .attr("x1", gridX + i * cellSize)
                 .attr("y1", gridY)
                 .attr("x2", gridX + i * cellSize)
@@ -39,6 +54,7 @@ export class MatrixRenderer {
                 .attr("stroke-width", 0.05);
             // draw horizontal lines
             gridG.append("line")
+                .attr("class", "horizontal-grid-line")
                 .attr("x1", gridX)
                 .attr("y1", gridY + i * cellSize)
                 .attr("x2", gridX + gridSize)
@@ -56,18 +72,12 @@ export class MatrixRenderer {
         leftNodeG.selectAll("circle")
             .data(this.nodes)
             .join("circle")
+            .attr("class", "node-left")
             .attr("cx", gridX - cellSize / 2)
             .attr("cy", () => gridY + i++ * cellSize + cellSize / 2) // closure to keep track of i
             .attr("r", radius)
             .attr("fill", d => d3.schemeObservable10[d.get_depth()])
-            .style("cursor", "pointer")
-            // change ego
-            .on("contextmenu", (event, node) => {
-                event.preventDefault();
-                this.matrix.change_ego(node);
-                svg.selectAll("*").remove();
-                this.render(svg);
-            })
+            .style("cursor", "pointer");
 
         // add node labels to the left of the circles
         leftNodeG.selectAll("text")
@@ -80,20 +90,17 @@ export class MatrixRenderer {
             .attr("font-size", 0.3)
             .text(d => d.label);
 
-        const topNodeG = mainG.append("g").attr("id", "top-node-g");
-        let j = 0;
 
-        topNodeG.selectAll("circle")
+
+        
+
+        const topNodeG = mainG.append("g").attr("id", "top-node-g")
+            .selectAll("circle")
             .data(this.nodes)
             .join("circle")
             .attr("id", d => `node-${d.get_depth()}-${d.get_id()}`)
             .attr("class", d => `node-depth-${d.get_depth()}`)
-            .attr("cx", d => {
-                // closure can update j
-                const x = gridX + j++ * cellSize + cellSize / 2;
-                d.set_x(x);
-                return x;
-            })
+            .attr("cx", d => this.calculate_node_x_coordinate(d))
             .attr("cy", d => {
                 const y = gridY - cellSize / 2;
                 d.set_y(y);
@@ -105,7 +112,7 @@ export class MatrixRenderer {
             .on("click", (event, d) => {
                 const isHighlighted = d.get_highlighted();
                 const state = d.get_state();
-                if (state === State.Compressed) {
+                if (state === State["Fully Compressed"]) {
                     // if compressed, highlight all nodes of the same depth
                     const nodes = this.nodes.filter(node => node.get_depth() === d.get_depth());
                     nodes.forEach(node => {
@@ -130,35 +137,27 @@ export class MatrixRenderer {
                 if (state === State.Uncompressed) {
                     // compress nodes and edges of the same depth
                     const nodes = this.nodes.filter(node => node.get_depth() === depth);
-                    nodes.forEach(node => {
-                        node.set_state(State.Compressed);
-                    });
-                    svg.selectAll(`.node-depth-${depth}`)
-                        .transition()
-                        .duration(300)
-                        .attr("cx", nodes[0].x)
-                        .attr("cy", nodes[0].y);
+                    this.matrix.compress_unc_nodes_by_depth(d);
+                    this.matrix.set_virtual_x_coordinates();
+
+                    topNodeG.transition().duration(300).attr("cx", d => this.calculate_node_x_coordinate(d));
 
                     // move edge squares
                     svg.selectAll(".edge-depth-" + depth)
                         .each(d => {
-                            d.set_state(State.Compressed);
+                            d.set_state(State["Fully Compressed"]);
                         })
                         .transition()
                         .duration(300)
                         .attr("x", nodes[0].x - cellSize / 2 + cellSize / 6);
 
-                } else if (state === State.Compressed) {
+                } else if (state === State["Fully Compressed"]) {
                     // uncompress nodes and edges of the same depth
                     const nodes = this.nodes.filter(node => node.get_depth() === depth);
-                    nodes.forEach(node => {
-                        node.set_state(State.Uncompressed);
-                    });
-                    topNodeG.selectAll(`.node-depth-${depth}`)
-                        .transition()
-                        .duration(300)
-                        .attr("cx", d => d.x)
-                        .attr("cy", d => d.y);
+                    this.matrix.compress_unc_nodes_by_depth(d);
+                    this.matrix.set_virtual_x_coordinates();
+
+                    topNodeG.transition().duration(300).attr("cx", d => this.calculate_node_x_coordinate(d));
 
                     // move edge squares back to original position
                     svg.selectAll(`.edge-depth-${depth}`)
@@ -169,9 +168,14 @@ export class MatrixRenderer {
                         .duration(300)
                         .attr("x", d => d.get_x());
                 }
-            })
-            .append("title")
-            .text(d => d.label);
+            });
+
+        topNodeG.append("line")
+            .attr("x1", d => d.get_x() * 2)
+            .attr("y1", gridY - cellSize)
+            .attr("x2", d => d.get_x() * 5)
+            .attr("y2", 8)
+            .attr("stroke", "black");
 
         const edgeG = mainG.append("g").attr("id", "edge-g");
         const lowerEdgeG = edgeG.append("g").attr("id", "lower-edge-g");
