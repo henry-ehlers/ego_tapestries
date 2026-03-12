@@ -24,6 +24,7 @@ export class Matrix {
     change_ego(node) {
         this.graph.change_ego_and_reconstruct(node);
         this.sort_nodes_by_depth();
+        this.set_virtual_x_coordinates();
     }
 
     // creates a virtual x coordinate for each node.

@@ -27,32 +27,35 @@ export class MatrixRenderer {
         return x;
     }
 
+    calculate_gridX() {
+        const canvasXcenter = this.canvasWidth / 2;
+        const gridX = canvasXcenter - this.calculate_gridsize() / 2;
+        return gridX
+    }
+
+    calculate_gridsize() {
+        const cellSize = 0.5;
+        const n = this.matrix.effective_node_count();
+        const gridSize = cellSize * n;
+        return gridSize;
+    }
+
     render(svg) {
         const canvasXcenter = this.canvasWidth / 2;
         const canvasYcenter = this.canvasHeight / 2;
         const cellSize = 0.5;
 
-        const mainG = svg.append("g");
-
-        // draw matrix cells grid centered on canvas
         const n = this.matrix.effective_node_count();
         const gridSize = cellSize * n;
         const gridX = canvasXcenter - gridSize / 2;
         const gridY = canvasYcenter - gridSize / 2;
+        const radius = cellSize / 4 * 1.1;
 
+        const mainG = svg.append("g");
 
-        const gridG = mainG.append("g").attr("id", "grid-g");
+        // horizontal lines
+        const gridG = mainG.append("g").attr("id", "horizontal-grid-lines-g");
         for (let i = 0; i <= n; i++) {
-            // draw vertical lines
-            gridG.append("line")
-                .attr("class", "vertical-grid-line")
-                .attr("x1", gridX + i * cellSize)
-                .attr("y1", gridY)
-                .attr("x2", gridX + i * cellSize)
-                .attr("y2", gridY + gridSize)
-                .attr("stroke", "lightgray")
-                .attr("stroke-width", 0.05);
-            // draw horizontal lines
             gridG.append("line")
                 .attr("class", "horizontal-grid-line")
                 .attr("x1", gridX)
@@ -63,49 +66,22 @@ export class MatrixRenderer {
                 .attr("stroke-width", 0.05);
         }
 
-        const radius = cellSize / 4 * 1.1;
-
-        // draw circle to the left of the matrix
-        const leftNodeG = mainG.append("g").attr("id", "left-node-g");
-        let i = 0;
-
-        leftNodeG.selectAll("circle")
+        // One group for each column.
+        // All nodes and edges are placed into their corresponding group.
+        // This allows us to perform transformations on the columns including their children.
+        const columnGroups = mainG.append("g")
+            .selectAll(".node-group") // Use a class to identify the groups
             .data(this.nodes)
-            .join("circle")
-            .attr("class", "node-left")
-            .attr("cx", gridX - cellSize / 2)
-            .attr("cy", () => gridY + i++ * cellSize + cellSize / 2) // closure to keep track of i
-            .attr("r", radius)
-            .attr("fill", d => d3.schemeObservable10[d.get_depth()])
-            .style("cursor", "pointer");
+            .join("g")
+            .attr("class", "node-group")
+            .attr("id", d => `node-group-${d.get_id()}`)
+            .attr("transform", d => `translate(${this.calculate_node_x_coordinate(d)}, ${gridY})`);
 
-        // add node labels to the left of the circles
-        leftNodeG.selectAll("text")
-            .data(this.nodes)
-            .join("text")
-            .attr("x", gridX - cellSize / 2 - radius - 0.1)
-            .attr("y", (d, i) => gridY + i * cellSize + cellSize / 2 + 0.05)
-            .attr("text-anchor", "end")
-            .attr("font-family", "Arial")
-            .attr("font-size", 0.3)
-            .text(d => d.label);
-
-
-
-        
-
-        const topNodeG = mainG.append("g").attr("id", "top-node-g")
-            .selectAll("circle")
-            .data(this.nodes)
-            .join("circle")
+        const columnNodes = columnGroups.append("circle")
             .attr("id", d => `node-${d.get_depth()}-${d.get_id()}`)
             .attr("class", d => `node-depth-${d.get_depth()}`)
-            .attr("cx", d => this.calculate_node_x_coordinate(d))
-            .attr("cy", d => {
-                const y = gridY - cellSize / 2;
-                d.set_y(y);
-                return y;
-            })
+            .attr("cx", 0)
+            .attr("cy", - cellSize / 2)
             .attr("r", radius)
             .attr("fill", d => d3.schemeObservable10[d.get_depth()])
             .style("cursor", "pointer")
@@ -118,7 +94,7 @@ export class MatrixRenderer {
                     nodes.forEach(node => {
                         node.set_highlighted(!isHighlighted);
                     });
-                    topNodeG.selectAll(`.node-depth-${d.get_depth()}`).classed("highlight", !isHighlighted);
+                    columnGroups.selectAll(`.node-depth-${d.get_depth()}`).classed("highlight", !isHighlighted);
                 } else {
                     d.get_highlighted() ? d.set_highlighted(false) : d.set_highlighted(true);
                     d3.select(event.currentTarget).classed("highlight", d.get_highlighted());
@@ -131,98 +107,82 @@ export class MatrixRenderer {
                 this.render(svg);
             })
             .on("dblclick", (_event, d) => {
-                const state = d.get_state();
-                const depth = d.get_depth();
+                // compress and uncompress
+                this.matrix.compress_unc_nodes_by_depth(d);
+                this.matrix.set_virtual_x_coordinates();
+                columnGroups.transition().duration(300)
+                    .attr("transform", d => `translate(${this.calculate_node_x_coordinate(d)}, ${gridY})`);
 
-                if (state === State.Uncompressed) {
-                    // compress nodes and edges of the same depth
-                    const nodes = this.nodes.filter(node => node.get_depth() === depth);
-                    this.matrix.compress_unc_nodes_by_depth(d);
-                    this.matrix.set_virtual_x_coordinates();
-
-                    topNodeG.transition().duration(300).attr("cx", d => this.calculate_node_x_coordinate(d));
-
-                    // move edge squares
-                    svg.selectAll(".edge-depth-" + depth)
-                        .each(d => {
-                            d.set_state(State["Fully Compressed"]);
-                        })
-                        .transition()
-                        .duration(300)
-                        .attr("x", nodes[0].x - cellSize / 2 + cellSize / 6);
-
-                } else if (state === State["Fully Compressed"]) {
-                    // uncompress nodes and edges of the same depth
-                    const nodes = this.nodes.filter(node => node.get_depth() === depth);
-                    this.matrix.compress_unc_nodes_by_depth(d);
-                    this.matrix.set_virtual_x_coordinates();
-
-                    topNodeG.transition().duration(300).attr("cx", d => this.calculate_node_x_coordinate(d));
-
-                    // move edge squares back to original position
-                    svg.selectAll(`.edge-depth-${depth}`)
-                        .each(d => {
-                            d.set_state(State.Uncompressed);
-                        }
-                        ).transition()
-                        .duration(300)
-                        .attr("x", d => d.get_x());
-                }
+                // adjust horizonal lines
+                mainG.selectAll(".horizontal-grid-line").transition().duration(300)
+                    .attr("x1", this.calculate_gridX())
+                    .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
             });
 
-        topNodeG.append("line")
-            .attr("x1", d => d.get_x() * 2)
-            .attr("y1", gridY - cellSize)
-            .attr("x2", d => d.get_x() * 5)
-            .attr("y2", 8)
-            .attr("stroke", "black");
+        const columnVertLinesLeft = columnGroups.append("line")
+            .attr("class", "vertical-grid-line-left")
+            .attr("id", d => `vertical-grid-line-left-${this.nodes.indexOf(d)}`)
+            .attr("x1", -1 / 2 * cellSize)
+            .attr("y1", 0)
+            .attr("x2", -1 / 2 * cellSize)
+            .attr("y2", gridSize)
+            .attr("stroke", "lightgray")
+            .attr("stroke-width", 0.05);
 
-        const edgeG = mainG.append("g").attr("id", "edge-g");
-        const lowerEdgeG = edgeG.append("g").attr("id", "lower-edge-g");
-        const upperEdgeG = edgeG.append("g").attr("id", "upper-edge-g");
+        const columnVertLinesRight = columnGroups.append("line")
+            .attr("class", "vertical-grid-line-right")
+            .attr("x1", 1 / 2 * cellSize)
+            .attr("y1", 0)
+            .attr("x2", 1 / 2 * cellSize)
+            .attr("y2", gridSize)
+            .attr("stroke", "lightgray")
+            .attr("stroke-width", 0.05);
 
-        lowerEdgeG.selectAll("rect")
-            .data(this.edges.map(edge => edge.clone())) // clone edges to avoid modifying original edges when setting x and y
-            .join("rect")
-            .attr("class", d => `edge-depth-${d.endpoints[1].get_depth()}`)
-            .attr("x", d => {
-                const targetIndex = this.nodes.indexOf(d.endpoints[1]);
-                const x = gridX + targetIndex * cellSize + cellSize / 6;
-                d.set_x(x);
-                return x;
-            })
-            .attr("y", d => {
-                const sourceIndex = this.nodes.indexOf(d.endpoints[0]);
-                const y = gridY + sourceIndex * cellSize + cellSize / 6;
-                d.set_y(y);
-                return y;
-            })
-            .attr("width", cellSize * 2 / 3)
-            .attr("height", cellSize * 2 / 3)
-            .attr("rx", cellSize / 6)
-            .attr("ry", cellSize / 6)
-            .attr("fill", d => d.get_depth() % 1 == 0.5 ? "#333" : d3.schemeObservable10[d.get_depth()]);
+        // attach nodes and labels to the left most group
+        this.nodes.forEach(node => {
+            const firstNodeGroup = mainG.select(`#node-group-${this.nodes[0].get_id()}`)
+            firstNodeGroup.append("circle")
+                .attr("class", "node-left")
+                .attr("cx", - cellSize)
+                .attr("cy", this.nodes.indexOf(node) * cellSize + cellSize / 2)
+                .attr("r", radius)
+                .attr("fill", d3.schemeObservable10[node.get_depth()]);
 
-        upperEdgeG.selectAll("rect")
-            .data(this.edges.map(edge => edge.clone())) // clone edges to avoid modifying original edges when setting x and y
-            .join("rect")
-            .attr("class", d => `edge-depth-${d.endpoints[0].get_depth()}`)
-            .attr("x", d => {
-                const sourceIndex = this.nodes.indexOf(d.endpoints[0]);
-                const x = gridX + sourceIndex * cellSize + cellSize / 6;
-                d.set_x(x);
-                return x;
-            })
-            .attr("y", d => {
-                const targetIndex = this.nodes.indexOf(d.endpoints[1]);
-                const y = gridY + targetIndex * cellSize + cellSize / 6;
-                d.set_y(y);
-                return y;
-            })
-            .attr("width", cellSize * 2 / 3)
-            .attr("height", cellSize * 2 / 3)
-            .attr("rx", cellSize / 6)
-            .attr("ry", cellSize / 6)
-            .attr("fill", d => d.get_depth() % 1 == 0.5 ? "#333" : d3.schemeObservable10[d.get_depth()]);
+            firstNodeGroup.append("text")
+                .attr("x", -2 * cellSize)
+                .attr("y", this.nodes.indexOf(node) * cellSize + cellSize / 2 + radius / 2)
+                .attr("text-anchor", "end")
+                .attr("font-family", "Arial")
+                .attr("font-size", 0.3)
+                .text(node.label);
+        });
+
+        // append edge rectangles into their corresponding node group,
+        // so compression is handled by one single transformation on said node group.
+        this.edges.forEach(edge => {
+            const sourceIndex = this.nodes.indexOf(edge.endpoints[0]);
+            const targetIndex = this.nodes.indexOf(edge.endpoints[1]);
+            const sourceId = edge.get_endpoint_ids()[0];
+            const targetId = edge.get_endpoint_ids()[1];
+            const color = edge.get_depth() % 1 == 0.5 ? "#333" : d3.schemeObservable10[edge.get_depth()];
+
+            mainG.select(`#node-group-${sourceId}`).append("rect")
+                .attr("x", -1 / 3 * cellSize)
+                .attr("y", targetIndex * cellSize + 1 / 6 * cellSize)
+                .attr("width", cellSize * 2 / 3)
+                .attr("height", cellSize * 2 / 3)
+                .attr("rx", cellSize / 6)
+                .attr("ry", cellSize / 6)
+                .attr("fill", color);
+
+            mainG.select(`#node-group-${targetId}`).append("rect")
+                .attr("x", -1 / 3 * cellSize)
+                .attr("y", sourceIndex * cellSize + 1 / 6 * cellSize)
+                .attr("width", cellSize * 2 / 3)
+                .attr("height", cellSize * 2 / 3)
+                .attr("rx", cellSize / 6)
+                .attr("ry", cellSize / 6)
+                .attr("fill", color);
+        });
     }
 }
