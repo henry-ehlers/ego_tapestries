@@ -60,6 +60,21 @@ export class Matrix {
         }
     }
 
+    // toggle hihglighting
+    highlight_unh_nodes(node) {
+        const depth = node.get_depth();
+        const state = node.get_state();
+        const isHighlighted = node.get_highlighted();
+        if (state == State["Fully Compressed"]) {
+            const nodes = this.graph.nodes.filter(node => node.get_depth() === depth);
+            nodes.forEach(node => {
+                node.set_highlighted(!isHighlighted);
+            });
+        } else {
+            node.set_highlighted(!isHighlighted);
+        }
+    }
+
     effective_node_count() {
         let count = 0;
         let current_depth = this.graph.nodes[0].get_depth();

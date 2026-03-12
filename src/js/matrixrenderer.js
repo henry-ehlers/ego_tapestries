@@ -1,6 +1,5 @@
 "use strict";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { State } from './state.js';
 
 export class MatrixRenderer {
 
@@ -15,7 +14,6 @@ export class MatrixRenderer {
 
     calculate_node_x_coordinate(node) {
         const canvasXcenter = this.canvasWidth / 2;
-        const canvasYcenter = this.canvasHeight / 2;
         const cellSize = 0.5;
 
         const n = this.matrix.effective_node_count();
@@ -66,8 +64,7 @@ export class MatrixRenderer {
                 .attr("stroke-width", 0.05);
         }
 
-        // One group for each column.
-        // All nodes and edges are placed into their corresponding group.
+        // One group for each column. All nodes and edges are placed into their corresponding group.
         // This allows us to perform transformations on the columns including their children.
         const columnGroups = mainG.append("g")
             .selectAll(".node-group") // Use a class to identify the groups
@@ -86,19 +83,8 @@ export class MatrixRenderer {
             .attr("fill", d => d3.schemeObservable10[d.get_depth()])
             .style("cursor", "pointer")
             .on("click", (event, d) => {
-                const isHighlighted = d.get_highlighted();
-                const state = d.get_state();
-                if (state === State["Fully Compressed"]) {
-                    // if compressed, highlight all nodes of the same depth
-                    const nodes = this.nodes.filter(node => node.get_depth() === d.get_depth());
-                    nodes.forEach(node => {
-                        node.set_highlighted(!isHighlighted);
-                    });
-                    columnGroups.selectAll(`.node-depth-${d.get_depth()}`).classed("highlight", !isHighlighted);
-                } else {
-                    d.get_highlighted() ? d.set_highlighted(false) : d.set_highlighted(true);
-                    d3.select(event.currentTarget).classed("highlight", d.get_highlighted());
-                }
+                this.matrix.highlight_unh_nodes(d);
+                columnNodes.classed("highlight", d => d.get_highlighted());
             })
             .on("contextmenu", (event, d) => {
                 event.preventDefault();
@@ -121,7 +107,6 @@ export class MatrixRenderer {
 
         const columnVertLinesLeft = columnGroups.append("line")
             .attr("class", "vertical-grid-line-left")
-            .attr("id", d => `vertical-grid-line-left-${this.nodes.indexOf(d)}`)
             .attr("x1", -1 / 2 * cellSize)
             .attr("y1", 0)
             .attr("x2", -1 / 2 * cellSize)
