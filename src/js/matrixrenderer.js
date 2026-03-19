@@ -1,5 +1,6 @@
 "use strict";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { State } from './state.js';
 
 export class MatrixRenderer {
 
@@ -80,11 +81,13 @@ export class MatrixRenderer {
             .attr("cx", 0)
             .attr("cy", - cellSize / 2)
             .attr("r", radius)
-            .attr("fill", d => d3.schemeObservable10[d.get_depth()])
+            .attr("fill", "transparent")
+            .attr("stroke", d => d3.schemeObservable10[d.get_depth()])
+            .attr("stroke-width", 0.1)
             .style("cursor", "pointer")
-            .on("click", (event, d) => {
+            .on("click", (_event, d) => {
                 this.matrix.highlight_unh_nodes(d);
-                columnNodes.classed("highlight", d => d.get_highlighted());
+                columnNodes.classed("highlight-matrix", d => d.get_highlighted());
             })
             .on("contextmenu", (event, d) => {
                 event.preventDefault();
@@ -98,6 +101,9 @@ export class MatrixRenderer {
                 this.matrix.set_virtual_x_coordinates();
                 columnGroups.transition().duration(300)
                     .attr("transform", d => `translate(${this.calculate_node_x_coordinate(d)}, ${gridY})`);
+
+                columnNodes.transition().duration(300)
+                    .attr("fill", d => d.get_state() == State["Fully Compressed"] ? d3.schemeObservable10[d.get_depth()] : "transparent");
 
                 // adjust horizonal lines
                 mainG.selectAll(".horizontal-grid-line").transition().duration(300)
@@ -131,7 +137,9 @@ export class MatrixRenderer {
                 .attr("cx", - cellSize)
                 .attr("cy", this.nodes.indexOf(node) * cellSize + cellSize / 2)
                 .attr("r", radius)
-                .attr("fill", d3.schemeObservable10[node.get_depth()]);
+                .attr("fill", "transparent")
+                .attr("stroke", d3.schemeObservable10[node.get_depth()])
+                .attr("stroke-width", 0.1);
 
             firstNodeGroup.append("text")
                 .attr("x", -2 * cellSize)
