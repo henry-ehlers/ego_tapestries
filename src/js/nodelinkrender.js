@@ -109,9 +109,13 @@ export class NodeLinkRenderer {
                 // fade all nodes and edges that are not on the path to ego
                 const path_to_ego = this.nodelink.graph.find_path_to_ego(d);
                 node.classed("fade-nodelink", n => !path_to_ego.includes(n));
+                link.classed("fade-nodelink", l => !(path_to_ego.includes(l.target) && path_to_ego.includes(l.source)));
+                arc.classed("fade-nodelink", true);
             })
             .on("mouseout", () => {
                 node.classed("fade-nodelink", false);
+                link.classed("fade-nodelink", false);
+                arc.classed("fade-nodelink", false);
             });
 
         // add labels on hover
