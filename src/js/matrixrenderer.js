@@ -4,6 +4,7 @@ import { State } from './state.js';
 
 export class MatrixRenderer {
 
+
     constructor(matrix, canvasWidth, canvasHeight) {
         this.matrix = matrix;
         this.canvasWidth = canvasWidth;
@@ -15,7 +16,7 @@ export class MatrixRenderer {
 
     calculate_node_x_coordinate(node) {
         const canvasXcenter = this.canvasWidth / 2;
-        const cellSize = 0.5;
+        const cellSize = 0.6;
 
         const n = this.matrix.effective_node_count();
         const gridSize = cellSize * n;
@@ -33,7 +34,7 @@ export class MatrixRenderer {
     }
 
     calculate_gridsize() {
-        const cellSize = 0.5;
+        const cellSize = 0.6;
         const n = this.matrix.effective_node_count();
         const gridSize = cellSize * n;
         return gridSize;
@@ -42,7 +43,7 @@ export class MatrixRenderer {
     render(svg) {
         const canvasXcenter = this.canvasWidth / 2;
         const canvasYcenter = this.canvasHeight / 2;
-        const cellSize = 0.5;
+        const cellSize = 0.6;
 
         const n = this.matrix.effective_node_count();
         const gridSize = cellSize * n;
