@@ -104,6 +104,14 @@ export class NodeLinkRenderer {
                 // change radius of nodes in this depth level to indicate compression state
                 node.attr("r", d => d.get_state() === State["Fully Compressed"] ? nodeRadius * 2 : nodeRadius);
                 this.easeSimulation(simulation);
+            })
+            .on("mouseover", (_event, d) => {
+                // fade all nodes and edges that are not on the path to ego
+                const path_to_ego = this.nodelink.graph.find_path_to_ego(d);
+                node.classed("fade-nodelink", n => !path_to_ego.includes(n));
+            })
+            .on("mouseout", () => {
+                node.classed("fade-nodelink", false);
             });
 
         // add labels on hover
