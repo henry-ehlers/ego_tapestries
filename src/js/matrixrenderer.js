@@ -111,6 +111,8 @@ export class MatrixRenderer {
                     .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
             });
 
+        columnNodes.append("title").text(d => `${d.label}`);
+
         const columnVertLinesLeft = columnGroups.append("line")
             .attr("class", "vertical-grid-line-left")
             .attr("x1", -1 / 2 * cellSize)
