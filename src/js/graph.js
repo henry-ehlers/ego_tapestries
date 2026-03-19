@@ -66,6 +66,21 @@ export class Graph {
         }
     }
 
+    find_path_to_ego(node) {
+        let path = [];
+        let currentNode = node;
+        while (currentNode.get_id() != this.ego.get_id()) {
+            path.push(currentNode);
+            let nextNode = currentNode.get_adjacency().find(neighbor => neighbor.get_depth() < currentNode.get_depth());
+            if (!nextNode) {
+                throw new Error("No path to ego found!");
+            }
+            currentNode = nextNode;
+        }
+        path.push(this.ego);
+        return path.reverse();
+    }
+
     identify_singleton_nodes() {
         let depths = [...new Set(this.nodes.map(node => node.get_depth()))];
         for (let depth of depths) {

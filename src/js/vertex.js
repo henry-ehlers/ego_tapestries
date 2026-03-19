@@ -47,6 +47,10 @@ export class Vertex {
         this.adjacency = adjacency;
     }
 
+    get_adjacency() {
+        return this.adjacency;
+    }
+
     set_state(state) {
         this.state = state;
     }

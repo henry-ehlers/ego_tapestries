@@ -76,7 +76,7 @@ export class MatrixRenderer {
             .attr("transform", d => `translate(${this.calculate_node_x_coordinate(d)}, ${gridY})`);
 
         const columnNodes = columnGroups.append("circle")
-            .attr("id", d => `node-${d.get_depth()}-${d.get_id()}`)
+            .attr("id", d => `node-${d.get_id()}`)
             .attr("class", d => `node-depth-${d.get_depth()}`)
             .attr("cx", 0)
             .attr("cy", - cellSize / 2)
@@ -104,11 +104,20 @@ export class MatrixRenderer {
 
                 columnNodes.transition().duration(300)
                     .attr("fill", d => d.get_state() == State["Fully Compressed"] ? d3.schemeObservable10[d.get_depth()] : "transparent");
+                columnNodes.classed("highlight-matrix", d => d.get_highlighted());
 
                 // adjust horizonal lines
                 mainG.selectAll(".horizontal-grid-line").transition().duration(300)
                     .attr("x1", this.calculate_gridX())
                     .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
+            })
+            .on("mouseover", (_event, d) => {
+                // fade all nodes and edges that are not on the path to ego
+                const path_to_ego = this.matrix.graph.find_path_to_ego(d);
+                columnNodes.classed("fade-matrix", node => !path_to_ego.includes(node));
+            })
+            .on("mouseout", () => {
+                columnNodes.classed("fade-matrix", false);
             });
 
         columnNodes.append("title").text(d => `${d.label}`);
