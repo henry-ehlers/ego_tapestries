@@ -12,7 +12,7 @@ const state = {
     height: 50,
     rendererType: "nodelink", // "biofabric", "nodelink" or "matrix"
     layoutType: "layered",    // "force", "radial" or "layered"
-    dataPath: "./data/miserables.edges.json",
+    dataPath: "./data/star_wars_4.edges.json",
     graph: null,
     svg: null,
 };

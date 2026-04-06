@@ -116,9 +116,11 @@ export class MatrixRenderer {
                 // fade all nodes and edges that are not on the path to ego
                 const path_to_ego = this.matrix.graph.find_path_to_ego(d);
                 columnNodes.classed("fade-matrix", node => !path_to_ego.includes(node));
+                mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
             })
             .on("mouseout", () => {
                 columnNodes.classed("fade-matrix", false);
+                mainG.selectAll(".edge-rect").classed("fade-matrix", false);
             });
 
         columnNodes.append("title").text(d => `${d.label}`);
@@ -172,6 +174,8 @@ export class MatrixRenderer {
             const color = edge.get_depth() % 1 == 0.5 ? "#333" : d3.schemeObservable10[edge.get_depth()];
 
             mainG.select(`#node-group-${sourceId}`).append("rect")
+                .datum(edge)
+                .attr("class", "edge-rect")
                 .attr("x", -1 / 3 * cellSize)
                 .attr("y", targetIndex * cellSize + 1 / 6 * cellSize)
                 .attr("width", cellSize * 2 / 3)
@@ -181,6 +185,8 @@ export class MatrixRenderer {
                 .attr("fill", color);
 
             mainG.select(`#node-group-${targetId}`).append("rect")
+                .datum(edge)
+                .attr("class", "edge-rect")
                 .attr("x", -1 / 3 * cellSize)
                 .attr("y", sourceIndex * cellSize + 1 / 6 * cellSize)
                 .attr("width", cellSize * 2 / 3)
