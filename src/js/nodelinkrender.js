@@ -280,16 +280,16 @@ export class NodeLinkRenderer {
         }
 
         const simulation = d3.forceSimulation(this.nodes)
-            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.05).distance(2))
+            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.2).distance(2.5))
             .force("charge", d3.forceManyBody().strength(-0.5))
 
             // Use custom radial force to pull nodes into concentric circles based on depth
-            .force("radius0", customRadialForce(radiusPerDepth * 0, canvasXcenter, canvasYcenter, 0).strength(1.5))
-            .force("radius1", customRadialForce(radiusPerDepth * 1, canvasXcenter, canvasYcenter, 1).strength(1.5))
-            .force("radius2", customRadialForce(radiusPerDepth * 2, canvasXcenter, canvasYcenter, 2).strength(1.5))
-            .force("radius3", customRadialForce(radiusPerDepth * 3, canvasXcenter, canvasYcenter, 3).strength(1.5))
-            .force("radius4", customRadialForce(radiusPerDepth * 4, canvasXcenter, canvasYcenter, 4).strength(1.5))
-            .force("radius5", customRadialForce(radiusPerDepth * 5, canvasXcenter, canvasYcenter, 5).strength(1.5));
+            .force("radius0", customRadialForce(radiusPerDepth * 0, canvasXcenter, canvasYcenter, 0).strength(1))
+            .force("radius1", customRadialForce(radiusPerDepth * 1, canvasXcenter, canvasYcenter, 1).strength(1))
+            .force("radius2", customRadialForce(radiusPerDepth * 2, canvasXcenter, canvasYcenter, 2).strength(1))
+            .force("radius3", customRadialForce(radiusPerDepth * 3, canvasXcenter, canvasYcenter, 3).strength(1))
+            .force("radius4", customRadialForce(radiusPerDepth * 4, canvasXcenter, canvasYcenter, 4).strength(1))
+            .force("radius5", customRadialForce(radiusPerDepth * 5, canvasXcenter, canvasYcenter, 5).strength(1));
 
         this.easeSimulation(simulation);
         return simulation;
