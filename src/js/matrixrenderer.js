@@ -116,10 +116,12 @@ export class MatrixRenderer {
                 // fade all nodes and edges that are not on the path to ego
                 const path_to_ego = this.matrix.graph.find_path_to_ego(d);
                 columnNodes.classed("fade-matrix", node => !path_to_ego.includes(node));
+                mainG.selectAll(".node-left").classed("fade-matrix", node => !path_to_ego.includes(node));
                 mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
             })
             .on("mouseout", () => {
                 columnNodes.classed("fade-matrix", false);
+                mainG.selectAll(".node-left").classed("fade-matrix", false);
                 mainG.selectAll(".edge-rect").classed("fade-matrix", false);
             });
 
@@ -147,6 +149,7 @@ export class MatrixRenderer {
         this.nodes.forEach(node => {
             const firstNodeGroup = mainG.select(`#node-group-${this.nodes[0].get_id()}`)
             firstNodeGroup.append("circle")
+                .datum(node)
                 .attr("class", "node-left")
                 .attr("cx", - cellSize)
                 .attr("cy", this.nodes.indexOf(node) * cellSize + cellSize / 2)
