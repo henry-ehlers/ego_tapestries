@@ -34,28 +34,30 @@ export class NodeLinkRenderer {
         simulation.on("tick", ticked);
 
         const link = mainG.append("g")
-            .attr("stroke", "#9c9c9c")
-            .attr("stroke-opacity", 0.6)
             .attr("stroke-width", edgeWidth)
             .selectAll("line")
             .data(this.edges)
-            .join("line");
+            .join("line")
+            .attr("color", d => (d.get_depth() % 1) === 0.5 ? "#c0c0c0" : "transparent") // color is not used for svg elements, but by setting it we can access the color with currentColor in CSS.
+            .attr("stroke", d => (d.get_depth() % 1) === 0.5 ? "#c0c0c0" : "transparent"); // links between different depths are gray lines, arcs are in color within same depth.
 
         const arc = mainG.append("g")
             .attr("fill", "none")
             .attr("stroke", "none")
-            .attr("stroke-opacity", 0.6)
             .attr("stroke-width", edgeWidth)
             .selectAll("path")
             .data(this.edges)
-            .join("path");
+            .join("path")
+            .attr("color", d => (d.get_depth() % 1) === 0.5 ? "transparent" : d3.schemeObservable10[d.get_depth()]) // color is not used for svg elements, but by setting it we can access the color with currentColor in CSS.
+            .attr("stroke", d => (d.get_depth() % 1) === 0.5 ? "transparent" : d3.schemeObservable10[d.get_depth()]); // links between different depths are gray lines, arcs are in color within same depth.
 
         const node = mainG.append("g")
-            .attr("fill", "#15ff00")
             .selectAll("circle")
             .data(this.nodes)
             .join("circle")
             .attr("r", nodeRadius)
+            .attr("color", d => d3.schemeObservable10[d.get_depth()]) // ditto
+            .attr("fill", d => d3.schemeObservable10[d.get_depth()])
             .call(drag(simulation))
             .style("cursor", "pointer")
             .on("click", (event, d) => {
@@ -108,14 +110,14 @@ export class NodeLinkRenderer {
             .on("mouseover", (_event, d) => {
                 // fade all nodes and edges that are not on the path to ego
                 const path_to_ego = this.nodelink.graph.find_path_to_ego(d);
-                node.classed("fade-nodelink", n => !path_to_ego.includes(n));
-                link.classed("fade-nodelink", l => !(path_to_ego.includes(l.target) && path_to_ego.includes(l.source)));
-                arc.classed("fade-nodelink", true);
+                node.classed("fade-nodelink-node", n => !path_to_ego.includes(n));
+                link.classed("fade-nodelink-link", l => !(path_to_ego.includes(l.target) && path_to_ego.includes(l.source)));
+                arc.classed("fade-nodelink-link", true);
             })
             .on("mouseout", () => {
-                node.classed("fade-nodelink", false);
-                link.classed("fade-nodelink", false);
-                arc.classed("fade-nodelink", false);
+                node.classed("fade-nodelink-node", false);
+                link.classed("fade-nodelink-link", false);
+                arc.classed("fade-nodelink-link", false);
             });
 
         // add labels on hover
@@ -129,14 +131,6 @@ export class NodeLinkRenderer {
             });
         }
 
-        // adjust colors based on depth
-        // links between different depths are gray lines. arcs are in color within same depth.
-        node.attr("fill", ({ index: i }) => ((this.nodes[i].get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[this.nodes[i].get_depth()]);
-        link.attr("stroke", ({ index: i }) => (this.edges[i].get_depth() % 1) === 0.5 ? "#9c9c9c" : "none");
-        arc.attr("stroke", ({ index: i }) => d3.schemeObservable10[this.edges[i].get_depth()]);
-
-        // todo this is just based on our default dataset.
-        node.filter(d => d.get_label() === "Napoleon").attr("fill", d3.schemeCategory10[0]);
 
         function ticked() {
             link
