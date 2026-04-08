@@ -62,15 +62,7 @@ export class NodeLinkRenderer {
             .call(drag(simulation))
             .style("cursor", "pointer")
             .on("click", (event, d) => {
-                // highlight nodes
-                if (d.get_state() === State["Fully Compressed"]) { // toggle highlight all nodes in this depth level
-                    const isHighlighted = d.get_highlighted();
-                    this.nodes.filter(n => n.get_depth() === d.get_depth()).forEach(n => n.set_highlighted(!isHighlighted));
-                    node.filter(n => n.get_depth() === d.get_depth()).classed("highlight", !isHighlighted);
-                } else {
-                    d.get_highlighted() ? d.set_highlighted(false) : d.set_highlighted(true);
-                    d3.select(event.currentTarget).classed("highlight", d.get_highlighted());
-                }
+                this.globalDispatcher.call("highlight", this, d.get_id());
             })
             .on("contextmenu", (event, d) => {
                 // change ego and rerender everything
@@ -90,7 +82,21 @@ export class NodeLinkRenderer {
                 this.globalDispatcher.call("hover-out");
             });
 
+        node.append("title").text(d => d.get_label());
+
         // Dispatcher callbacks for all interactions
+
+        this.globalDispatcher.on(`highlight.nodelink.${this.nodelink.layoutType}`, (id) => {
+            const selected_node = this.nodes.find(n => n.get_id() === id);
+            if (selected_node.get_state() === State["Fully Compressed"]) { // toggle highlight all nodes in this depth level
+                const isHighlighted = selected_node.get_highlighted();
+                this.nodes.filter(n => n.get_depth() === selected_node.get_depth()).forEach(n => n.set_highlighted(!isHighlighted));
+                node.filter(n => n.get_depth() === selected_node.get_depth()).classed("highlight", !isHighlighted);
+            } else {
+                selected_node.get_highlighted() ? selected_node.set_highlighted(false) : selected_node.set_highlighted(true);
+                node.filter(n => n.get_id() === id).classed("highlight", selected_node.get_highlighted());
+            }
+        });
 
         this.globalDispatcher.on(`compression.nodelink.${this.nodelink.layoutType}`, (id) => {
             const selected_node = this.nodes.find(n => n.get_id() === id);
@@ -136,10 +142,6 @@ export class NodeLinkRenderer {
             link.classed("fade-nodelink-link", false);
             arc.classed("fade-nodelink-link", false);
         });
-
-        // add labels on hover
-        node.append("title")
-            .text(d => d.get_label());
 
         function unsetFixedPositions(nodes) {
             nodes.forEach(n => {

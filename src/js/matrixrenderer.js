@@ -87,8 +87,7 @@ export class MatrixRenderer {
             .attr("stroke-width", 0.1)
             .style("cursor", "pointer")
             .on("click", (_event, d) => {
-                this.matrix.highlight_unh_nodes(d);
-                columnNodes.classed("highlight-matrix", d => d.get_highlighted());
+                this.globalDispatcher.call("highlight", this, d.get_id());
             })
             .on("contextmenu", (event, d) => {
                 event.preventDefault();
@@ -107,6 +106,12 @@ export class MatrixRenderer {
             });
 
         // Dispatcher callbacks for all interactions
+
+        this.globalDispatcher.on("highlight.matrix", (id) => {
+            const n = this.nodes.find(n => n.get_id() === id);
+            this.matrix.highlight_unh_nodes(n);
+            columnNodes.classed("highlight-matrix", d => d.get_highlighted());
+        });
 
         this.globalDispatcher.on("compression.matrix", (id) => {
             const n = this.nodes.find(n => n.get_id() === id);
