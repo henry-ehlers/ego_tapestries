@@ -17,7 +17,7 @@ const state = {
 
 function render() {
 
-    const global_dispatcher = d3.dispatch("highlight", "hover-in", "hover-out"); 
+    const global_dispatcher = d3.dispatch("highlight", "hover-in", "hover-out", "compression"); 
 
     const biofabric_svg = d3.select("#biofabric-svg");
     const biofabric = new BioFabric(new Graph(state.data));

@@ -6,7 +6,7 @@ import customYforce from "./customYforce.js";
 
 export class NodeLinkRenderer {
 
-    constructor(nodelink, canvasWidth, canvasHeight, globalDispatcher = d3.dispatch("highlight", "hover-in", "hover-out")) { // default dispatcher if not provided, but can be shared across renderers for coordinated interactions
+    constructor(nodelink, canvasWidth, canvasHeight, globalDispatcher = d3.dispatch("highlight", "hover-in", "hover-out", "compression")) { // default dispatcher if not provided, but can be shared across renderers for coordinated interactions
         this.nodelink = nodelink;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -81,32 +81,7 @@ export class NodeLinkRenderer {
                 this.render(svg);
             })
             .on("dblclick", (_event, d) => {
-                console.log(`Clicked on node ${d.get_label()} with state ${State[d.get_state()]}`);
-                const depth = d.get_depth();
-                const x = d.get_x();
-                const y = d.get_y();
-
-                switch (d.get_state()) {
-                    case State["Uncompressed"]:
-                        this.nodes.filter(n => n.get_depth() === depth).forEach(n => {
-                            n.set_state(State["Fully Compressed"]);
-                            n.oldx = n.get_x();
-                            n.oldy = n.get_y();
-                            n.fx = x;
-                            n.fy = y;
-                        });
-                        break;
-                    case State["Fully Compressed"]:
-                        this.nodes.filter(n => n.get_depth() === depth).forEach(n => {
-                            n.set_state(State["Uncompressed"]);
-
-                            unsetFixedPositions(this.nodes.filter(n => n.get_depth() === depth));
-                        });
-                        break;
-                }
-                // change radius of nodes in this depth level to indicate compression state
-                node.attr("r", d => d.get_state() === State["Fully Compressed"] ? nodeRadius * 2 : nodeRadius);
-                this.easeSimulation(simulation);
+                this.globalDispatcher.call("compression", this, d.get_id());
             })
             .on("mouseover", (_event, d) => {
                 this.globalDispatcher.call("hover-in", this, d.get_id());
@@ -114,6 +89,38 @@ export class NodeLinkRenderer {
             .on("mouseout", () => {
                 this.globalDispatcher.call("hover-out");
             });
+
+        // Dispatcher callbacks for all interactions
+
+        this.globalDispatcher.on(`compression.nodelink.${this.nodelink.layoutType}`, (id) => {
+            const selected_node = this.nodes.find(n => n.get_id() === id);
+            console.log(`Clicked on node ${selected_node.get_label()} with state ${State[selected_node.get_state()]}`);
+            const depth = selected_node.get_depth();
+            const x = selected_node.get_x();
+            const y = selected_node.get_y();
+
+            switch (selected_node.get_state()) {
+                case State["Uncompressed"]:
+                    this.nodes.filter(n => n.get_depth() === depth).forEach(n => {
+                        n.set_state(State["Fully Compressed"]);
+                        n.oldx = n.get_x();
+                        n.oldy = n.get_y();
+                        n.fx = x;
+                        n.fy = y;
+                    });
+                    break;
+                case State["Fully Compressed"]:
+                    this.nodes.filter(n => n.get_depth() === depth).forEach(n => {
+                        n.set_state(State["Uncompressed"]);
+
+                        unsetFixedPositions(this.nodes.filter(n => n.get_depth() === depth));
+                    });
+                    break;
+            }
+            // change radius of nodes in this depth level to indicate compression state
+            node.attr("r", d => d.get_state() === State["Fully Compressed"] ? nodeRadius * 2 : nodeRadius);
+            this.easeSimulation(simulation);
+        });
 
         this.globalDispatcher.on(`hover-in.nodelink.${this.nodelink.layoutType}`, (id) => {
             // fade all nodes and edges that are not on the path to ego
@@ -140,7 +147,6 @@ export class NodeLinkRenderer {
                 n.fy = null;
             });
         }
-
 
         function ticked() {
             link
