@@ -4,11 +4,11 @@ import { State } from './state.js';
 
 export class MatrixRenderer {
 
-
-    constructor(matrix, canvasWidth, canvasHeight) {
+    constructor(matrix, canvasWidth, canvasHeight, globalDispatcher = d3.dispatch("highlight", "hover-in", "hover-out", "compression")) { // default dispatcher if not provided, but can be shared across renderers for coordinated interactions
         this.matrix = matrix;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+        this.globalDispatcher = globalDispatcher;
 
         this.nodes = this.matrix.graph.nodes;
         this.edges = this.matrix.graph.edges;
@@ -87,8 +87,7 @@ export class MatrixRenderer {
             .attr("stroke-width", 0.1)
             .style("cursor", "pointer")
             .on("click", (_event, d) => {
-                this.matrix.highlight_unh_nodes(d);
-                columnNodes.classed("highlight-matrix", d => d.get_highlighted());
+                this.globalDispatcher.call("highlight", this, d.get_id());
             })
             .on("contextmenu", (event, d) => {
                 event.preventDefault();
@@ -97,33 +96,56 @@ export class MatrixRenderer {
                 this.render(svg);
             })
             .on("dblclick", (_event, d) => {
-                // compress and uncompress
-                this.matrix.compress_unc_nodes_by_depth(d);
-                this.matrix.set_virtual_x_coordinates();
-                columnGroups.transition().duration(300)
-                    .attr("transform", d => `translate(${this.calculate_node_x_coordinate(d)}, ${gridY})`);
-
-                columnNodes.transition().duration(300)
-                    .attr("fill", d => d.get_state() == State["Fully Compressed"] ? d3.schemeObservable10[d.get_depth()] : "transparent");
-                columnNodes.classed("highlight-matrix", d => d.get_highlighted());
-
-                // adjust horizonal lines
-                mainG.selectAll(".horizontal-grid-line").transition().duration(300)
-                    .attr("x1", this.calculate_gridX())
-                    .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
+                this.globalDispatcher.call("compression", this, d.get_id());
             })
             .on("mouseover", (_event, d) => {
-                // fade all nodes and edges that are not on the path to ego
-                const path_to_ego = this.matrix.graph.find_path_to_ego(d);
-                columnNodes.classed("fade-matrix", node => !path_to_ego.includes(node));
-                mainG.selectAll(".node-left").classed("fade-matrix", node => !path_to_ego.includes(node));
-                mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
+                this.globalDispatcher.call("hover-in", this, d.get_id());
             })
             .on("mouseout", () => {
-                columnNodes.classed("fade-matrix", false);
-                mainG.selectAll(".node-left").classed("fade-matrix", false);
-                mainG.selectAll(".edge-rect").classed("fade-matrix", false);
+                this.globalDispatcher.call("hover-out");
             });
+
+        // Dispatcher callbacks for all interactions
+
+        this.globalDispatcher.on("highlight.matrix", (id) => {
+            const n = this.nodes.find(n => n.get_id() === id);
+            this.matrix.highlight_unh_nodes(n);
+            columnNodes.classed("highlight-matrix", d => d.get_highlighted());
+        });
+
+        this.globalDispatcher.on("compression.matrix", (id) => {
+            const n = this.nodes.find(n => n.get_id() === id);
+            // compress and uncompress
+            this.matrix.compress_unc_nodes_by_depth(n);
+            this.matrix.set_virtual_x_coordinates();
+            columnGroups.transition().duration(300)
+                .attr("transform", d => `translate(${this.calculate_node_x_coordinate(d)}, ${gridY})`);
+
+            columnNodes.transition().duration(300)
+                .attr("fill", d => d.get_state() == State["Fully Compressed"] ? d3.schemeObservable10[d.get_depth()] : "transparent");
+            columnNodes.classed("highlight-matrix", d => d.get_highlighted());
+
+            // adjust horizonal lines
+            mainG.selectAll(".horizontal-grid-line").transition().duration(300)
+                .attr("x1", this.calculate_gridX())
+                .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
+        });
+
+        this.globalDispatcher.on("hover-in.matrix", (id) => {
+            // fade all nodes and edges that are not on the path to ego
+            const n = this.nodes.find(n => n.get_id() === id);
+            const path_to_ego = this.matrix.graph.find_path_to_ego(n);
+            columnNodes.classed("fade-matrix", node => !path_to_ego.includes(node));
+            mainG.selectAll(".node-left").classed("fade-matrix", node => !path_to_ego.includes(node));
+            mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
+
+        });
+
+        this.globalDispatcher.on("hover-out.matrix", () => {
+            columnNodes.classed("fade-matrix", false);
+            mainG.selectAll(".node-left").classed("fade-matrix", false);
+            mainG.selectAll(".edge-rect").classed("fade-matrix", false);
+        });
 
         columnNodes.append("title").text(d => `${d.label}`);
 
