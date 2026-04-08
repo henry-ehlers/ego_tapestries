@@ -5,10 +5,11 @@ import { State } from './state.js';
 export class MatrixRenderer {
 
 
-    constructor(matrix, canvasWidth, canvasHeight) {
+    constructor(matrix, canvasWidth, canvasHeight, globalDispatcher = d3.dispatch("highlight", "hover-in", "hover-out")) { // default dispatcher if not provided, but can be shared across renderers for coordinated interactions
         this.matrix = matrix;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+        this.globalDispatcher = globalDispatcher;
 
         this.nodes = this.matrix.graph.nodes;
         this.edges = this.matrix.graph.edges;
@@ -113,17 +114,27 @@ export class MatrixRenderer {
                     .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
             })
             .on("mouseover", (_event, d) => {
-                // fade all nodes and edges that are not on the path to ego
-                const path_to_ego = this.matrix.graph.find_path_to_ego(d);
-                columnNodes.classed("fade-matrix", node => !path_to_ego.includes(node));
-                mainG.selectAll(".node-left").classed("fade-matrix", node => !path_to_ego.includes(node));
-                mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
+                this.globalDispatcher.call("hover-in", this, d.get_id());
             })
             .on("mouseout", () => {
-                columnNodes.classed("fade-matrix", false);
-                mainG.selectAll(".node-left").classed("fade-matrix", false);
-                mainG.selectAll(".edge-rect").classed("fade-matrix", false);
+                this.globalDispatcher.call("hover-out");
             });
+
+        this.globalDispatcher.on("hover-in.matrix", (id) => {
+            // fade all nodes and edges that are not on the path to ego
+            const n = this.nodes.find(n => n.get_id() === id);
+            const path_to_ego = this.matrix.graph.find_path_to_ego(n);
+            columnNodes.classed("fade-matrix", node => !path_to_ego.includes(node));
+            mainG.selectAll(".node-left").classed("fade-matrix", node => !path_to_ego.includes(node));
+            mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
+
+        });
+
+        this.globalDispatcher.on("hover-out.matrix", () => {
+            columnNodes.classed("fade-matrix", false);
+            mainG.selectAll(".node-left").classed("fade-matrix", false);
+            mainG.selectAll(".edge-rect").classed("fade-matrix", false);
+        });
 
         columnNodes.append("title").text(d => `${d.label}`);
 

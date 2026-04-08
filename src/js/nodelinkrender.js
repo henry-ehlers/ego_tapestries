@@ -6,10 +6,11 @@ import customYforce from "./customYforce.js";
 
 export class NodeLinkRenderer {
 
-    constructor(nodelink, canvasWidth, canvasHeight) {
+    constructor(nodelink, canvasWidth, canvasHeight, globalDispatcher = d3.dispatch("highlight", "hover-in", "hover-out")) { // default dispatcher if not provided, but can be shared across renderers for coordinated interactions
         this.nodelink = nodelink;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+        this.globalDispatcher = globalDispatcher;
 
         this.nodes = this.nodelink.graph.nodes;
         this.edges = this.nodelink.graph.edges;
@@ -108,17 +109,26 @@ export class NodeLinkRenderer {
                 this.easeSimulation(simulation);
             })
             .on("mouseover", (_event, d) => {
-                // fade all nodes and edges that are not on the path to ego
-                const path_to_ego = this.nodelink.graph.find_path_to_ego(d);
-                node.classed("fade-nodelink-node", n => !path_to_ego.includes(n));
-                link.classed("fade-nodelink-link", l => !(path_to_ego.includes(l.target) && path_to_ego.includes(l.source)));
-                arc.classed("fade-nodelink-link", true);
+                this.globalDispatcher.call("hover-in", this, d.get_id());
             })
             .on("mouseout", () => {
-                node.classed("fade-nodelink-node", false);
-                link.classed("fade-nodelink-link", false);
-                arc.classed("fade-nodelink-link", false);
+                this.globalDispatcher.call("hover-out");
             });
+
+        this.globalDispatcher.on(`hover-in.nodelink.${this.nodelink.layoutType}`, (id) => {
+            // fade all nodes and edges that are not on the path to ego
+            const n = this.nodes.find(n => n.get_id() === id); // node objects are different in each renderer, but they have the same id.
+            const path_to_ego = this.nodelink.graph.find_path_to_ego(n);
+            node.classed("fade-nodelink-node", n => !path_to_ego.includes(n));
+            link.classed("fade-nodelink-link", l => !(path_to_ego.includes(l.target) && path_to_ego.includes(l.source)));
+            arc.classed("fade-nodelink-link", true);
+        });
+
+        this.globalDispatcher.on(`hover-out.nodelink.${this.nodelink.layoutType}`, () => {
+            node.classed("fade-nodelink-node", false);
+            link.classed("fade-nodelink-link", false);
+            arc.classed("fade-nodelink-link", false);
+        });
 
         // add labels on hover
         node.append("title")
