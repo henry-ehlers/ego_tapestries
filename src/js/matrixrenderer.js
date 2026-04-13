@@ -2,6 +2,8 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { State } from './state.js';
 
+const cellSize = 1.0;
+
 export class MatrixRenderer {
 
     constructor(matrix, canvasWidth, canvasHeight, globalDispatcher = d3.dispatch("highlight", "hover-in", "hover-out", "compression")) { // default dispatcher if not provided, but can be shared across renderers for coordinated interactions
@@ -16,7 +18,6 @@ export class MatrixRenderer {
 
     calculate_node_x_coordinate(node) {
         const canvasXcenter = this.canvasWidth / 2;
-        const cellSize = 0.6;
 
         const n = this.matrix.effective_node_count();
         const gridSize = cellSize * n;
@@ -34,7 +35,6 @@ export class MatrixRenderer {
     }
 
     calculate_gridsize() {
-        const cellSize = 0.6;
         const n = this.matrix.effective_node_count();
         const gridSize = cellSize * n;
         return gridSize;
@@ -43,7 +43,6 @@ export class MatrixRenderer {
     render(svg) {
         const canvasXcenter = this.canvasWidth / 2;
         const canvasYcenter = this.canvasHeight / 2;
-        const cellSize = 0.6;
 
         const n = this.matrix.effective_node_count();
         const gridSize = cellSize * n;
