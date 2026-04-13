@@ -21,7 +21,7 @@ function render() {
 
     const biofabric_svg = d3.select("#biofabric-svg");
     const biofabric = new BioFabric(new Graph(state.data));
-    const renderer = new BioFabricRenderer(biofabric, state.width, state.height);
+    const renderer = new BioFabricRenderer(biofabric, state.width, state.height, global_dispatcher);
     renderer.render(biofabric_svg);
 
     const force_svg = d3.select("#force-svg");

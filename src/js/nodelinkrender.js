@@ -3,6 +3,7 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { State } from './state.js';
 import customRadialForce from './customradialforce.js';
 import customYforce from "./customYforce.js";
+import { CompressionMsg } from "./CompressionMsg.js";
 
 export class NodeLinkRenderer {
 
@@ -73,7 +74,7 @@ export class NodeLinkRenderer {
                 this.render(svg);
             })
             .on("dblclick", (_event, d) => {
-                this.globalDispatcher.call("compression", this, d.get_id());
+                this.globalDispatcher.call("compression", this, new CompressionMsg(d.get_id(), true));
             })
             .on("mouseover", (_event, d) => {
                 this.globalDispatcher.call("hover-in", this, d.get_id());
@@ -98,7 +99,19 @@ export class NodeLinkRenderer {
             }
         });
 
-        this.globalDispatcher.on(`compression.nodelink.${this.nodelink.layoutType}`, (id) => {
+        this.globalDispatcher.on(`compression.nodelink.${this.nodelink.layoutType}`, (msg) => {
+            let id;
+            
+            if (!msg.fullcompression) {
+                return;
+            } else if (msg.type === "string") {
+                id = msg.msg;
+            } else {
+                const depth = msg.msg.get_depth();
+                const any_node_of_depth = this.nodes.find(n => n.get_depth() === depth);
+                id = any_node_of_depth.get_id();
+            }
+
             const selected_node = this.nodes.find(n => n.get_id() === id);
             console.log(`Clicked on node ${selected_node.get_label()} with state ${State[selected_node.get_state()]}`);
             const depth = selected_node.get_depth();

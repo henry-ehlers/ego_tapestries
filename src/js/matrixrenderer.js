@@ -1,6 +1,7 @@
 "use strict";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { State } from './state.js';
+import { CompressionMsg } from "./CompressionMsg.js";
 
 const cellSize = 1.0;
 
@@ -95,7 +96,7 @@ export class MatrixRenderer {
                 this.render(svg);
             })
             .on("dblclick", (_event, d) => {
-                this.globalDispatcher.call("compression", this, d.get_id());
+                this.globalDispatcher.call("compression", this, new CompressionMsg(d.get_id(), true));
             })
             .on("mouseover", (_event, d) => {
                 this.globalDispatcher.call("hover-in", this, d.get_id());
@@ -112,7 +113,20 @@ export class MatrixRenderer {
             columnNodes.classed("highlight-matrix", d => d.get_highlighted());
         });
 
-        this.globalDispatcher.on("compression.matrix", (id) => {
+        this.globalDispatcher.on("compression.matrix", (msg) => {
+            let id;
+            
+            // extract id from message
+            if (!msg.fullcompression) {
+                return;
+            } else if (msg.type === "string") {
+                id = msg.msg;
+            } else {
+                const depth = msg.msg.get_depth();
+                const any_node_of_depth = this.nodes.find(n => n.get_depth() === depth);
+                id = any_node_of_depth.get_id();
+            }
+
             const n = this.nodes.find(n => n.get_id() === id);
             // compress and uncompress
             this.matrix.compress_unc_nodes_by_depth(n);
