@@ -244,10 +244,10 @@ export class BioFabric {
     }
     calculcate_depth_x_coordinates() {
         let emptyDepths = [];
-        console.log("Graph Depth: " + this.graph.get_depth());
-        console.log(this.edgeDepths.filter(depthIcon => (depthIcon.get_depth() <= this.graph.get_depth())));
+        // console.log("Graph Depth: " + this.graph.get_depth());
+        // console.log(this.edgeDepths.filter(depthIcon => (depthIcon.get_depth() <= this.graph.get_depth())));
         for (let depthIndex = 0; depthIndex < this.edgeDepths.filter(depthIcon => (depthIcon.get_depth() <= this.graph.get_depth())).length; depthIndex++) {
-            console.log("Depth Index: " + depthIndex);
+            // console.log("Depth Index: " + depthIndex);
             let currEdgeDepthIcon = this.edgeDepths[depthIndex];
             if (depthIndex == 0) {
                 currEdgeDepthIcon.set_x(0);

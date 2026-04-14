@@ -113,7 +113,6 @@ export class NodeLinkRenderer {
             }
 
             const selected_node = this.nodes.find(n => n.get_id() === id);
-            console.log(`Clicked on node ${selected_node.get_label()} with state ${State[selected_node.get_state()]}`);
             const depth = selected_node.get_depth();
             const x = selected_node.get_x();
             const y = selected_node.get_y();
