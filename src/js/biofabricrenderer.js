@@ -189,7 +189,10 @@ export class BioFabricRenderer {
                 .on("dblclick", () => {
                     // Check if Depth is not Singleton/Empty -> update drawing if not so
                     if ((nodeDepthIcon.get_state() != State["Singleton"]) && (nodeDepthIcon.get_state() != State["Empty"])) {
-                        this.globalDispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, false, "node")); // leave false for now while implementing
+                        // we only fully compress if the edge is already fully compressed and we are compressing the node, or if we are already fully compressed and are decompressing the node.
+                        const edgePendant = this.biofabric.edgeDepths.find(edgeDepth => edgeDepth.get_depth() == nodeDepthIcon.get_depth());
+                        const isFullCompression = (nodeDepthIcon.get_state() == State["Uncompressed"] && edgePendant.get_state() == State["Fully Compressed"]) || (nodeDepthIcon.get_state() == State["Fully Compressed"] && edgePendant.get_state() == State["Fully Compressed"]);
+                        this.globalDispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, isFullCompression, "node"));
                     }
                 })
                 .style("cursor", () => {
@@ -330,14 +333,44 @@ export class BioFabricRenderer {
                 .on("dblclick", () => {
                     // Ensure Current Depth's EdgeSet is not Singleton or Empty
                     if ((edgeDepth.get_state() != State["Singleton"]) && (edgeDepth.get_state() != State["Empty"])) {
-                        this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, false, "edge")); // leave false for now while implementing
+                        let isFullCompression = false;
+                        // we only fully compress if the node is already fully compressed and we are compressing the edge fully, or if we are already fully compressed and are decompressing the node.
+                        if (edgeDepth.get_depth() % 1 == 0) { // only fully compress if its a full depth, not a half depth
+                            const nodePendant = this.biofabric.nodeDepths.find(nodeDepth => nodeDepth.get_depth() == edgeDepth.get_depth());
+                            isFullCompression = (edgeDepth.get_state() == State["Partially Compressed"] && nodePendant.get_state() == State["Fully Compressed"]) || (edgeDepth.get_state() == State["Fully Compressed"] && nodePendant.get_state() == State["Fully Compressed"]);
+                        }
+                        this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, isFullCompression, "edge"));
                     }
                 });
         }
 
         this.globalDispatcher.on("compression.biofabric", (msg) => {
-            if (msg.nodeOrEdge == "node") {
-                const nodeDepthIcon = msg.msg;
+            let foundNodeDepthIcon = null;
+            let foundEdgeDepth = null;
+            const isByNonBioFabric = msg.type === "string";
+
+            // Decompose the message based on its type
+            // the message cam from the other visualizations anc contains only the ID of the compressed node.
+            if (isByNonBioFabric) {
+                const nodeID = msg.msg;
+                const node = this.biofabric.graph.nodes.find(node => node.get_id() == nodeID);
+                foundNodeDepthIcon = nodeDepthIcons.find(nodeDepthIcon => nodeDepthIcon.get_depth() == node.get_depth());
+                foundEdgeDepth = this.biofabric.edgeDepths.find(edgeDepth => edgeDepth.get_depth() == node.get_depth());
+            } else if (msg.type === "object" && msg.nodeOrEdge == "node") {
+                foundNodeDepthIcon = msg.msg;
+            } else if (msg.type === "object" && msg.nodeOrEdge == "edge") {
+                foundEdgeDepth = msg.msg;
+            } else {
+                console.error("Unknown message type received in BioFabric Renderer: " + msg);
+                return;
+            }
+
+            const nodeStateBeforeTransition = foundNodeDepthIcon ? foundNodeDepthIcon.get_state() : null;
+            const edgeStateBeforeTransition = foundEdgeDepth ? foundEdgeDepth.get_state() : null;
+
+            if (msg.nodeOrEdge == "node" || isByNonBioFabric) {
+                const nodeDepthIcon = foundNodeDepthIcon;
+                console.log("Toggling Node Depth Icon with depth " + nodeDepthIcon.get_depth() + " and state " + State[nodeDepthIcon.get_state()])
                 let depthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepthIcon.get_depth());
 
                 // Switch the State of the DepthIcon
@@ -420,10 +453,8 @@ export class BioFabricRenderer {
                     .duration(transitionDuration)
                     .attr("opacity", () => {
                         if (nodeDepthIcon.get_state() == State["Uncompressed"]) {
-                            console.log("State Uncompressed")
                             return "0"
                         } else {
-                            console.log("State Uncompressed")
                             return "1"
                         }
                     })
@@ -465,8 +496,10 @@ export class BioFabricRenderer {
                         .attr("cy", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
 
                 }
-            } else if (msg.nodeOrEdge == "edge") {
-                const edgeDepth = msg.msg;
+            }
+
+            if (msg.nodeOrEdge == "edge" || isByNonBioFabric) {
+                const edgeDepth = foundEdgeDepth;
 
                 // Switch the State of the DepthIcon
                 switch (edgeDepth.get_state()) {
@@ -565,8 +598,6 @@ export class BioFabricRenderer {
                             return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
                         }
                     });
-            } else {
-                console.log("Unknown Compression Message Type")
             }
         });
 
