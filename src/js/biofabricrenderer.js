@@ -219,6 +219,7 @@ export class BioFabricRenderer {
                 .append("line")
                 .attr("id", "edgeLine-" + edge.get_id())
                 .attr("class", "edgeLine")
+                .datum(edge) // edge data
                 .attr("y1", this.biofabric.graph.nodes[topNodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("y2", this.biofabric.graph.nodes[lowNodeIndex].get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("x1", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
@@ -231,21 +232,41 @@ export class BioFabricRenderer {
                 .append("circle")
                 .attr("id", "edgeCircleSource-" + edge.get_id())
                 .attr('class', "edgecircle")
+                .datum(edge.endpoints[0]) // source vertex data
                 .attr("cy", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
                 .attr("r", 30 / this.biofabric.graph.edges.filter(e => e.get_depth() <= this.biofabric.graph.get_depth()).length)
                 .attr("stroke-width", "0")
                 .attr("fill", ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
+                .on("click", (_event, d) => {
+                    this.globalDispatcher.call("highlight", this, d.get_id());
+                })
+                .on("mouseover", (_event, d) => {
+                    this.globalDispatcher.call("hover-in", this, d.get_id());
+                })
+                .on("mouseout", () => {
+                    this.globalDispatcher.call("hover-out");
+                });
 
             innerG
                 .append("circle")
                 .attr("id", "edgeCircleTarget-" + edge.get_id())
                 .attr('class', "edgecircle")
+                .datum(edge.endpoints[1]) // target vertex data
                 .attr("cy", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
                 .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
                 .attr("r", 30 / this.biofabric.graph.edges.filter(e => e.get_depth() <= this.biofabric.graph.get_depth()).length)
                 .attr("stroke-width", "0")
                 .attr("fill", ((edge.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edge.get_depth()])
+                .on("click", (_event, d) => {
+                    this.globalDispatcher.call("highlight", this, d.get_id());
+                })
+                .on("mouseover", (_event, d) => {
+                    this.globalDispatcher.call("hover-in", this, d.get_id());
+                })
+                .on("mouseout", () => {
+                    this.globalDispatcher.call("hover-out");
+                });
         }
 
         for (let edgeDepth of this.biofabric.edgeDepths) {
@@ -629,6 +650,20 @@ export class BioFabricRenderer {
                         }
                     });
             }
+        });
+
+        this.globalDispatcher.on("hover-in.biofabric", (id) => {
+            const n = this.biofabric.graph.nodes.find(n => n.get_id() === id);
+            const path_to_ego = this.biofabric.graph.find_path_to_ego(n);
+
+            d3.selectAll(".edgeLine").classed("fade-biofabric", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
+            d3.selectAll(".edgecircle").classed("fade-biofabric", node => !path_to_ego.includes(node));
+
+        });
+
+        this.globalDispatcher.on("hover-out.biofabric", () => {
+            d3.selectAll(".edgeLine").classed("fade-biofabric", false);
+            d3.selectAll(".edgecircle").classed("fade-biofabric", false);
         });
 
     }
