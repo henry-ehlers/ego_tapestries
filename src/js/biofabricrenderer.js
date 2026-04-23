@@ -666,6 +666,12 @@ export class BioFabricRenderer {
             d3.selectAll(".edgecircle").classed("fade-biofabric", false);
         });
 
+        this.globalDispatcher.on("highlight.biofabric", (id) => {
+            // equivalent to matrix highlighting.
+            const n = this.biofabric.graph.nodes.find(n => n.get_id() === id);
+            this.biofabric.highlight_unh_nodes(n);
+            d3.selectAll(".edgecircle").classed("highlight-biofabric", d => d.get_highlighted());
+        });
     }
 
     // Update
