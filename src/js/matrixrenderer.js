@@ -115,7 +115,7 @@ export class MatrixRenderer {
 
         this.globalDispatcher.on("compression.matrix", (msg) => {
             let id;
-            
+
             // extract id from message
             if (!msg.fullcompression) {
                 return;
@@ -233,5 +233,17 @@ export class MatrixRenderer {
                 .attr("ry", cellSize / 6)
                 .attr("fill", color);
         });
+
+        const zoom = d3.zoom()
+            .scaleExtent([0.5, 5])
+            .filter(event => {
+                // do not zoom if we double click a circle (handled by dblclick event on node)
+                return !(event.type === "dblclick" && event.target.tagName === "circle");
+            })
+            .on("zoom", (event) => {
+                mainG.attr("transform", event.transform);
+            });
+
+        svg.call(zoom);
     }
 }
