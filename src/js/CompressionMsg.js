@@ -8,6 +8,10 @@ export class CompressionMsg {
     // Hence we need to type check the message to determine how to handle it.
     // e.g. the non-biofabric renderers only care about full compression/decompression of biofabric and not the individual steps.
     constructor(msg, isFullCompression = false, nodeOrEdge = "") {
+        if (nodeOrEdge !== "node" && nodeOrEdge !== "edge" && nodeOrEdge !== "") {
+            throw new Error("nodeOrEdge must be either 'node', 'edge' or ''");
+        }
+
         this.msg = msg;
         this.type = typeof msg;
         this.fullcompression = isFullCompression;

@@ -365,13 +365,19 @@ export class BioFabricRenderer {
                 return;
             }
 
+            // this comes into play if either one is already fully compressed, but the other is not, and we are doing a full compression. In this case, we keep the state fully compressed to stay synced.
             const nodeStateBeforeTransition = foundNodeDepthIcon ? foundNodeDepthIcon.get_state() : null;
             const edgeStateBeforeTransition = foundEdgeDepth ? foundEdgeDepth.get_state() : null;
+            const foundBoth = foundNodeDepthIcon && foundEdgeDepth;
+            const nodeShouldStayFullyCompressed = foundBoth && msg.fullcompression && ((nodeStateBeforeTransition == State["Fully Compressed"]) && (edgeStateBeforeTransition != State["Fully Compressed"]));
+            const edgeShouldStayFullyCompressed = foundBoth && msg.fullcompression && ((edgeStateBeforeTransition == State["Fully Compressed"]) && (nodeStateBeforeTransition != State["Fully Compressed"]));
 
             if (msg.nodeOrEdge == "node" || isByNonBioFabric) {
                 const nodeDepthIcon = foundNodeDepthIcon;
                 console.log("Toggling Node Depth Icon with depth " + nodeDepthIcon.get_depth() + " and state " + State[nodeDepthIcon.get_state()])
                 let depthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepthIcon.get_depth());
+
+
 
                 // Switch the State of the DepthIcon
                 switch (nodeDepthIcon.get_state()) {
@@ -379,7 +385,10 @@ export class BioFabricRenderer {
                         nodeDepthIcon.set_state(State["Fully Compressed"])
                         break;
                     case State["Fully Compressed"]:
-                        nodeDepthIcon.set_state(State["Uncompressed"])
+                        nodeDepthIcon.set_state(State["Uncompressed"]);
+                        if (nodeShouldStayFullyCompressed) {
+                            nodeDepthIcon.set_state(State["Fully Compressed"]);
+                        }
                         break;
                 }
 
@@ -390,7 +399,10 @@ export class BioFabricRenderer {
                             depthNode.set_state(State["Fully Compressed"])
                             break;
                         case State["Fully Compressed"]:
-                            depthNode.set_state(State["Uncompressed"])
+                            depthNode.set_state(State["Uncompressed"]);
+                            if (nodeShouldStayFullyCompressed) {
+                                depthNode.set_state(State["Fully Compressed"]);
+                            }
                             break;
                     }
                 }
@@ -485,18 +497,22 @@ export class BioFabricRenderer {
 
                     innerG
                         .select("#" + "edgeCircleTarget-" + edge.get_id())
-                        .transition("edgeCircleTargetYTransition")
+                        .transition("edgeCircleTargetYTransition") // named transition to avoid conflicts with the edge circle target X transition triggered by edge compression
                         .duration(transitionDuration)
                         .attr("cy", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)));
 
                     innerG
                         .select("#" + "edgeCircleSource-" + edge.get_id())
-                        .transition("edgeCircleSourceYTransition")
+                        .transition("edgeCircleSourceYTransition") // ditto
                         .duration(transitionDuration)
                         .attr("cy", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)));
 
                 }
             }
+
+            // -----------------------------------------------------------------------------------------------------------------------------------------------------
+            // Continuing with Edge Depth Icon Toggle. Unfortunaltely, this has to be in the same function, as calls from other visualizations do not differentiate.
+            // -----------------------------------------------------------------------------------------------------------------------------------------------------
 
             if (msg.nodeOrEdge == "edge" || isByNonBioFabric) {
                 const edgeDepth = foundEdgeDepth;
@@ -505,12 +521,19 @@ export class BioFabricRenderer {
                 switch (edgeDepth.get_state()) {
                     case State["Uncompressed"]:
                         edgeDepth.set_state(State["Partially Compressed"])
+                        // skip to fully compressed if the message came from a non-biofabric visualization
+                        if (msg.fullcompression) {
+                            edgeDepth.set_state(State["Fully Compressed"])
+                        }
                         break;
                     case State["Partially Compressed"]:
                         edgeDepth.set_state(State["Fully Compressed"])
                         break;
                     case State["Fully Compressed"]:
-                        edgeDepth.set_state(State["Uncompressed"])
+                        edgeDepth.set_state(State["Uncompressed"]);
+                        if (edgeShouldStayFullyCompressed) {
+                            edgeDepth.set_state(State["Fully Compressed"]);
+                        }
                         break;
                 }
 
@@ -520,12 +543,19 @@ export class BioFabricRenderer {
                     switch (edge.get_state()) {
                         case (State["Uncompressed"]):
                             edge.set_state(State["Partially Compressed"]);
+                            // skip to fully compressed if the message came from a non-biofabric visualization
+                            if (msg.fullcompression) {
+                                edge.set_state(State["Fully Compressed"]);
+                            }
                             break;
                         case (State["Partially Compressed"]):
                             edge.set_state(State["Fully Compressed"]);
                             break;
                         case (State["Fully Compressed"]):
                             edge.set_state(State["Uncompressed"]);
+                            if (edgeShouldStayFullyCompressed) {
+                                edge.set_state(State["Fully Compressed"]);
+                            }
                             break;
                     }
                 }
