@@ -478,22 +478,22 @@ export class BioFabricRenderer {
 
                     innerG
                         .select("#" + "edgeLine-" + edge.get_id())
-                        .transition()
+                        .transition("edgeLineYTransition") // named transition to avoid conflicts with the edge line X transition triggered by edge compression
                         .duration(transitionDuration)
                         .attr("y1", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
-                        .attr("y2", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                        .attr("y2", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)));
 
                     innerG
                         .select("#" + "edgeCircleTarget-" + edge.get_id())
-                        .transition()
+                        .transition("edgeCircleTargetYTransition")
                         .duration(transitionDuration)
-                        .attr("cy", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                        .attr("cy", edge.get_target_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)));
 
                     innerG
                         .select("#" + "edgeCircleSource-" + edge.get_id())
-                        .transition()
+                        .transition("edgeCircleSourceYTransition")
                         .duration(transitionDuration)
-                        .attr("cy", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)))
+                        .attr("cy", edge.get_source_vertex().get_y() * (this.canvasHeight * (1 - this.innerY)));
 
                 }
             }
@@ -538,18 +538,18 @@ export class BioFabricRenderer {
                 for (let edge of this.biofabric.graph.edges.filter(edge => edge.get_depth() <= this.biofabric.graph.get_depth())) {
 
                     innerG.select("#edgeLine-" + edge.get_id())
-                        .transition()
+                        .transition("edgeLineXTransition")
                         .duration(transitionDuration)
                         .attr("x1", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
                         .attr("x2", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
 
                     innerG.select("#edgeCircleSource-" + edge.get_id())
-                        .transition()
+                        .transition("edgeCircleSourceXTransition")
                         .duration(transitionDuration)
                         .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
 
                     innerG.select("#edgeCircleTarget-" + edge.get_id())
-                        .transition()
+                        .transition("edgeCircleTargetXTransition")
                         .duration(transitionDuration)
                         .attr("cx", edge.get_x() * (this.canvasWidth * (1 - this.innerX)))
 
