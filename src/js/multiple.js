@@ -10,7 +10,7 @@ import { MatrixRenderer } from './matrixrenderer.js';
 const state = {
     width: 100,
     height: 50,
-    dataPath: "./data/star_wars_4.edges.json",
+    dataPath: "./data/star_wars_4_adapted.edges.json",
     data: null,
     svg: null,
 };
