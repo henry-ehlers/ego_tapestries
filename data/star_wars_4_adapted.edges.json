@@ -49,13 +49,6 @@
     }
   },
   {
-    "source": 6,
-    "target": 0,
-    "attrs": {
-      "weight": 1
-    }
-  },
-  {
     "source": 13,
     "target": 0,
     "attrs": {
@@ -109,13 +102,6 @@
     "target": 5,
     "attrs": {
       "weight": 2
-    }
-  },
-  {
-    "source": 6,
-    "target": 3,
-    "attrs": {
-      "weight": 4
     }
   },
   {
@@ -235,13 +221,6 @@
     "target": 18,
     "attrs": {
       "weight": 2
-    }
-  },
-  {
-    "source": 6,
-    "target": 7,
-    "attrs": {
-      "weight": 1
     }
   },
   {
