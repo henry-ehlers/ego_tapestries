@@ -148,15 +148,15 @@ export class MatrixRenderer {
             // fade all nodes and edges that are not on the path to ego
             const n = this.nodes.find(n => n.get_id() === id);
             const path_to_ego = this.matrix.graph.find_path_to_ego(n);
-            columnNodes.classed("fade-matrix", node => !path_to_ego.includes(node));
-            mainG.selectAll(".node-left").classed("fade-matrix", node => !path_to_ego.includes(node));
+            columnNodes.classed("fade-matrix-nodes", node => !path_to_ego.includes(node));
+            mainG.selectAll(".node-left").classed("fade-matrix-nodes", node => !path_to_ego.includes(node));
             mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
-
+            mainG.selectAll(".node-group").filter(node => path_to_ego.includes(node)).raise(); // bring nodes on path to ego to front, to prevent them from being overlapped by faded edges
         });
 
         this.globalDispatcher.on("hover-out.matrix", () => {
-            columnNodes.classed("fade-matrix", false);
-            mainG.selectAll(".node-left").classed("fade-matrix", false);
+            columnNodes.classed("fade-matrix-nodes", false);
+            mainG.selectAll(".node-left").classed("fade-matrix-nodes", false);
             mainG.selectAll(".edge-rect").classed("fade-matrix", false);
         });
 
@@ -220,7 +220,8 @@ export class MatrixRenderer {
                 .attr("height", cellSize * 2 / 3)
                 .attr("rx", cellSize / 6)
                 .attr("ry", cellSize / 6)
-                .attr("fill", color);
+                .attr("fill", color)
+                .attr("color", color); // store color to be able to use css current color to change the fill
 
             mainG.select(`#node-group-${targetId}`).append("rect")
                 .datum(edge)
@@ -231,7 +232,8 @@ export class MatrixRenderer {
                 .attr("height", cellSize * 2 / 3)
                 .attr("rx", cellSize / 6)
                 .attr("ry", cellSize / 6)
-                .attr("fill", color);
+                .attr("fill", color)
+                .attr("color", color); // store color to be able to use css current color to change the fill
         });
 
         const zoom = d3.zoom()
