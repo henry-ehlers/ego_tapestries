@@ -46,7 +46,11 @@
                     "location": "aboveStimulus",
                     "type": "dropdown",
                     "placeholder": "Please choose your favorite color",
-                    "options": ["Red", "Blue", "My favorite color is not shown here."]
+                    "options": [
+                        "Red",
+                        "Blue",
+                        "My favorite color is not shown here."
+                    ]
                 }
             ]
         },
@@ -64,6 +68,22 @@
                     "numItems": 5
                 }
             ]
+        },
+        "bar-chart-1": {
+            "baseComponent": "bar-chart",
+            "description": "A trial for the user to click the largest bar",
+            "instruction": "Click on the largest bar",
+            "parameters": {
+                "barData": [
+                    0.32,
+                    0.01,
+                    1.2,
+                    1.3,
+                    0.82,
+                    0.4,
+                    0.3
+                ]
+            }
         }
     },
     "sequence": {
@@ -71,7 +91,24 @@
         "components": [
             "introduction",
             "first-question-set",
-            "second-question-set"
+            "second-question-set",
+            "bar-chart-1"
         ]
+    },
+    "baseComponents": {
+        "bar-chart": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "barChart",
+                    "prompt": "Your selected answer:",
+                    "required": false,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "basic-questionnaire-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus"
+        }
     }
 }

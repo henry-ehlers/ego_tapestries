@@ -671,6 +671,15 @@ export class BioFabricRenderer {
             const n = this.biofabric.graph.nodes.find(n => n.get_id() === id);
             this.biofabric.highlight_unh_nodes(n);
             d3.selectAll(".edgecircle").classed("highlight-biofabric", d => d.get_highlighted());
+
+            console.log("Highlighted Node " + id);
+
+            if (Revisit) {
+                Revisit.postAnswers({
+                    // 'barChart' must match id defined in config.json baseComponent response 
+                    ['barChart']: this.biofabric.graph.nodes.filter(n => n.get_highlighted()).map(n => n.get_id())
+                });
+            }
         });
     }
 

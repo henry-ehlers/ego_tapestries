@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>egonets</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Load revisit-communicate to be able to send data to reVISit -->
+    <script src="../../../revisitUtilities/revisit-communicate.js"></script>
+    <script type="module" src="src/js/main.js"></script>
+
+</head>
+
+<body>
+    <svg></svg>
+</body>
+
+<script>
+    // Get data from the config file
+    Revisit.onDataReceive((data) => {
+        console.log(data);
+    });
+</script>
+
+</html>

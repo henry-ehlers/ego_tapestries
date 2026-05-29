@@ -10,7 +10,7 @@ import { MatrixRenderer } from './matrixrenderer.js';
 const state = {
     width: 100,
     height: 50,
-    rendererType: "nodelink", // "biofabric", "nodelink" or "matrix"
+    rendererType: "biofabric", // "biofabric", "nodelink" or "matrix"
     layoutType: "layered",    // "force", "radial" or "layered"
     dataPath: "./data/star_wars_4_adapted.edges.json",
     graph: null,
