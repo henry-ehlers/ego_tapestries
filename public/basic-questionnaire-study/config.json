@@ -22,37 +22,14 @@
         "autoDownloadStudy": false,
         "withSidebar": true
     },
+    "importedLibraries": [
+        "nasa-tlx"
+    ],
     "components": {
         "introduction": {
             "type": "markdown",
             "path": "basic-questionnaire-study/assets/introduction.md",
             "response": []
-        },
-        "first-question-set": {
-            "type": "questionnaire",
-            "response": [
-                {
-                    "id": "q1-name",
-                    "prompt": "What is your first name?",
-                    "required": true,
-                    "location": "aboveStimulus",
-                    "type": "longText",
-                    "placeholder": "Please enter your first name"
-                },
-                {
-                    "id": "q2-color",
-                    "prompt": "What is your favorite color?",
-                    "required": true,
-                    "location": "aboveStimulus",
-                    "type": "dropdown",
-                    "placeholder": "Please choose your favorite color",
-                    "options": [
-                        "Red",
-                        "Blue",
-                        "My favorite color is not shown here."
-                    ]
-                }
-            ]
         },
         "second-question-set": {
             "type": "questionnaire",
@@ -90,9 +67,9 @@
         "order": "fixed",
         "components": [
             "introduction",
-            "first-question-set",
             "second-question-set",
-            "bar-chart-1"
+            "bar-chart-1",
+            "$nasa-tlx.components.nasa-tlx"
         ]
     },
     "baseComponents": {
