@@ -111,6 +111,15 @@ export class MatrixRenderer {
             const n = this.nodes.find(n => n.get_id() === id);
             this.matrix.highlight_unh_nodes(n);
             columnNodes.classed("highlight-matrix", d => d.get_highlighted());
+
+            // Revisit may be defined globally, if the user is running this in a Revisit environment.
+            if (Revisit) {
+                let highlightedNodes = this.matrix.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
+                Revisit.postAnswers({
+                    // 'graphVis' must match id defined in config.json baseComponent response 
+                    ['graphVis']: highlightedNodes,
+                });
+            }
         });
 
         this.globalDispatcher.on("compression.matrix", (msg) => {

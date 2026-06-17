@@ -97,11 +97,20 @@ export class NodeLinkRenderer {
                 selected_node.get_highlighted() ? selected_node.set_highlighted(false) : selected_node.set_highlighted(true);
                 node.filter(n => n.get_id() === id).classed("highlight", selected_node.get_highlighted());
             }
+
+            // Revisit may be defined globally, if the user is running this in a Revisit environment.
+            if (Revisit) {
+                let highlightedNodes = this.nodelink.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
+                Revisit.postAnswers({
+                    // 'graphVis' must match id defined in config.json baseComponent response 
+                    ['graphVis']: highlightedNodes,
+                });
+            }
         });
 
         this.globalDispatcher.on(`compression.nodelink.${this.nodelink.layoutType}`, (msg) => {
             let id;
-            
+
             if (!msg.fullcompression) {
                 return;
             } else if (msg.type === "string") {
