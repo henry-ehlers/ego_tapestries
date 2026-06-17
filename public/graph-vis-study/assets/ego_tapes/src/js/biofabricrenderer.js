@@ -676,8 +676,8 @@ export class BioFabricRenderer {
 
             if (Revisit) {
                 Revisit.postAnswers({
-                    // 'barChart' must match id defined in config.json baseComponent response 
-                    ['barChart']: this.biofabric.graph.nodes.filter(n => n.get_highlighted()).map(n => n.get_id())
+                    // 'graphVis' must match id defined in config.json baseComponent response 
+                    ['graphVis']: this.biofabric.graph.nodes.filter(n => n.get_highlighted()).map(n => n.get_id())
                 });
             }
         });

@@ -32,35 +32,18 @@
             "path": "graph-vis-study/assets/introduction.md",
             "response": []
         },
-        "second-question-set": {
-            "type": "questionnaire",
-            "response": [
-                {
-                    "id": "q3-satisfaction",
-                    "prompt": "Rate your satisfaction with this survey from 1 (not enjoyable) to 5 (very enjoyable).",
-                    "required": true,
-                    "location": "aboveStimulus",
-                    "type": "likert",
-                    "leftLabel": "Not Enjoyable",
-                    "rightLabel": "Very Enjoyable",
-                    "numItems": 5
-                }
-            ]
+        "tutorial": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/tutorial.md",
+            "response": []
         },
-        "bar-chart-1": {
-            "baseComponent": "bar-chart",
-            "description": "A trial for the user to click the largest bar",
-            "instruction": "Click on the largest bar",
+        "tutorial-force-directed-task1": {
+            "baseComponent": "graph-vis",
+            "description": "Locate the alter (i.e., non ego-node) with the largest number of neighbors.",
+            "instruction": "# Task 1\nLocate the alter (i.e., non ego-node) with the largest number of neighbors.\n## How to answer\n Click on the alter to select the answer",
             "parameters": {
-                "barData": [
-                    0.32,
-                    0.01,
-                    1.2,
-                    1.3,
-                    0.82,
-                    0.4,
-                    0.3
-                ]
+                "graphFilePath": "TODO/relative/path",
+                "visualizationStyle": "force-directed"
             }
         }
     },
@@ -68,17 +51,17 @@
         "order": "fixed",
         "components": [
             "introduction",
-            "second-question-set",
-            "bar-chart-1",
+            "tutorial",
+            "tutorial-force-directed-task1",
             "$nasa-tlx.components.nasa-tlx"
         ]
     },
     "baseComponents": {
-        "bar-chart": {
+        "graph-vis": {
             "type": "website",
             "response": [
                 {
-                    "id": "barChart",
+                    "id": "graphVis",
                     "prompt": "Your selected answer:",
                     "required": false,
                     "location": "belowStimulus",
