@@ -42,8 +42,8 @@
             "description": "Locate the alter (i.e., non ego-node) with the largest number of neighbors.",
             "instruction": "# Task 1\nLocate the alter (i.e., non ego-node) with the largest number of neighbors.\n## How to answer\n Click on the alter to select the answer",
             "parameters": {
-                "graphFilePath": "TODO/relative/path",
-                "visualizationStyle": "force-directed"
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
             }
         }
     },
