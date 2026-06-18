@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/revisit-studies/study/v2.4.2/src/parser/GlobalConfigSchema.json",
+  "configsList": [
+    "graph-vis-study",
+    "basic-questionnaire-study",
+    "tutorial"
+  ],
+  "configs": {
+    "tutorial": {
+      "path": "tutorial/config.json"
+    },
+    "basic-questionnaire-study": {
+      "path": "basic-questionnaire-study/config.json"
+    },
+    "graph-vis-study": {
+      "path": "graph-vis-study/config.json"
+    }
+  }
+}
