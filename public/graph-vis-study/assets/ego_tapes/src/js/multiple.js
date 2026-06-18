@@ -30,12 +30,6 @@ function render() {
     const force_renderer = new NodeLinkRenderer(nodelink, state.width, state.height, global_dispatcher);
     force_renderer.render(force_svg);
 
-    const radial_svg = d3.select("#radial-svg");
-    const nodelink_radial = new NodeLink(new Graph(state.data));
-    nodelink_radial.setLayoutType("radial");
-    const radial_renderer = new NodeLinkRenderer(nodelink_radial, state.width, state.height, global_dispatcher);
-    radial_renderer.render(radial_svg);
-
     const layered_svg = d3.select("#layered-svg");
     const nodelink_layered = new NodeLink(new Graph(state.data));
     nodelink_layered.setLayoutType("layered");

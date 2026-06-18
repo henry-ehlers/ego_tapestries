@@ -260,6 +260,14 @@
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "layered"
             }
+        },
+        "all-four-side-by-side": {
+            "type": "website",
+            "response": [],
+            "path": "graph-vis-study/assets/ego_tapes/multiple.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Show interaction between all visualizations",
+            "instruction": "# Overview Visualizations\n These are the four visualizations of the study. You can interact with them in this overview and see the interactive changes simultaneously."
         }
     },
     "sequence": {
@@ -303,7 +311,8 @@
             "tutorial-layered-task6",
             "tutorial-layered-task7",
             "tutorial-layered-task8",
-            "$nasa-tlx.components.nasa-tlx"
+            "$nasa-tlx.components.nasa-tlx",
+            "all-four-side-by-side"
         ]
     },
     "baseComponents": {
