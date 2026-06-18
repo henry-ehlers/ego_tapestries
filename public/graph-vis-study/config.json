@@ -40,7 +40,98 @@
         "tutorial-force-directed-task1": {
             "baseComponent": "graph-vis",
             "description": "Locate the alter (i.e., non ego-node) with the largest number of neighbors.",
-            "instruction": "# Task 1\nLocate the alter (i.e., non ego-node) with the largest number of neighbors.\n## How to answer\n Click on the alter to select the answer",
+            "instruction": "# Task 1\nLocate the alter (i.e., non ego-node) with the largest number of neighbors.\n## How to answer\n Click on the alter to select the answer.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task2": {
+            "baseComponent": "graph-vis-custom-response",
+            "description": "Identify the shortest path between two non-ego alters.",
+            "instruction": "# Task 2\nIdentify the shortest path between two non-ego alters.\n## How to answer\n Enter the number of edges of the path between those two nodes below.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            },
+            "response": [
+                {
+                    "id": "task2",
+                    "prompt": "Identify the shortest path between two non-ego alters",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "tutorial-force-directed-task3": {
+            "baseComponent": "graph-vis",
+            "description": "Which alter is closest to the ego (i.e., which edge between ego and 1-ater has the largest edge weight)",
+            "instruction": "# Task 3\nWhich alter is closest to the ego (i.e., which edge between ego and 1-ater has the largest edge weight)\n## How to answer\n Click on the alter to select the answer.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task4": {
+            "baseComponent": "graph-vis-custom-response",
+            "description": "Estimate/Count the number of alters in alter level k.",
+            "instruction": "# Task 4\nEstimate/Count the number of alters in alter level k.\n## How to answer\n Enter the number below.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            },
+            "response": [
+                {
+                    "id": "task4",
+                    "prompt": "Estimate/Count the number of alters in alter level k.",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "tutorial-force-directed-task5": {
+            "baseComponent": "graph-vis-custom-response",
+            "description": "Estimate the number of intra-k-alter edges.",
+            "instruction": "# Task 5\nEstimate the number of intra-k-alter edges.\n## How to answer\n Enter the number below.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            },
+            "response": [
+                {
+                    "id": "task5",
+                    "prompt": "Estimate the number of intra-k-alter edges.",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "tutorial-force-directed-task6": {
+            "baseComponent": "graph-vis",
+            "description": "Given two alters, identify their common neighbors.",
+            "instruction": "# Task 6\nGiven two alters, identify their common neighbors.\n## How to answer\n Click on the nodes to select them",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task7": {
+            "baseComponent": "graph-vis-custom-response",
+            "description": "Which alter level is the largest?",
+            "instruction": "# Task 7\nWhich alter level is the largest?\n## How to answer\n Enter the number below.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            },
+            "response": [
+                {
+                    "id": "task7",
+                    "prompt": "Which alter level is the largest?",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "tutorial-force-directed-task8": {
+            "baseComponent": "graph-vis",
+            "description": "Follow the path p from node v to node u.",
+            "instruction": "# Task 8\nFollow the path p from node v to node u.\n## How to answer\n Click on all nodes on the path",
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "force"
@@ -53,17 +144,30 @@
             "introduction",
             "tutorial",
             "tutorial-force-directed-task1",
+            "$nasa-tlx.components.nasa-tlx",
+            "tutorial-force-directed-task2",
+            "tutorial-force-directed-task3",
+            "tutorial-force-directed-task4",
+            "tutorial-force-directed-task5",
+            "tutorial-force-directed-task6",
+            "tutorial-force-directed-task7",
+            "tutorial-force-directed-task8",
             "$nasa-tlx.components.nasa-tlx"
         ]
     },
     "baseComponents": {
+        "graph-vis-custom-response": {
+            "type": "website",
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus"
+        },
         "graph-vis": {
             "type": "website",
             "response": [
                 {
                     "id": "graphVis",
                     "prompt": "Your selected answer:",
-                    "required": false,
+                    "required": true,
                     "location": "belowStimulus",
                     "type": "reactive"
                 }
