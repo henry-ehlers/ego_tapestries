@@ -92,6 +92,174 @@
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "force"
             }
+        },
+        "tutorial-matrix-task1": {
+            "baseComponent": "task1",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task2": {
+            "baseComponent": "task2",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task3": {
+            "baseComponent": "task3",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task4": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task5": {
+            "baseComponent": "task5",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task6": {
+            "baseComponent": "task6",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task7": {
+            "baseComponent": "task7",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task8": {
+            "baseComponent": "task8",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-biofabric-task1": {
+            "baseComponent": "task1",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task2": {
+            "baseComponent": "task2",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task3": {
+            "baseComponent": "task3",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task4": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task5": {
+            "baseComponent": "task5",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task6": {
+            "baseComponent": "task6",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task7": {
+            "baseComponent": "task7",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task8": {
+            "baseComponent": "task8",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-layered-task1": {
+            "baseComponent": "task1",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task2": {
+            "baseComponent": "task2",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task3": {
+            "baseComponent": "task3",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task4": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task5": {
+            "baseComponent": "task5",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task6": {
+            "baseComponent": "task6",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task7": {
+            "baseComponent": "task7",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task8": {
+            "baseComponent": "task8",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
         }
     },
     "sequence": {
@@ -108,6 +276,33 @@
             "tutorial-force-directed-task6",
             "tutorial-force-directed-task7",
             "tutorial-force-directed-task8",
+            "$nasa-tlx.components.nasa-tlx",
+            "tutorial-matrix-task1",
+            "tutorial-matrix-task2",
+            "tutorial-matrix-task3",
+            "tutorial-matrix-task4",
+            "tutorial-matrix-task5",
+            "tutorial-matrix-task6",
+            "tutorial-matrix-task7",
+            "tutorial-matrix-task8",
+            "$nasa-tlx.components.nasa-tlx",
+            "tutorial-biofabric-task1",
+            "tutorial-biofabric-task2",
+            "tutorial-biofabric-task3",
+            "tutorial-biofabric-task4",
+            "tutorial-biofabric-task5",
+            "tutorial-biofabric-task6",
+            "tutorial-biofabric-task7",
+            "tutorial-biofabric-task8",
+            "$nasa-tlx.components.nasa-tlx",
+            "tutorial-layered-task1",
+            "tutorial-layered-task2",
+            "tutorial-layered-task3",
+            "tutorial-layered-task4",
+            "tutorial-layered-task5",
+            "tutorial-layered-task6",
+            "tutorial-layered-task7",
+            "tutorial-layered-task8",
             "$nasa-tlx.components.nasa-tlx"
         ]
     },
