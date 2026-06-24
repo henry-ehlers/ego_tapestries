@@ -21,7 +21,7 @@ export class BioFabricRenderer {
         this.innerY = 0.2
 
         // NodeDepthG (x,y)
-        this.nodeDepthX = 0.15 // 0.025
+        this.nodeDepthX = 0.025
         this.nodeDepthY = 0.2
 
         // Node G (x,y)
@@ -30,7 +30,7 @@ export class BioFabricRenderer {
 
         // EdgeDepthG (x,y)
         this.edgeDepthX = 0.2
-        this.edgeDepthY = 0.1 // 0.05
+        this.edgeDepthY = 0.05
     }
 
     // Renderer
