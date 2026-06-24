@@ -275,17 +275,21 @@ export class NodeLinkRenderer {
         }
 
         const simulation = d3.forceSimulation(this.nodes)
-            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(0.05).distance(2))
-            .force("charge", d3.forceManyBody().strength(-0.5))
-            .force("x", d3.forceX(this.canvasWidth / 2).strength(0.05))
+            .force("link", d3.forceLink(this.edges)
+                .id(d => d.get_id())
+                .distance(60)
+                .strength(0.1)
+            )
+            .force("charge", d3.forceManyBody().strength(-40))
+            .force("x", d3.forceX(this.canvasWidth / 2).strength(0.25))
 
             // Use custom Y force to pull nodes into horizontal layers based on depth
-            .force("yLayer0", customYforce(layerHeight * 0.5, 0).strength(1.5))
-            .force("yLayer1", customYforce(layerHeight * 1.5, 1).strength(1.5))
-            .force("yLayer2", customYforce(layerHeight * 2.5, 2).strength(1.5))
-            .force("yLayer3", customYforce(layerHeight * 3.5, 3).strength(1.5))
-            .force("yLayer4", customYforce(layerHeight * 4.5, 4).strength(1.5))
-            .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(1.5));
+            .force("yLayer0", customYforce(layerHeight * 0.5, 0).strength(2))
+            .force("yLayer1", customYforce(layerHeight * 1.5, 1).strength(2))
+            .force("yLayer2", customYforce(layerHeight * 2.5, 2).strength(2))
+            .force("yLayer3", customYforce(layerHeight * 3.5, 3).strength(2))
+            .force("yLayer4", customYforce(layerHeight * 4.5, 4).strength(2))
+            .force("yLayer5", customYforce(layerHeight * 5.5, 5).strength(2));
 
         this.easeSimulation(simulation);
         return simulation;
@@ -330,8 +334,12 @@ export class NodeLinkRenderer {
 
     initializeDefaultForceLink() {
         return d3.forceSimulation(this.nodes)
-            .force("link", d3.forceLink(this.edges).id(d => d.get_id()).strength(1).distance(2.5))
-            .force("charge", d3.forceManyBody().strength(-1.5))
+            .force("link", d3.forceLink(this.edges)
+                .id(d => d.get_id())
+                .distance(40)
+                .strength(0.5)
+            )
+            .force("charge", d3.forceManyBody().strength(-50))
             .force("center", d3.forceCenter(this.canvasWidth / 2, this.canvasHeight / 2));
     }
 }
