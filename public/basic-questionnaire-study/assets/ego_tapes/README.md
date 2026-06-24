@@ -1,3 +1,0 @@
-# Ego Tapestries
-
-### Details TBD
