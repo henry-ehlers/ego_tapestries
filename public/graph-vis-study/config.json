@@ -57,6 +57,35 @@
                 }
             ]
         },
+        "tutorial-gatekeep-force-directed": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. The ego is the node in blue color.\n## How to answer\n Click on the node to select it.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
         "tutorial-force-directed-task1": {
             "baseComponent": "task1",
             "parameters": {
@@ -330,9 +359,16 @@
         "components": [
             "introduction",
             "tutorial",
-            "graph-terminology",
-            "tutorial-force-directed-task1",
+            {
+                "id": "gatekeep",
+                "order": "fixed",
+                "components": [
+                    "graph-terminology",
+                    "tutorial-gatekeep-force-directed"
+                ]
+            },
             "$nasa-tlx.components.nasa-tlx",
+            "tutorial-force-directed-task1",
             "tutorial-force-directed-task2",
             "tutorial-force-directed-task3",
             "tutorial-force-directed-task4",
