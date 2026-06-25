@@ -15,6 +15,13 @@ export class MatrixRenderer {
 
         this.nodes = this.matrix.graph.nodes;
         this.edges = this.matrix.graph.edges;
+
+        this.interactionLog = {
+            highlights: 0,
+            compressions: 0,
+            hoverCount: 0,
+            timeline: [] // empty for now
+        };
     }
 
     calculate_node_x_coordinate(node) {
@@ -112,12 +119,15 @@ export class MatrixRenderer {
             this.matrix.highlight_unh_nodes(n);
             columnNodes.classed("highlight-matrix", d => d.get_highlighted());
 
+            this.interactionLog.highlights += 1;
+
             // Revisit may be defined globally, if the user is running this in a Revisit environment.
             if (Revisit) {
                 let highlightedNodes = this.matrix.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
                 Revisit.postAnswers({
                     // 'graphVis' must match id defined in config.json baseComponent response 
                     ['graphVis']: highlightedNodes,
+                    "interactionMetadata": this.interactionLog
                 });
             }
         });
@@ -151,6 +161,8 @@ export class MatrixRenderer {
             mainG.selectAll(".horizontal-grid-line").transition().duration(300)
                 .attr("x1", this.calculate_gridX())
                 .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
+
+            this.interactionLog.compressions += 1;
         });
 
         this.globalDispatcher.on("hover-in.matrix", (id) => {
@@ -161,6 +173,8 @@ export class MatrixRenderer {
             mainG.selectAll(".node-left").classed("fade-matrix-nodes", node => !path_to_ego.includes(node));
             mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
             mainG.selectAll(".node-group").filter(node => path_to_ego.includes(node)).raise(); // bring nodes on path to ego to front, to prevent them from being overlapped by faded edges
+
+            this.interactionLog.hoverCount += 1;
         });
 
         this.globalDispatcher.on("hover-out.matrix", () => {

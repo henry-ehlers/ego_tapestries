@@ -37,6 +37,26 @@
             "path": "graph-vis-study/assets/tutorial.md",
             "response": []
         },
+        "graph-terminology": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/graph_terms_intro.md",
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "visualization-count",
+                    "answer": 4
+                }
+            ],
+            "response": [
+                {
+                    "id": "visualization-count",
+                    "prompt": "How many different types of visualizations will you be shown?",
+                    "type": "numerical"
+                }
+            ]
+        },
         "tutorial-force-directed-task1": {
             "baseComponent": "task1",
             "parameters": {
@@ -296,6 +316,13 @@
                 "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
                 "visualizationStyle": "force"
             }
+        },
+        "interaction-metadata": {
+            "baseComponent": "graph-vis-interaction-log",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "matrix"
+            }
         }
     },
     "sequence": {
@@ -303,6 +330,7 @@
         "components": [
             "introduction",
             "tutorial",
+            "graph-terminology",
             "tutorial-force-directed-task1",
             "$nasa-tlx.components.nasa-tlx",
             "tutorial-force-directed-task2",
@@ -344,7 +372,8 @@
             "test-biofabric-task4-large-graph",
             "test-matrix-task4-large-graph",
             "test-layered-task4-large-graph",
-            "test-force-task4-large-graph"
+            "test-force-task4-large-graph",
+            "interaction-metadata"
         ]
     },
     "baseComponents": {
@@ -481,6 +510,26 @@
                     "prompt": "Your selected answer:",
                     "required": true,
                     "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus"
+        },
+        "graph-vis-interaction-log": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                },
+                {
+                    "id": "interactionMetadata",
+                    "prompt": "",
+                    "required": false,
                     "type": "reactive"
                 }
             ],
