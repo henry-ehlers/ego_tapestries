@@ -396,19 +396,19 @@
             ],
             "path": "graph-vis-study/assets/ego_tapes/revisit.html",
             "instructionLocation": "aboveStimulus",
-            "description": "Locate the alter (i.e., non ego-node) with the largest number of neighbors.",
-            "instruction": "# Task 1\nLocate the alter (i.e., non ego-node) with the largest number of neighbors.\n## How to answer\n Click on the alter to select the answer."
+            "description": "Locate the node, which is not the ego, with the largest number of neighbors.",
+            "instruction": "# Task 1\nLocate the node, which is not the ego, with the largest number of neighbors.\n## How to answer\n Click on the alter to select the answer."
         },
         "task2": {
             "type": "website",
             "path": "graph-vis-study/assets/ego_tapes/revisit.html",
             "instructionLocation": "aboveStimulus",
-            "description": "Identify the shortest path between two non-ego alters.",
-            "instruction": "# Task 2\nIdentify the shortest path between two non-ego alters.\n## How to answer\n Enter the number of edges of the path between those two nodes below.",
+            "description": "Identify the shortest path between two nodes",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes\n## How to answer\n Enter the number of edges of the path between those two nodes below.",
             "response": [
                 {
                     "id": "task2",
-                    "prompt": "Identify the shortest path between two non-ego alters",
+                    "prompt": "Identify the shortest path between two nodes",
                     "type": "numerical"
                 }
             ]
@@ -433,12 +433,12 @@
             "type": "website",
             "path": "graph-vis-study/assets/ego_tapes/revisit.html",
             "instructionLocation": "aboveStimulus",
-            "description": "Estimate/Count the number of alters in alter level k.",
-            "instruction": "# Task 4\nEstimate/Count the number of alters in alter level k.\n## How to answer\n Enter the number below.",
+            "description": "Estimate/Count the number of nodes in alter level k.",
+            "instruction": "# Task 4\nEstimate/Count the number of nodes in alter level k.\n## How to answer\n Enter the number below.",
             "response": [
                 {
                     "id": "task4",
-                    "prompt": "Estimate/Count the number of alters in alter level k.",
+                    "prompt": "Estimate/Count the number of nodes in alter level k.",
                     "type": "numerical"
                 }
             ]
@@ -447,12 +447,12 @@
             "type": "website",
             "path": "graph-vis-study/assets/ego_tapes/revisit.html",
             "instructionLocation": "aboveStimulus",
-            "description": "Estimate the number of intra-k-alter edges.",
-            "instruction": "# Task 5\nEstimate the number of intra-k-alter edges.\n## How to answer\n Enter the number below.",
+            "description": "Estimate the number of edges between all nodes of alter level k.",
+            "instruction": "# Task 5\nEstimate the number of edges between all nodes of alter level k.\n## How to answer\n Enter the number below.",
             "response": [
                 {
                     "id": "task5",
-                    "prompt": "Estimate the number of intra-k-alter edges.",
+                    "prompt": "Estimate the number of edges between all nodes of alter level k.",
                     "type": "numerical"
                 }
             ]
@@ -470,8 +470,8 @@
             ],
             "path": "graph-vis-study/assets/ego_tapes/revisit.html",
             "instructionLocation": "aboveStimulus",
-            "description": "Given two alters, identify their common neighbors.",
-            "instruction": "# Task 6\nGiven two alters, identify their common neighbors.\n## How to answer\n Click on the nodes to select them"
+            "description": "Given two nodes, identify their common neighbors.",
+            "instruction": "# Task 6\nGiven two nodes, identify their common neighbors.\n## How to answer\n Click on the nodes to select them"
         },
         "task7": {
             "type": "website",
