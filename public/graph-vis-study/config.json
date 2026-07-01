@@ -144,7 +144,7 @@
                 }
             ],
             "description": "Click on the ego",
-            "instruction": "# Tutorial\nSelect the ego. In BioFabric the ego is the top horizontal bar\n## How to answer\n Click on the circles on the top bar to select it.",
+            "instruction": "# Tutorial\nSelect the ego. In our version of ego networks in BioFabric, the ego is the top horizontal line\n## How to answer\n Click on the top line to select it.",
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "biofabric"
