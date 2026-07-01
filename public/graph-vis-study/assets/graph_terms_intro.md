@@ -22,11 +22,16 @@ Think of a standard city metro or subway map:
 In this study, you will be shown four different types of graph visualization.
 The nodes and edges stay the same, but the way they look changes completely.
 
-### Node-Link Diagrams
+### Node-Link Force-Directed Diagrams
 
 This is the classic view that looks exactly like the subway map we just described.
 You will see circles (nodes) connected by lines (edges).
-You will see two slight variations of this style during the study.
+
+### Node-Link Layered Diagrams.
+
+
+Similar to the one above with lines as edges and circles as nodes.
+The nodes are drawn on different visual layers however.
 
 ### Adjacency Matrix
 
