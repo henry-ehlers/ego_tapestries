@@ -27,7 +27,8 @@ export class NodeLinkRenderer {
         this.interactionLog = {
             highlights: 0,
             compressions: 0,
-            hovers: 0
+            hovers: 0,
+            hasManyCompressions: false
         };
     }
 
@@ -119,6 +120,8 @@ export class NodeLinkRenderer {
 
         this.globalDispatcher.on(`compression.nodelink.${this.nodelink.layoutType}`, (msg) => {
             this.interactionLog.compressions += 1;
+            this.interactionLog.hasManyCompressions = this.interactionLog.compressions > 3;
+
 
             let id;
 

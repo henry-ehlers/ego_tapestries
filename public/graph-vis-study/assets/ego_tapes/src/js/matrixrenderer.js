@@ -19,7 +19,8 @@ export class MatrixRenderer {
         this.interactionLog = {
             highlights: 0,
             compressions: 0,
-            hovers: 0
+            hovers: 0,
+            hasManyCompressions: false
         };
     }
 
@@ -132,6 +133,9 @@ export class MatrixRenderer {
         });
 
         this.globalDispatcher.on("compression.matrix", (msg) => {
+            this.interactionLog.compressions += 1;
+            this.interactionLog.hasManyCompressions = this.interactionLog.compressions > 3;
+
             let id;
 
             // extract id from message
@@ -160,8 +164,6 @@ export class MatrixRenderer {
             mainG.selectAll(".horizontal-grid-line").transition().duration(300)
                 .attr("x1", this.calculate_gridX())
                 .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
-
-            this.interactionLog.compressions += 1;
         });
 
         this.globalDispatcher.on("hover-in.matrix", (id) => {

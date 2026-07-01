@@ -35,7 +35,8 @@ export class BioFabricRenderer {
         this.interactionLog = {
             highlights: 0,
             compressions: 0,
-            hovers: 0
+            hovers: 0,
+            hasManyCompressions: false,
         };
     }
 
@@ -377,6 +378,7 @@ export class BioFabricRenderer {
 
         this.globalDispatcher.on("compression.biofabric", (msg) => {
             this.interactionLog.compressions += 1;
+            this.interactionLog.hasManyCompressions = this.interactionLog.compressions > 3;
 
             let foundNodeDepthIcon = null;
             let foundEdgeDepth = null;
