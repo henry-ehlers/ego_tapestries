@@ -19,8 +19,7 @@ export class MatrixRenderer {
         this.interactionLog = {
             highlights: 0,
             compressions: 0,
-            hoverCount: 0,
-            timeline: [] // empty for now
+            hovers: 0
         };
     }
 
@@ -174,7 +173,7 @@ export class MatrixRenderer {
             mainG.selectAll(".edge-rect").classed("fade-matrix", edge => !(path_to_ego.includes(edge.get_source_vertex()) && path_to_ego.includes(edge.get_target_vertex())));
             mainG.selectAll(".node-group").filter(node => path_to_ego.includes(node)).raise(); // bring nodes on path to ego to front, to prevent them from being overlapped by faded edges
 
-            this.interactionLog.hoverCount += 1;
+            this.interactionLog.hovers += 1;
         });
 
         this.globalDispatcher.on("hover-out.matrix", () => {

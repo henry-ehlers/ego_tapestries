@@ -23,6 +23,12 @@ export class NodeLinkRenderer {
             n.x = this.canvasWidth / 2 + Math.random() * 10;
             n.y = this.canvasHeight / 2 - Math.random() * 100;
         });
+
+        this.interactionLog = {
+            highlights: 0,
+            compressions: 0,
+            hovers: 0
+        };
     }
 
     render(svg) {
@@ -88,6 +94,8 @@ export class NodeLinkRenderer {
         // Dispatcher callbacks for all interactions
 
         this.globalDispatcher.on(`highlight.nodelink.${this.nodelink.layoutType}`, (id) => {
+            this.interactionLog.highlights += 1;
+
             const selected_node = this.nodes.find(n => n.get_id() === id);
             if (selected_node.get_state() === State["Fully Compressed"]) { // toggle highlight all nodes in this depth level
                 const isHighlighted = selected_node.get_highlighted();
@@ -104,11 +112,14 @@ export class NodeLinkRenderer {
                 Revisit.postAnswers({
                     // 'graphVis' must match id defined in config.json baseComponent response 
                     ['graphVis']: highlightedNodes,
+                    "interactionMetadata": this.interactionLog
                 });
             }
         });
 
         this.globalDispatcher.on(`compression.nodelink.${this.nodelink.layoutType}`, (msg) => {
+            this.interactionLog.compressions += 1;
+
             let id;
 
             if (!msg.fullcompression) {
@@ -150,6 +161,8 @@ export class NodeLinkRenderer {
         });
 
         this.globalDispatcher.on(`hover-in.nodelink.${this.nodelink.layoutType}`, (id) => {
+            this.interactionLog.hovers += 1;
+
             // fade all nodes and edges that are not on the path to ego
             const n = this.nodes.find(n => n.get_id() === id); // node objects are different in each renderer, but they have the same id.
             const path_to_ego = this.nodelink.graph.find_path_to_ego(n);

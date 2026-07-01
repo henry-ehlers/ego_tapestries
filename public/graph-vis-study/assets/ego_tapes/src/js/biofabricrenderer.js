@@ -31,6 +31,12 @@ export class BioFabricRenderer {
         // EdgeDepthG (x,y)
         this.edgeDepthX = 0.2
         this.edgeDepthY = 0.05
+
+        this.interactionLog = {
+            highlights: 0,
+            compressions: 0,
+            hovers: 0
+        };
     }
 
     // Renderer
@@ -370,6 +376,8 @@ export class BioFabricRenderer {
         }
 
         this.globalDispatcher.on("compression.biofabric", (msg) => {
+            this.interactionLog.compressions += 1;
+
             let foundNodeDepthIcon = null;
             let foundEdgeDepth = null;
             const isByNonBioFabric = msg.type === "string";
@@ -657,6 +665,8 @@ export class BioFabricRenderer {
         });
 
         this.globalDispatcher.on("hover-in.biofabric", (id) => {
+            this.interactionLog.hovers += 1;
+
             const n = this.biofabric.graph.nodes.find(n => n.get_id() === id);
             const path_to_ego = this.biofabric.graph.find_path_to_ego(n);
 
@@ -671,13 +681,12 @@ export class BioFabricRenderer {
         });
 
         this.globalDispatcher.on("highlight.biofabric", (id) => {
+            this.interactionLog.highlights += 1;
+
             // equivalent to matrix highlighting.
             const n = this.biofabric.graph.nodes.find(n => n.get_id() === id);
             this.biofabric.highlight_unh_nodes(n);
             d3.selectAll(".edgecircle").classed("highlight-biofabric", d => d.get_highlighted());
-
-            console.log("Highlighted Node " + id);
-
 
             // Revisit may be defined globally, if the user is running this in a Revisit environment.
             if (Revisit) {
@@ -685,6 +694,7 @@ export class BioFabricRenderer {
                 Revisit.postAnswers({
                     // 'graphVis' must match id defined in config.json baseComponent response 
                     ['graphVis']: highlightedNodes,
+                    "interactionMetadata": this.interactionLog
                 });
             }
         });
