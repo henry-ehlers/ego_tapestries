@@ -58,6 +58,11 @@
                 }
             ]
         },
+        "tutorial-tlx": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/tlx.md",
+            "response": []
+        },
         "tutorial-gatekeep-force-directed": {
             "baseComponent": "graph-vis-custom-response",
             "response": [
@@ -424,13 +429,14 @@
                 "order": "fixed",
                 "components": [
                     "graph-terminology",
+                    "tutorial-tlx",
+                    "$nasa-tlx.components.nasa-tlx",
                     "tutorial-gatekeep-force-directed",
                     "tutorial-gatekeep-matrix",
                     "tutorial-gatekeep-biofabric",
                     "tutorial-gatekeep-layered"
                 ]
             },
-            "$nasa-tlx.components.nasa-tlx",
             {
                 "id": "tutorial",
                 "order": "random",
