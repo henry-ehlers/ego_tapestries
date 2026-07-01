@@ -5,8 +5,9 @@
         "version": "pilot",
         "authors": [
             "Sara Di Bartolomeo",
-            "Henry Ehlers",
+            "Daniel Pahr",
             "Velitchko Filipov",
+            "Henry Ehlers",
             "Johann Sebastian Schicho"
         ],
         "date": "2026-02-23",
@@ -84,6 +85,93 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "force"
+            }
+        },
+        "tutorial-gatekeep-matrix": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. The ego is the node in blue color.\n## How to answer\n Click on the node to select it.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-gatekeep-biofabric": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. In BioFabric the ego is the top horizontal bar\n## How to answer\n Click on the circles on the top bar to select it.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-gatekeep-layered": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. The ego is the node in blue color.\n## How to answer\n Click on the node to select it.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
             }
         },
         "tutorial-force-directed-task1": {
@@ -336,7 +424,10 @@
                 "order": "fixed",
                 "components": [
                     "graph-terminology",
-                    "tutorial-gatekeep-force-directed"
+                    "tutorial-gatekeep-force-directed",
+                    "tutorial-gatekeep-matrix",
+                    "tutorial-gatekeep-biofabric",
+                    "tutorial-gatekeep-layered"
                 ]
             },
             "$nasa-tlx.components.nasa-tlx",
