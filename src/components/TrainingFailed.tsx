@@ -16,7 +16,7 @@ export function TrainingFailed() {
 
   return (
     <Text>
-      Thank you for participating. Unfortunately you didn&apos;t answer the training correctly, which means you are not eligible to participate in the study. You may close this window now.
+      Thank you for participating. Unfortunately you didn&apos;t answer the training correctly, which means you are not eligible to participate in the study. Please return to Prolific and state that you could not complete the study.
     </Text>
   );
 }
