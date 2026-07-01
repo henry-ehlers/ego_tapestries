@@ -59,6 +59,7 @@ export class BioFabricRenderer {
             innerG.append("line")
                 .attr("id", "nodeLine-" + node.get_id())
                 .attr("class", "nodeline")
+                .datum(node) // node data
                 .attr("x1", 0)
                 .attr("x2", this.canvasWidth * (0.95 * (1 - this.innerX)))
                 .attr("y1", node.get_y() * (this.canvasHeight * (1 - this.innerY)))
@@ -66,6 +67,9 @@ export class BioFabricRenderer {
                 .attr("stroke", "#eee")
                 .attr("stroke-width", 0.25)
                 .attr("stroke-linecap", "round")
+                .on("click", (_event, d) => {
+                    this.globalDispatcher.call("highlight", this, d.get_id());
+                })
 
             // Add Node Text
             nodeG.append("text")
