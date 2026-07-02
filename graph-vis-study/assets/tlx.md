@@ -1,4 +1,10 @@
-# NASA-TLX RATING SCALE DEFINITIONS
+# How you will be evaluated
+
+We will use the NASA TLX forms to evaluate you. They are described below.
+
+---
+
+## NASA-TLX Rating Scale Definitions
 
 
 The NASA Task Load Index (TLX) measures how a study participant
