@@ -424,58 +424,137 @@
         "components": [
             "introduction",
             "tutorial",
+            "graph-terminology",
+            "tutorial-tlx",
+            "$nasa-tlx.components.nasa-tlx",
             {
-                "id": "gatekeep",
-                "order": "fixed",
+                "id": "between-subject",
+                "order": "latinSquare",
+                "numSamples": 1,
                 "components": [
-                    "graph-terminology",
-                    "tutorial-tlx",
-                    "$nasa-tlx.components.nasa-tlx",
-                    "tutorial-gatekeep-force-directed",
-                    "tutorial-gatekeep-matrix",
-                    "tutorial-gatekeep-biofabric",
-                    "tutorial-gatekeep-layered"
-                ]
-            },
-            {
-                "id": "tutorial",
-                "order": "random",
-                "components": [
-                    "tutorial-force-directed-task1",
-                    "tutorial-force-directed-task2",
-                    "tutorial-force-directed-task4",
-                    "tutorial-force-directed-task5",
-                    "tutorial-force-directed-task6",
-                    "tutorial-force-directed-task7",
-                    "tutorial-force-directed-task8",
-                    "tutorial-matrix-task1",
-                    "tutorial-matrix-task2",
-                    "tutorial-matrix-task4",
-                    "tutorial-matrix-task5",
-                    "tutorial-matrix-task6",
-                    "tutorial-matrix-task7",
-                    "tutorial-matrix-task8",
-                    "tutorial-biofabric-task1",
-                    "tutorial-biofabric-task2",
-                    "tutorial-biofabric-task4",
-                    "tutorial-biofabric-task5",
-                    "tutorial-biofabric-task6",
-                    "tutorial-biofabric-task7",
-                    "tutorial-biofabric-task8",
-                    "tutorial-layered-task1",
-                    "tutorial-layered-task2",
-                    "tutorial-layered-task4",
-                    "tutorial-layered-task5",
-                    "tutorial-layered-task6",
-                    "tutorial-layered-task7",
-                    "tutorial-layered-task8"
+                    {
+                        "id": "force-directed-between-subject",
+                        "order": "fixed",
+                        "components": [
+                            {
+                                "order": "fixed",
+                                "components": [
+                                    "tutorial-gatekeep-force-directed"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "tutorial-force-directed-task1",
+                                    "tutorial-force-directed-task2",
+                                    "tutorial-force-directed-task4",
+                                    "tutorial-force-directed-task5",
+                                    "tutorial-force-directed-task6",
+                                    "tutorial-force-directed-task7",
+                                    "tutorial-force-directed-task8"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "test-force-task4-large-graph"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "matrix-between-subject",
+                        "order": "fixed",
+                        "components": [
+                            {
+                                "order": "fixed",
+                                "components": [
+                                    "tutorial-gatekeep-matrix"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "tutorial-matrix-task1",
+                                    "tutorial-matrix-task2",
+                                    "tutorial-matrix-task4",
+                                    "tutorial-matrix-task5",
+                                    "tutorial-matrix-task6",
+                                    "tutorial-matrix-task7",
+                                    "tutorial-matrix-task8"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "test-matrix-task4-large-graph"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "biofabric-between-subject",
+                        "order": "fixed",
+                        "components": [
+                            {
+                                "order": "fixed",
+                                "components": [
+                                    "tutorial-gatekeep-biofabric"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "tutorial-biofabric-task1",
+                                    "tutorial-biofabric-task2",
+                                    "tutorial-biofabric-task4",
+                                    "tutorial-biofabric-task5",
+                                    "tutorial-biofabric-task6",
+                                    "tutorial-biofabric-task7",
+                                    "tutorial-biofabric-task8"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "test-biofabric-task4-large-graph"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "layered-between-subject",
+                        "order": "fixed",
+                        "components": [
+                            {
+                                "order": "fixed",
+                                "components": [
+                                    "tutorial-gatekeep-layered"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "tutorial-layered-task1",
+                                    "tutorial-layered-task2",
+                                    "tutorial-layered-task4",
+                                    "tutorial-layered-task5",
+                                    "tutorial-layered-task6",
+                                    "tutorial-layered-task7",
+                                    "tutorial-layered-task8"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "test-layered-task4-large-graph"
+                                ]
+                            }
+                        ]
+                    }
                 ]
             },
             "all-four-side-by-side",
-            "test-biofabric-task4-large-graph",
-            "test-matrix-task4-large-graph",
-            "test-layered-task4-large-graph",
-            "test-force-task4-large-graph",
             "interaction-metadata"
         ]
     },
