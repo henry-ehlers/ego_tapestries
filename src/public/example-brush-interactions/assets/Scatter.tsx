@@ -2,7 +2,7 @@
 
 import { useResizeObserver } from '@mantine/hooks';
 import { useEffect, useMemo, useState } from 'react';
-import ColumnTable from 'arquero/dist/types/table/column-table';
+import { ColumnTable } from 'arquero';
 import * as d3 from 'd3';
 import {
   Button, Group, RangeSlider, SegmentedControl, Stack, Text,

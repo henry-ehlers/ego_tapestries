@@ -5,7 +5,7 @@ import {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { from, escape } from 'arquero';
-import ColumnTable from 'arquero/dist/types/table/column-table';
+import { ColumnTable } from 'arquero';
 import { Registry, initializeTrrack } from '@trrack/core';
 import * as d3 from 'd3';
 import debounce from 'lodash.debounce';
