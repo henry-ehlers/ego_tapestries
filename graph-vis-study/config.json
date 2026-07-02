@@ -1,0 +1,781 @@
+{
+    "$schema": "https://raw.githubusercontent.com/revisit-studies/study/main/src/parser/StudyConfigSchema.json",
+    "studyMetadata": {
+        "title": "Graph Visualization Study",
+        "version": "pilot",
+        "authors": [
+            "Sara Di Bartolomeo",
+            "Daniel Pahr",
+            "Velitchko Filipov",
+            "Henry Ehlers",
+            "Johann Sebastian Schicho"
+        ],
+        "date": "2026-02-23",
+        "description": "Ego Networks Visualization Study",
+        "organizations": [
+            "TU Wien"
+        ]
+    },
+    "uiConfig": {
+        "contactEmail": "your@email.com",
+        "helpTextPath": "graph-vis-study/assets/help.md",
+        "logoPath": "revisitAssets/revisitLogoSquare.svg",
+        "withProgressBar": true,
+        "autoDownloadStudy": false,
+        "withSidebar": true
+    },
+    "importedLibraries": [
+        "nasa-tlx"
+    ],
+    "components": {
+        "introduction": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/introduction.md",
+            "response": []
+        },
+        "tutorial": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/tutorial.md",
+            "response": []
+        },
+        "graph-terminology": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/graph_terms_intro.md",
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "visualization-count",
+                    "answer": 4
+                }
+            ],
+            "response": [
+                {
+                    "id": "visualization-count",
+                    "prompt": "How many different types of visualizations will you be shown?",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "tutorial-tlx": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/tlx.md",
+            "response": []
+        },
+        "tutorial-gatekeep-force-directed": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. The ego is the node in blue color.\n## How to answer\n Click on the node to select it.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-gatekeep-matrix": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. The ego is the node in blue color.\n## How to answer\n Click on the node to select it.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-gatekeep-biofabric": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. In our version of ego networks in BioFabric, the ego is the top horizontal line\n## How to answer\n Click on the top line to select it.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-gatekeep-layered": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. The ego is the node in blue color.\n## How to answer\n Click on the node to select it.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-gatekeep-compression-force-directed": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            },
+            "instruction": "# Tutorial\nDouble click on a node to compress / uncompress its alter level\n## How to answer\n Double click on any node."
+        },
+        "tutorial-gatekeep-compression-matrix": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            },
+            "instruction": "# Tutorial\nDouble click on a node to compress / uncompress its alter level\n## How to answer\n Double click on any node."
+        },
+        "tutorial-gatekeep-compression-layered": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            },
+            "instruction": "# Tutorial\nDouble click on a node to compress / uncompress its alter level\n## How to answer\n Double click on any node."
+        },
+        "tutorial-gatekeep-compression-biofabric": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            },
+            "instruction": "# Tutorial\nDouble click the button on top or the left hand side of the visualization to compress / uncompress its alter level\n## How to answer\n Double click any of the buttons for the node group above or left of the visualization."
+        },
+        "tutorial-force-directed-task1": {
+            "baseComponent": "task1",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task2": {
+            "baseComponent": "task2",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task4": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task5": {
+            "baseComponent": "task5",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task6": {
+            "baseComponent": "task6",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task7": {
+            "baseComponent": "task7",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-force-directed-task8": {
+            "baseComponent": "task8",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "tutorial-matrix-task1": {
+            "baseComponent": "task1",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task2": {
+            "baseComponent": "task2",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task4": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task5": {
+            "baseComponent": "task5",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task6": {
+            "baseComponent": "task6",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task7": {
+            "baseComponent": "task7",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-matrix-task8": {
+            "baseComponent": "task8",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "tutorial-biofabric-task1": {
+            "baseComponent": "task1",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task2": {
+            "baseComponent": "task2",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task4": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task5": {
+            "baseComponent": "task5",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task6": {
+            "baseComponent": "task6",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task7": {
+            "baseComponent": "task7",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task8": {
+            "baseComponent": "task8",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-layered-task1": {
+            "baseComponent": "task1",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task2": {
+            "baseComponent": "task2",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task4": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task5": {
+            "baseComponent": "task5",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task6": {
+            "baseComponent": "task6",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task7": {
+            "baseComponent": "task7",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "tutorial-layered-task8": {
+            "baseComponent": "task8",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "all-four-side-by-side": {
+            "type": "website",
+            "response": [],
+            "path": "graph-vis-study/assets/ego_tapes/multiple.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Show interaction between all visualizations",
+            "instruction": "# Overview Visualizations\n These are the four visualizations of the study. You can interact with them in this overview and see the interactive changes simultaneously."
+        },
+        "test-biofabric-task4-large-graph": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "test-matrix-task4-large-graph": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "matrix"
+            }
+        },
+        "test-layered-task4-large-graph": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "layered"
+            }
+        },
+        "test-force-task4-large-graph": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "force"
+            }
+        },
+        "interaction-metadata": {
+            "baseComponent": "graph-vis-interaction-log",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "matrix"
+            }
+        }
+    },
+    "sequence": {
+        "order": "fixed",
+        "components": [
+            "introduction",
+            "tutorial",
+            "graph-terminology",
+            "tutorial-tlx",
+            "$nasa-tlx.components.nasa-tlx",
+            {
+                "id": "between-subject",
+                "order": "latinSquare",
+                "numSamples": 1,
+                "components": [
+                    {
+                        "id": "force-directed-between-subject",
+                        "order": "fixed",
+                        "components": [
+                            {
+                                "order": "fixed",
+                                "components": [
+                                    "tutorial-gatekeep-force-directed",
+                                    "tutorial-gatekeep-compression-force-directed"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "tutorial-force-directed-task1",
+                                    "tutorial-force-directed-task2",
+                                    "tutorial-force-directed-task4",
+                                    "tutorial-force-directed-task5",
+                                    "tutorial-force-directed-task6",
+                                    "tutorial-force-directed-task7",
+                                    "tutorial-force-directed-task8"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "test-force-task4-large-graph"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "matrix-between-subject",
+                        "order": "fixed",
+                        "components": [
+                            {
+                                "order": "fixed",
+                                "components": [
+                                    "tutorial-gatekeep-matrix",
+                                    "tutorial-gatekeep-compression-matrix"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "tutorial-matrix-task1",
+                                    "tutorial-matrix-task2",
+                                    "tutorial-matrix-task4",
+                                    "tutorial-matrix-task5",
+                                    "tutorial-matrix-task6",
+                                    "tutorial-matrix-task7",
+                                    "tutorial-matrix-task8"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "test-matrix-task4-large-graph"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "biofabric-between-subject",
+                        "order": "fixed",
+                        "components": [
+                            {
+                                "order": "fixed",
+                                "components": [
+                                    "tutorial-gatekeep-biofabric",
+                                    "tutorial-gatekeep-compression-biofabric"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "tutorial-biofabric-task1",
+                                    "tutorial-biofabric-task2",
+                                    "tutorial-biofabric-task4",
+                                    "tutorial-biofabric-task5",
+                                    "tutorial-biofabric-task6",
+                                    "tutorial-biofabric-task7",
+                                    "tutorial-biofabric-task8"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "test-biofabric-task4-large-graph"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "layered-between-subject",
+                        "order": "fixed",
+                        "components": [
+                            {
+                                "order": "fixed",
+                                "components": [
+                                    "tutorial-gatekeep-layered",
+                                    "tutorial-gatekeep-compression-layered"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "tutorial-layered-task1",
+                                    "tutorial-layered-task2",
+                                    "tutorial-layered-task4",
+                                    "tutorial-layered-task5",
+                                    "tutorial-layered-task6",
+                                    "tutorial-layered-task7",
+                                    "tutorial-layered-task8"
+                                ]
+                            },
+                            {
+                                "order": "random",
+                                "components": [
+                                    "test-layered-task4-large-graph"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "all-four-side-by-side",
+            "interaction-metadata"
+        ]
+    },
+    "baseComponents": {
+        "tutorial-gatekeep-compression": {
+            "type": "website",
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "response": [
+                {
+                    "id": "manyCompressions",
+                    "prompt": "Complete at least 3 compressions or uncompressions of an alter level.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "manyCompressions",
+                    "answer": true
+                }
+            ],
+            "description": "Compress the alter levels."
+        },
+        "task1": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Locate the node, which is not the ego, with the largest number of neighbors.",
+            "instruction": "# Task 1\nLocate the node, which is not the ego, with the largest number of neighbors.\n## How to answer\n Click on the alter to select the answer."
+        },
+        "task2": {
+            "type": "website",
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Identify the shortest path between two nodes",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes\n## How to answer\n Enter the number of edges of the path between those two nodes below.",
+            "response": [
+                {
+                    "id": "task2",
+                    "prompt": "Identify the shortest path between two nodes",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "task3": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Which alter is closest to the ego (i.e., which edge between ego and 1-ater has the largest edge weight)",
+            "instruction": "# Task 3\nWhich alter is closest to the ego (i.e., which edge between ego and 1-ater has the largest edge weight)\n## How to answer\n Click on the alter to select the answer."
+        },
+        "task4": {
+            "type": "website",
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Estimate/Count the number of nodes in alter level k.",
+            "instruction": "# Task 4\nEstimate/Count the number of nodes in alter level k.\n## How to answer\n Enter the number below.",
+            "response": [
+                {
+                    "id": "task4",
+                    "prompt": "Estimate/Count the number of nodes in alter level k.",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "task5": {
+            "type": "website",
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Estimate the number of edges between all nodes of alter level k.",
+            "instruction": "# Task 5\nEstimate the number of edges between all nodes of alter level k.\n## How to answer\n Enter the number below.",
+            "response": [
+                {
+                    "id": "task5",
+                    "prompt": "Estimate the number of edges between all nodes of alter level k.",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "task6": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Given two nodes, identify their common neighbors.",
+            "instruction": "# Task 6\nGiven two nodes, identify their common neighbors.\n## How to answer\n Click on the nodes to select them"
+        },
+        "task7": {
+            "type": "website",
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Which alter level is the largest?",
+            "instruction": "# Task 7\nWhich alter level is the largest?\n## How to answer\n Enter the number below.",
+            "response": [
+                {
+                    "id": "task7",
+                    "prompt": "Which alter level is the largest?",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "task8": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Follow the path p from node v to node u.",
+            "instruction": "# Task 8\nFollow the path p from node v to node u.\n## How to answer\n Click on all nodes on the path"
+        },
+        "graph-vis-custom-response": {
+            "type": "website",
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus"
+        },
+        "graph-vis": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus"
+        },
+        "graph-vis-interaction-log": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                },
+                {
+                    "id": "interactionMetadata",
+                    "prompt": "",
+                    "required": false,
+                    "type": "reactive"
+                }
+            ],
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus"
+        }
+    }
+}
