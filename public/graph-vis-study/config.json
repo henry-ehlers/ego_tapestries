@@ -179,6 +179,38 @@
                 "visualizationStyle": "layered"
             }
         },
+        "tutorial-gatekeep-compression-force-directed": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "force"
+            },
+            "instruction": "# Tutorial\nDouble click on a node to compress / uncompress its alter level\n## How to answer\n Double click on any node."
+        },
+        "tutorial-gatekeep-compression-matrix": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "matrix"
+            },
+            "instruction": "# Tutorial\nDouble click on a node to compress / uncompress its alter level\n## How to answer\n Double click on any node."
+        },
+        "tutorial-gatekeep-compression-layered": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "layered"
+            },
+            "instruction": "# Tutorial\nDouble click on a node to compress / uncompress its alter level\n## How to answer\n Double click on any node."
+        },
+        "tutorial-gatekeep-compression-biofabric": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            },
+            "instruction": "# Tutorial\nDouble click the button on top or the left hand side of the visualization to compress / uncompress its alter level\n## How to answer\n Double click any of the buttons for the node group above or left of the visualization."
+        },
         "tutorial-force-directed-task1": {
             "baseComponent": "task1",
             "parameters": {
@@ -439,7 +471,8 @@
                             {
                                 "order": "fixed",
                                 "components": [
-                                    "tutorial-gatekeep-force-directed"
+                                    "tutorial-gatekeep-force-directed",
+                                    "tutorial-gatekeep-compression-force-directed"
                                 ]
                             },
                             {
@@ -469,7 +502,8 @@
                             {
                                 "order": "fixed",
                                 "components": [
-                                    "tutorial-gatekeep-matrix"
+                                    "tutorial-gatekeep-matrix",
+                                    "tutorial-gatekeep-compression-matrix"
                                 ]
                             },
                             {
@@ -499,7 +533,8 @@
                             {
                                 "order": "fixed",
                                 "components": [
-                                    "tutorial-gatekeep-biofabric"
+                                    "tutorial-gatekeep-biofabric",
+                                    "tutorial-gatekeep-compression-biofabric"
                                 ]
                             },
                             {
@@ -529,7 +564,8 @@
                             {
                                 "order": "fixed",
                                 "components": [
-                                    "tutorial-gatekeep-layered"
+                                    "tutorial-gatekeep-layered",
+                                    "tutorial-gatekeep-compression-layered"
                                 ]
                             },
                             {
@@ -559,6 +595,29 @@
         ]
     },
     "baseComponents": {
+        "tutorial-gatekeep-compression": {
+            "type": "website",
+            "path": "graph-vis-study/assets/ego_tapes/revisit.html",
+            "instructionLocation": "aboveStimulus",
+            "response": [
+                {
+                    "id": "manyCompressions",
+                    "prompt": "Complete at least 3 compressions or uncompressions of an alter level.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "manyCompressions",
+                    "answer": true
+                }
+            ],
+            "description": "Compress the alter levels."
+        },
         "task1": {
             "type": "website",
             "response": [

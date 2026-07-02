@@ -122,14 +122,7 @@ export class MatrixRenderer {
             this.interactionLog.highlights += 1;
 
             // Revisit may be defined globally, if the user is running this in a Revisit environment.
-            if (Revisit) {
-                let highlightedNodes = this.matrix.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
-                Revisit.postAnswers({
-                    // 'graphVis' must match id defined in config.json baseComponent response 
-                    ['graphVis']: highlightedNodes,
-                    "interactionMetadata": this.interactionLog
-                });
-            }
+            this.sendRevisitAnswers();
         });
 
         this.globalDispatcher.on("compression.matrix", (msg) => {
@@ -164,6 +157,8 @@ export class MatrixRenderer {
             mainG.selectAll(".horizontal-grid-line").transition().duration(300)
                 .attr("x1", this.calculate_gridX())
                 .attr("x2", this.calculate_gridX() + this.calculate_gridsize());
+
+            this.sendRevisitAnswers();
         });
 
         this.globalDispatcher.on("hover-in.matrix", (id) => {
@@ -271,5 +266,18 @@ export class MatrixRenderer {
             });
 
         svg.call(zoom);
+
+    }
+
+    sendRevisitAnswers() {
+        if (Revisit) {
+            let highlightedNodes = this.matrix.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
+            Revisit.postAnswers({
+                // 'graphVis' must match id defined in config.json baseComponent response 
+                ['graphVis']: highlightedNodes,
+                "interactionMetadata": this.interactionLog,
+                "manyCompressions": this.interactionLog.hasManyCompressions
+            });
+        }
     }
 }

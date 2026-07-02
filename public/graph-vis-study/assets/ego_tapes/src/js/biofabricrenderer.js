@@ -664,6 +664,8 @@ export class BioFabricRenderer {
                         }
                     });
             }
+
+            this.sendRevisitAnswers();
         });
 
         this.globalDispatcher.on("hover-in.biofabric", (id) => {
@@ -691,19 +693,24 @@ export class BioFabricRenderer {
             d3.selectAll(".edgecircle").classed("highlight-biofabric", d => d.get_highlighted());
 
             // Revisit may be defined globally, if the user is running this in a Revisit environment.
-            if (Revisit) {
-                let highlightedNodes = this.biofabric.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
-                Revisit.postAnswers({
-                    // 'graphVis' must match id defined in config.json baseComponent response 
-                    ['graphVis']: highlightedNodes,
-                    "interactionMetadata": this.interactionLog
-                });
-            }
+            this.sendRevisitAnswers();
         });
     }
 
     // Update
     update() {
 
+    }
+
+    sendRevisitAnswers() {
+        if (Revisit) {
+            let highlightedNodes = this.biofabric.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
+            Revisit.postAnswers({
+                // 'graphVis' must match id defined in config.json baseComponent response 
+                ['graphVis']: highlightedNodes,
+                "interactionMetadata": this.interactionLog,
+                "manyCompressions": this.interactionLog.hasManyCompressions
+            });
+        }
     }
 }

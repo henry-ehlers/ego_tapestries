@@ -108,14 +108,7 @@ export class NodeLinkRenderer {
             }
 
             // Revisit may be defined globally, if the user is running this in a Revisit environment.
-            if (Revisit) {
-                let highlightedNodes = this.nodelink.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
-                Revisit.postAnswers({
-                    // 'graphVis' must match id defined in config.json baseComponent response 
-                    ['graphVis']: highlightedNodes,
-                    "interactionMetadata": this.interactionLog
-                });
-            }
+            this.sendRevisitAnswers();
         });
 
         this.globalDispatcher.on(`compression.nodelink.${this.nodelink.layoutType}`, (msg) => {
@@ -161,6 +154,8 @@ export class NodeLinkRenderer {
             // change radius of nodes in this depth level to indicate compression state
             node.attr("r", d => d.get_state() === State["Fully Compressed"] ? nodeRadius * 2 : nodeRadius);
             this.easeSimulation(simulation);
+
+            this.sendRevisitAnswers();
         });
 
         this.globalDispatcher.on(`hover-in.nodelink.${this.nodelink.layoutType}`, (id) => {
@@ -357,5 +352,17 @@ export class NodeLinkRenderer {
             )
             .force("charge", d3.forceManyBody().strength(-50))
             .force("center", d3.forceCenter(this.canvasWidth / 2, this.canvasHeight / 2));
+    }
+
+    sendRevisitAnswers() {
+        if (Revisit) {
+            let highlightedNodes = this.nodelink.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
+            Revisit.postAnswers({
+                // 'graphVis' must match id defined in config.json baseComponent response 
+                ['graphVis']: highlightedNodes,
+                "interactionMetadata": this.interactionLog,
+                "manyCompressions": this.interactionLog.hasManyCompressions
+            });
+        }
     }
 }
