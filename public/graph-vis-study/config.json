@@ -38,6 +38,26 @@
             "path": "graph-vis-study/assets/tutorial.md",
             "response": []
         },
+        "graph-terminology-force-directed": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/graph_terminology_force_directed.md",
+            "response": []
+        },
+        "graph-terminology-matrix": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/graph_terminology_matrix.md",
+            "response": []
+        },
+        "graph-terminology-biofabric": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/graph_terminology_biofabric.md",
+            "response": []
+        },
+        "graph-terminology-layered": {
+            "type": "markdown",
+            "path": "graph-vis-study/assets/graph_terminology_layered.md",
+            "response": []
+        },
         "graph-terminology": {
             "type": "markdown",
             "path": "graph-vis-study/assets/graph_terms_intro.md",
@@ -456,9 +476,6 @@
         "components": [
             "introduction",
             "tutorial",
-            "graph-terminology",
-            "tutorial-tlx",
-            "$nasa-tlx.components.nasa-tlx",
             {
                 "id": "between-subject",
                 "order": "latinSquare",
@@ -468,6 +485,9 @@
                         "id": "force-directed-between-subject",
                         "order": "fixed",
                         "components": [
+                            "graph-terminology-force-directed",
+                            "tutorial-tlx",
+                            "$nasa-tlx.components.nasa-tlx",
                             {
                                 "order": "fixed",
                                 "components": [
@@ -499,6 +519,9 @@
                         "id": "matrix-between-subject",
                         "order": "fixed",
                         "components": [
+                            "graph-terminology-matrix",
+                            "tutorial-tlx",
+                            "$nasa-tlx.components.nasa-tlx",
                             {
                                 "order": "fixed",
                                 "components": [
@@ -530,6 +553,9 @@
                         "id": "biofabric-between-subject",
                         "order": "fixed",
                         "components": [
+                            "graph-terminology-biofabric",
+                            "tutorial-tlx",
+                            "$nasa-tlx.components.nasa-tlx",
                             {
                                 "order": "fixed",
                                 "components": [
@@ -561,6 +587,9 @@
                         "id": "layered-between-subject",
                         "order": "fixed",
                         "components": [
+                            "graph-terminology-layered",
+                            "tutorial-tlx",
+                            "$nasa-tlx.components.nasa-tlx",
                             {
                                 "order": "fixed",
                                 "components": [
