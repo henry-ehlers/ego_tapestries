@@ -236,7 +236,16 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "force"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        3
+                    ]
+                }
+            ]
         },
         "tutorial-force-directed-task2": {
             "baseComponent": "task2",
@@ -250,14 +259,28 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "force"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task4",
+                    "answer": 6
+                }
+            ]
         },
         "tutorial-force-directed-task5": {
             "baseComponent": "task5",
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "force"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task5",
+                    "answer": 5
+                }
+            ]
         },
         "tutorial-force-directed-task6": {
             "baseComponent": "task6",
@@ -271,7 +294,14 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "force"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task7",
+                    "answer": 1
+                }
+            ]
         },
         "tutorial-force-directed-task8": {
             "baseComponent": "task8",
@@ -285,7 +315,16 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "matrix"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        3
+                    ]
+                }
+            ]
         },
         "tutorial-matrix-task2": {
             "baseComponent": "task2",
@@ -299,14 +338,28 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "matrix"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task4",
+                    "answer": 6
+                }
+            ]
         },
         "tutorial-matrix-task5": {
             "baseComponent": "task5",
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "matrix"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task5",
+                    "answer": 5
+                }
+            ]
         },
         "tutorial-matrix-task6": {
             "baseComponent": "task6",
@@ -320,7 +373,14 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "matrix"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task7",
+                    "answer": 1
+                }
+            ]
         },
         "tutorial-matrix-task8": {
             "baseComponent": "task8",
@@ -334,7 +394,16 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "biofabric"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        3
+                    ]
+                }
+            ]
         },
         "tutorial-biofabric-task2": {
             "baseComponent": "task2",
@@ -348,14 +417,28 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "biofabric"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task4",
+                    "answer": 6
+                }
+            ]
         },
         "tutorial-biofabric-task5": {
             "baseComponent": "task5",
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "biofabric"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task5",
+                    "answer": 5
+                }
+            ]
         },
         "tutorial-biofabric-task6": {
             "baseComponent": "task6",
@@ -369,7 +452,14 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "biofabric"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task7",
+                    "answer": 1
+                }
+            ]
         },
         "tutorial-biofabric-task8": {
             "baseComponent": "task8",
@@ -383,7 +473,16 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "layered"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        3
+                    ]
+                }
+            ]
         },
         "tutorial-layered-task2": {
             "baseComponent": "task2",
@@ -397,14 +496,28 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "layered"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task4",
+                    "answer": 6
+                }
+            ]
         },
         "tutorial-layered-task5": {
             "baseComponent": "task5",
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "layered"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task5",
+                    "answer": 5
+                }
+            ]
         },
         "tutorial-layered-task6": {
             "baseComponent": "task6",
@@ -418,7 +531,14 @@
             "parameters": {
                 "graphDataPath": "./data/star_wars_4_adapted.edges.json",
                 "visualizationStyle": "layered"
-            }
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task7",
+                    "answer": 1
+                }
+            ]
         },
         "tutorial-layered-task8": {
             "baseComponent": "task8",
@@ -697,12 +817,12 @@
             "type": "website",
             "path": "graph-vis-study/assets/ego_tapes/revisit.html",
             "instructionLocation": "aboveStimulus",
-            "description": "Estimate/Count the number of nodes in alter level k.",
-            "instruction": "# Task 4\nEstimate/Count the number of nodes in alter level k.\n## How to answer\n Enter the number below.",
+            "description": "Estimate the number of nodes in alter level 2.",
+            "instruction": "# Task 4\nEstimate the number of nodes in alter level 2.\n## How to answer\n Enter the number below.",
             "response": [
                 {
                     "id": "task4",
-                    "prompt": "Estimate/Count the number of nodes in alter level k.",
+                    "prompt": "Estimate/Count the number of nodes in alter level 2.",
                     "type": "numerical"
                 }
             ]
@@ -711,8 +831,8 @@
             "type": "website",
             "path": "graph-vis-study/assets/ego_tapes/revisit.html",
             "instructionLocation": "aboveStimulus",
-            "description": "Estimate the number of edges between all nodes of alter level k.",
-            "instruction": "# Task 5\nEstimate the number of edges between all nodes of alter level k.\n## How to answer\n Enter the number below.",
+            "description": "Estimate the number of edges between all nodes of alter level 2.",
+            "instruction": "# Task 5\nEstimate the number of edges between all nodes of alter level 2.\n## How to answer\n Enter the number below.",
             "response": [
                 {
                     "id": "task5",
