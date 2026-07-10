@@ -170,6 +170,94 @@
                 "visualizationStyle": "biofabric"
             }
         },
+        "tutorial-gatekeep-biofabric-node-1": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        7
+                    ]
+                }
+            ],
+            "description": "Select node 7",
+            "instruction": "# Tutorial\nSelect node 7. The nodes are the horizontal bars, stretching from left to right. The node name is written to the left hand side of the node.\n## How to answer\n Click on the node, i.e. horizontal bar of node 7. You can find node 7 by searching for '7' on the left side of all nodes. Check the answer when you have node 7 selected.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-gatekeep-biofabric-node-2": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        19
+                    ]
+                }
+            ],
+            "description": "Select node 19",
+            "instruction": "# Tutorial\nSelect node 19. The nodes are the horizontal bars, stretching from left to right. The node name is written to the left hand side of the node.\n## How to answer\n Click on the node, i.e. horizontal bar of node 19. You can find node 19 by searching for '19' on the left side of all nodes. Check the answer when you have node 19 selected.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-gatekeep-biofabric-edge-1": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        8,
+                        9
+                    ]
+                }
+            ],
+            "description": "Select the edge between node 8 and node 9",
+            "instruction": "# Tutorial\nSelect the edge between node 8 and node 9. The nodes are the horizontal bars, stretching from left to right. The node name is written to the left hand side of the node. The edge is a vertical line with circular endpoints drawn between the two nodes. It connects the two nodes.\n## How to answer\n Click on the two endpoints of the edge between node 8 and node 9, You can find the nodes by looking  for their name on the left side of all nodes. Check the answer when you have the two edge endpoints selected.",
+            "parameters": {
+                "graphDataPath": "./data/star_wars_4_adapted.edges.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
         "tutorial-gatekeep-layered": {
             "baseComponent": "graph-vis-custom-response",
             "response": [
@@ -596,6 +684,43 @@
         "components": [
             "introduction",
             "tutorial",
+            {
+                "id": "biofabric-only",
+                "order": "fixed",
+                "components": [
+                    "graph-terminology-biofabric",
+                    "tutorial-tlx",
+                    "$nasa-tlx.components.nasa-tlx",
+                    {
+                        "order": "fixed",
+                        "components": [
+                            "tutorial-gatekeep-biofabric",
+                            "tutorial-gatekeep-compression-biofabric",
+                            "tutorial-gatekeep-biofabric-node-1",
+                            "tutorial-gatekeep-biofabric-node-2",
+                            "tutorial-gatekeep-biofabric-edge-1"
+                        ]
+                    },
+                    {
+                        "order": "random",
+                        "components": [
+                            "tutorial-biofabric-task1",
+                            "tutorial-biofabric-task2",
+                            "tutorial-biofabric-task4",
+                            "tutorial-biofabric-task5",
+                            "tutorial-biofabric-task6",
+                            "tutorial-biofabric-task7",
+                            "tutorial-biofabric-task8"
+                        ]
+                    },
+                    {
+                        "order": "random",
+                        "components": [
+                            "test-biofabric-task4-large-graph"
+                        ]
+                    }
+                ]
+            },
             {
                 "id": "between-subject",
                 "order": "latinSquare",
