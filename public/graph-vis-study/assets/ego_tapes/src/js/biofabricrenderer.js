@@ -203,7 +203,9 @@ export class BioFabricRenderer {
                         // we only fully compress if the edge is already fully compressed and we are compressing the node, or if we are already fully compressed and are decompressing the node.
                         const edgePendant = this.biofabric.edgeDepths.find(edgeDepth => edgeDepth.get_depth() == nodeDepthIcon.get_depth());
                         const isFullCompression = (nodeDepthIcon.get_state() == State["Uncompressed"] && edgePendant.get_state() == State["Fully Compressed"]) || (nodeDepthIcon.get_state() == State["Fully Compressed"] && edgePendant.get_state() == State["Fully Compressed"]);
-                        this.globalDispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, isFullCompression, "node"));
+                        // Disable compression through double click, as we do not want interactivity for the study.
+                        //
+                        // this.globalDispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, isFullCompression, "node"));
                     }
                 })
                 .style("cursor", () => {
@@ -371,7 +373,9 @@ export class BioFabricRenderer {
                             const nodePendant = this.biofabric.nodeDepths.find(nodeDepth => nodeDepth.get_depth() == edgeDepth.get_depth());
                             isFullCompression = (edgeDepth.get_state() == State["Partially Compressed"] && nodePendant.get_state() == State["Fully Compressed"]) || (edgeDepth.get_state() == State["Fully Compressed"] && nodePendant.get_state() == State["Fully Compressed"]);
                         }
-                        this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, isFullCompression, "edge"));
+                        // NOTE: Disable compression through double click, as we do not want interactivity for the study.
+                        //
+                        // this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, isFullCompression, "edge"));
                     }
                 });
         }
