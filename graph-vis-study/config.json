@@ -650,6 +650,22 @@
                 "visualizationStyle": "biofabric"
             }
         },
+        "test-biofabric-task4-large-graph-preset-compression": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "biofabric",
+                "nodeAlterCompressions": [
+                    1
+                ],
+                "edgeAlterCompressions": [
+                    0.5,
+                    0.5,
+                    1,
+                    1.5
+                ]
+            }
+        },
         "test-matrix-task4-large-graph": {
             "baseComponent": "task4",
             "parameters": {
@@ -716,7 +732,8 @@
                     {
                         "order": "random",
                         "components": [
-                            "test-biofabric-task4-large-graph"
+                            "test-biofabric-task4-large-graph",
+                            "test-biofabric-task4-large-graph-preset-compression"
                         ]
                     }
                 ]

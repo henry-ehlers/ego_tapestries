@@ -6,6 +6,9 @@ import { NodeLink } from './nodelink.js';
 import { NodeLinkRenderer } from './nodelinkrender.js';
 import { Matrix } from './matrix.js';
 import { MatrixRenderer } from './matrixrenderer.js';
+import { CompressionMsg } from "./CompressionMsg.js";
+import { State } from './state.js';
+
 
 const state = {
     width: 100,
@@ -32,16 +35,39 @@ function getOrCreateSvg() {
     return svg;
 }
 
-function render() {
+function render(options = {}) {
     if (!state.graph) return;
 
     state.svg = getOrCreateSvg();
     state.svg.selectAll("*").remove();
 
     if (state.rendererType === "biofabric") {
+        // dispatcher defined here, so we can send compressions from revisit parameters.
+        const dispatcher = d3.dispatch("highlight", "hover-in", "hover-out", "compression");
+
         const biofabric = new BioFabric(state.graph);
-        const renderer = new BioFabricRenderer(biofabric, state.width, state.height);
+        const renderer = new BioFabricRenderer(biofabric, state.width, state.height, dispatcher);
         renderer.render(state.svg);
+
+        // send compression messages for any node or edge depths that are specified in the options.
+        // this breaks separation of concerns, but i'm unsure how else to do it without major refactoring.
+        for (const nodeDepth of options.nodeAlterCompressions) {
+            const nodeDepthIcon = biofabric.nodeDepths.find(nodeDepthObj => nodeDepthObj.get_depth() == nodeDepth);
+            const edgePendant = biofabric.edgeDepths.find(edgeDepth => edgeDepth.get_depth() == nodeDepth);
+            const isFullCompression = (nodeDepthIcon.get_state() == State["Uncompressed"] && edgePendant.get_state() == State["Fully Compressed"]) || (nodeDepthIcon.get_state() == State["Fully Compressed"] && edgePendant.get_state() == State["Fully Compressed"]);
+            dispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, isFullCompression, "node"));
+        }
+
+        for (const edgeDepth of options.edgeAlterCompressions) {
+            const edgeDepthIcon = biofabric.edgeDepths.find(edgeDepthObj => edgeDepthObj.get_depth() == edgeDepth);
+            let isFullCompression = false;
+            if (edgeDepthIcon.get_depth() % 1 == 0) {
+                const nodePendant = biofabric.nodeDepths.find(nodeDepth => nodeDepth.get_depth() == edgeDepthIcon.get_depth());
+                isFullCompression = (edgeDepthIcon.get_state() == State["Partially Compressed"] && nodePendant.get_state() == State["Fully Compressed"]) || (edgeDepthIcon.get_state() == State["Fully Compressed"] && nodePendant.get_state() == State["Fully Compressed"]);
+            }
+            dispatcher.call("compression", this, new CompressionMsg(edgeDepthIcon, isFullCompression, "edge"));
+        }
+
     } else if (state.rendererType === "matrix") {
         const matrix = new Matrix(state.graph);
         const renderer = new MatrixRenderer(matrix, state.width, state.height);
@@ -95,7 +121,7 @@ async function ego_init(options = {}) {
     if (options.dataPath != null) state.dataPath = options.dataPath;
 
     await loadGraph(state.dataPath);
-    render();
+    render(options);
 }
 
 export {
