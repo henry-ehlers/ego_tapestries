@@ -23,6 +23,13 @@
             // note the path must be relative to 'main_revisit.js'
             // e.g. "./data/star_wars_4_adapted.edges.json"
             options.dataPath = data.graphDataPath;
+
+            if (Object.hasOwn(data, "nodeAlterCompressions")) {
+                options.nodeAlterCompressions = data.nodeAlterCompressions;
+            }
+            if (Object.hasOwn(data, "edgeAlterCompressions")) {
+                options.edgeAlterCompressions = data.edgeAlterCompressions;
+            }
         }
 
         if (data.visualizationStyle) {
