@@ -30,14 +30,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Convert edge JSON to edge list with random weights."
     )
-    parser.add_argument("input", type=str, help="Path to input edges JSON file")
-    parser.add_argument("output", type=str, help="Path to output edges JSON file")
+    parser.add_argument(
+        "input", type=str, nargs="+", help="Path to input edges JSON file"
+    )
+
     args = parser.parse_args()
 
-    data = load_json_file(args.input)
-    edge_list = get_edge_list(data)
-    edge_list = only_source_target(edge_list)
-    edge_list = introduce_random_weight(edge_list)
+    for input_file in args.input:
+        output_file = input_file.replace(".json", "_edge_list.json")
+        data = load_json_file(input_file)
+        edge_list = get_edge_list(data)
+        edge_list = only_source_target(edge_list)
+        edge_list = introduce_random_weight(edge_list)
 
-    with open(args.output, "w") as f:
-        json.dump(edge_list, f, indent=2)
+        with open(output_file, "w") as f:
+            json.dump(edge_list, f, indent=2)
