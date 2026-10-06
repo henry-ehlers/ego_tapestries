@@ -90,6 +90,9 @@ export class BioFabricRenderer {
                 .attr("dominant-baseline", "middle")
                 .text(node.get_label())
                 .attr("fill", "#333")
+                .on("click", (_event, d) => {
+                    this.globalDispatcher.call("highlight", this, d.get_id());
+                })
                 .on("mouseover", (_event, d) => {
                     this.globalDispatcher.call("hover-in", this, d.get_id());
                 })
