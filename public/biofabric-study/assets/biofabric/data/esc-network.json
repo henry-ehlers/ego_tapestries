@@ -1,0 +1,4064 @@
+{
+  "nodes": [
+    {
+      "id": "AL",
+      "label": "Albania",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "AM",
+      "label": "Armenia",
+      "group": "asia",
+      "level": 1
+    },
+    {
+      "id": "AU",
+      "label": "Australia",
+      "group": "oceania",
+      "level": 1
+    },
+    {
+      "id": "AT",
+      "label": "Austria",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "AZ",
+      "label": "Azerbaijan",
+      "group": "asia",
+      "level": 1
+    },
+    {
+      "id": "BE",
+      "label": "Belgium",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "HR",
+      "label": "Croatia",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "CY",
+      "label": "Cyprus",
+      "group": "asia",
+      "level": 1
+    },
+    {
+      "id": "CZ",
+      "label": "Czechia",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "DK",
+      "label": "Denmark",
+      "group": "scandinavia",
+      "level": 1
+    },
+    {
+      "id": "EE",
+      "label": "Estonia",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "FI",
+      "label": "Finland",
+      "group": "scandinavia",
+      "level": 1
+    },
+    {
+      "id": "FR",
+      "label": "France",
+      "group": "west europe",
+      "level": 1
+    },
+    {
+      "id": "GE",
+      "label": "Georgia",
+      "group": "asia",
+      "level": 1
+    },
+    {
+      "id": "DE",
+      "label": "Germany",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "GR",
+      "label": "Greece",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "IS",
+      "label": "Iceland",
+      "group": "west europe",
+      "level": 1
+    },
+    {
+      "id": "IE",
+      "label": "Ireland",
+      "group": "west europe",
+      "level": 1
+    },
+    {
+      "id": "IL",
+      "label": "Israel",
+      "group": "asia",
+      "level": 1
+    },
+    {
+      "id": "IT",
+      "label": "Italy",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "LV",
+      "label": "Latvia",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "LT",
+      "label": "Lithuania",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "LU",
+      "label": "Luxembourg",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "MT",
+      "label": "Malta",
+      "group": "west europe",
+      "level": 1
+    },
+    {
+      "id": "ME",
+      "label": "Montenegro",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "NL",
+      "label": "Netherlands",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "NO",
+      "label": "Norway",
+      "group": "scandinavia",
+      "level": 1
+    },
+    {
+      "id": "PL",
+      "label": "Poland",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "PT",
+      "label": "Portugal",
+      "group": "west europe",
+      "level": 1
+    },
+    {
+      "id": "SM",
+      "label": "San Marino",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "RS",
+      "label": "Serbia",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "SI",
+      "label": "Slovenia",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "ES",
+      "label": "Spain",
+      "group": "west europe",
+      "level": 1
+    },
+    {
+      "id": "SE",
+      "label": "Sweden",
+      "group": "scandinavia",
+      "level": 1
+    },
+    {
+      "id": "CH",
+      "label": "Switzerland",
+      "group": "central europe",
+      "level": 1
+    },
+    {
+      "id": "UA",
+      "label": "Ukraine",
+      "group": "east europe",
+      "level": 1
+    },
+    {
+      "id": "GB",
+      "label": "United Kingdom",
+      "group": "west europe",
+      "level": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "AL",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 13,
+      "label": "Albania to Austria"
+    },
+    {
+      "source": "AM",
+      "target": "AT",
+      "group": "asia group",
+      "weight": 15,
+      "label": "Armenia to Austria"
+    },
+    {
+      "source": "AU",
+      "target": "AT",
+      "group": "oceania group",
+      "weight": 10,
+      "label": "Australia to Austria"
+    },
+    {
+      "source": "AZ",
+      "target": "AT",
+      "group": "asia group",
+      "weight": 10,
+      "label": "Azerbaijan to Austria"
+    },
+    {
+      "source": "BE",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 15,
+      "label": "Belgium to Austria"
+    },
+    {
+      "source": "HR",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 15,
+      "label": "Croatia to Austria"
+    },
+    {
+      "source": "CY",
+      "target": "AT",
+      "group": "asia group",
+      "weight": 13,
+      "label": "Cyprus to Austria"
+    },
+    {
+      "source": "CZ",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Czechia to Austria"
+    },
+    {
+      "source": "DK",
+      "target": "AT",
+      "group": "scandinavia group",
+      "weight": 8,
+      "label": "Denmark to Austria"
+    },
+    {
+      "source": "EE",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Estonia to Austria"
+    },
+    {
+      "source": "FI",
+      "target": "AT",
+      "group": "scandinavia group",
+      "weight": 19,
+      "label": "Finland to Austria"
+    },
+    {
+      "source": "FR",
+      "target": "AT",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "France to Austria"
+    },
+    {
+      "source": "GE",
+      "target": "AT",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Georgia to Austria"
+    },
+    {
+      "source": "DE",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 18,
+      "label": "Germany to Austria"
+    },
+    {
+      "source": "GR",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 20,
+      "label": "Greece to Austria"
+    },
+    {
+      "source": "IS",
+      "target": "AT",
+      "group": "west europe group",
+      "weight": 11,
+      "label": "Iceland to Austria"
+    },
+    {
+      "source": "IE",
+      "target": "AT",
+      "group": "west europe group",
+      "weight": 16,
+      "label": "Ireland to Austria"
+    },
+    {
+      "source": "IL",
+      "target": "AT",
+      "group": "asia group",
+      "weight": 14,
+      "label": "Israel to Austria"
+    },
+    {
+      "source": "IT",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Italy to Austria"
+    },
+    {
+      "source": "LV",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 16,
+      "label": "Latvia to Austria"
+    },
+    {
+      "source": "LT",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 9,
+      "label": "Lithuania to Austria"
+    },
+    {
+      "source": "LU",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Luxembourg to Austria"
+    },
+    {
+      "source": "MT",
+      "target": "AT",
+      "group": "west europe group",
+      "weight": 17,
+      "label": "Malta to Austria"
+    },
+    {
+      "source": "ME",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 11,
+      "label": "Montenegro to Austria"
+    },
+    {
+      "source": "NL",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 15,
+      "label": "Netherlands to Austria"
+    },
+    {
+      "source": "NO",
+      "target": "AT",
+      "group": "scandinavia group",
+      "weight": 13,
+      "label": "Norway to Austria"
+    },
+    {
+      "source": "PL",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 14,
+      "label": "Poland to Austria"
+    },
+    {
+      "source": "PT",
+      "target": "AT",
+      "group": "west europe group",
+      "weight": 13,
+      "label": "Portugal to Austria"
+    },
+    {
+      "source": "SM",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "San Marino to Austria"
+    },
+    {
+      "source": "RS",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 18,
+      "label": "Serbia to Austria"
+    },
+    {
+      "source": "SI",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 20,
+      "label": "Slovenia to Austria"
+    },
+    {
+      "source": "ES",
+      "target": "AT",
+      "group": "west europe group",
+      "weight": 11,
+      "label": "Spain to Austria"
+    },
+    {
+      "source": "SE",
+      "target": "AT",
+      "group": "scandinavia group",
+      "weight": 12,
+      "label": "Sweden to Austria"
+    },
+    {
+      "source": "CH",
+      "target": "AT",
+      "group": "central europe group",
+      "weight": 13,
+      "label": "Switzerland to Austria"
+    },
+    {
+      "source": "UA",
+      "target": "AT",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Ukraine to Austria"
+    },
+    {
+      "source": "GB",
+      "target": "AT",
+      "group": "west europe group",
+      "weight": 8,
+      "label": "United Kingdom to Austria"
+    },
+    {
+      "source": "AL",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Albania to Israel"
+    },
+    {
+      "source": "AU",
+      "target": "IL",
+      "group": "oceania group",
+      "weight": 12,
+      "label": "Australia to Israel"
+    },
+    {
+      "source": "AT",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Austria to Israel"
+    },
+    {
+      "source": "AZ",
+      "target": "IL",
+      "group": "asia group",
+      "weight": 24,
+      "label": "Azerbaijan to Israel"
+    },
+    {
+      "source": "BE",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "Belgium to Israel"
+    },
+    {
+      "source": "HR",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Croatia to Israel"
+    },
+    {
+      "source": "CY",
+      "target": "IL",
+      "group": "asia group",
+      "weight": 15,
+      "label": "Cyprus to Israel"
+    },
+    {
+      "source": "CZ",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Czechia to Israel"
+    },
+    {
+      "source": "DK",
+      "target": "IL",
+      "group": "scandinavia group",
+      "weight": 11,
+      "label": "Denmark to Israel"
+    },
+    {
+      "source": "EE",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 2,
+      "label": "Estonia to Israel"
+    },
+    {
+      "source": "FI",
+      "target": "IL",
+      "group": "scandinavia group",
+      "weight": 12,
+      "label": "Finland to Israel"
+    },
+    {
+      "source": "FR",
+      "target": "IL",
+      "group": "west europe group",
+      "weight": 19,
+      "label": "France to Israel"
+    },
+    {
+      "source": "GE",
+      "target": "IL",
+      "group": "asia group",
+      "weight": 8,
+      "label": "Georgia to Israel"
+    },
+    {
+      "source": "DE",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 15,
+      "label": "Germany to Israel"
+    },
+    {
+      "source": "GR",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Greece to Israel"
+    },
+    {
+      "source": "IS",
+      "target": "IL",
+      "group": "west europe group",
+      "weight": 4,
+      "label": "Iceland to Israel"
+    },
+    {
+      "source": "IE",
+      "target": "IL",
+      "group": "west europe group",
+      "weight": 17,
+      "label": "Ireland to Israel"
+    },
+    {
+      "source": "IT",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Italy to Israel"
+    },
+    {
+      "source": "LV",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Latvia to Israel"
+    },
+    {
+      "source": "LT",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Lithuania to Israel"
+    },
+    {
+      "source": "LU",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 13,
+      "label": "Luxembourg to Israel"
+    },
+    {
+      "source": "MT",
+      "target": "IL",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "Malta to Israel"
+    },
+    {
+      "source": "ME",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Montenegro to Israel"
+    },
+    {
+      "source": "NL",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 17,
+      "label": "Netherlands to Israel"
+    },
+    {
+      "source": "NO",
+      "target": "IL",
+      "group": "scandinavia group",
+      "weight": 10,
+      "label": "Norway to Israel"
+    },
+    {
+      "source": "PT",
+      "target": "IL",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "Portugal to Israel"
+    },
+    {
+      "source": "SM",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "San Marino to Israel"
+    },
+    {
+      "source": "RS",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 2,
+      "label": "Serbia to Israel"
+    },
+    {
+      "source": "SI",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Slovenia to Israel"
+    },
+    {
+      "source": "ES",
+      "target": "IL",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "Spain to Israel"
+    },
+    {
+      "source": "SE",
+      "target": "IL",
+      "group": "scandinavia group",
+      "weight": 12,
+      "label": "Sweden to Israel"
+    },
+    {
+      "source": "CH",
+      "target": "IL",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "Switzerland to Israel"
+    },
+    {
+      "source": "UA",
+      "target": "IL",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Ukraine to Israel"
+    },
+    {
+      "source": "GB",
+      "target": "IL",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "United Kingdom to Israel"
+    },
+    {
+      "source": "AL",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Albania to Estonia"
+    },
+    {
+      "source": "AM",
+      "target": "EE",
+      "group": "asia group",
+      "weight": 14,
+      "label": "Armenia to Estonia"
+    },
+    {
+      "source": "AU",
+      "target": "EE",
+      "group": "oceania group",
+      "weight": 9,
+      "label": "Australia to Estonia"
+    },
+    {
+      "source": "AT",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 11,
+      "label": "Austria to Estonia"
+    },
+    {
+      "source": "AZ",
+      "target": "EE",
+      "group": "asia group",
+      "weight": 15,
+      "label": "Azerbaijan to Estonia"
+    },
+    {
+      "source": "BE",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "Belgium to Estonia"
+    },
+    {
+      "source": "HR",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 17,
+      "label": "Croatia to Estonia"
+    },
+    {
+      "source": "CY",
+      "target": "EE",
+      "group": "asia group",
+      "weight": 7,
+      "label": "Cyprus to Estonia"
+    },
+    {
+      "source": "CZ",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Czechia to Estonia"
+    },
+    {
+      "source": "DK",
+      "target": "EE",
+      "group": "scandinavia group",
+      "weight": 6,
+      "label": "Denmark to Estonia"
+    },
+    {
+      "source": "FI",
+      "target": "EE",
+      "group": "scandinavia group",
+      "weight": 12,
+      "label": "Finland to Estonia"
+    },
+    {
+      "source": "GE",
+      "target": "EE",
+      "group": "asia group",
+      "weight": 8,
+      "label": "Georgia to Estonia"
+    },
+    {
+      "source": "DE",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Germany to Estonia"
+    },
+    {
+      "source": "GR",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Greece to Estonia"
+    },
+    {
+      "source": "IS",
+      "target": "EE",
+      "group": "west europe group",
+      "weight": 10,
+      "label": "Iceland to Estonia"
+    },
+    {
+      "source": "IE",
+      "target": "EE",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "Ireland to Estonia"
+    },
+    {
+      "source": "IL",
+      "target": "EE",
+      "group": "asia group",
+      "weight": 10,
+      "label": "Israel to Estonia"
+    },
+    {
+      "source": "IT",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 17,
+      "label": "Italy to Estonia"
+    },
+    {
+      "source": "LV",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 13,
+      "label": "Latvia to Estonia"
+    },
+    {
+      "source": "LT",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 17,
+      "label": "Lithuania to Estonia"
+    },
+    {
+      "source": "LU",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Luxembourg to Estonia"
+    },
+    {
+      "source": "MT",
+      "target": "EE",
+      "group": "west europe group",
+      "weight": 15,
+      "label": "Malta to Estonia"
+    },
+    {
+      "source": "ME",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 10,
+      "label": "Montenegro to Estonia"
+    },
+    {
+      "source": "NL",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Netherlands to Estonia"
+    },
+    {
+      "source": "NO",
+      "target": "EE",
+      "group": "scandinavia group",
+      "weight": 11,
+      "label": "Norway to Estonia"
+    },
+    {
+      "source": "PL",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 10,
+      "label": "Poland to Estonia"
+    },
+    {
+      "source": "PT",
+      "target": "EE",
+      "group": "west europe group",
+      "weight": 4,
+      "label": "Portugal to Estonia"
+    },
+    {
+      "source": "SM",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 14,
+      "label": "San Marino to Estonia"
+    },
+    {
+      "source": "RS",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 15,
+      "label": "Serbia to Estonia"
+    },
+    {
+      "source": "SI",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 14,
+      "label": "Slovenia to Estonia"
+    },
+    {
+      "source": "ES",
+      "target": "EE",
+      "group": "west europe group",
+      "weight": 7,
+      "label": "Spain to Estonia"
+    },
+    {
+      "source": "SE",
+      "target": "EE",
+      "group": "scandinavia group",
+      "weight": 8,
+      "label": "Sweden to Estonia"
+    },
+    {
+      "source": "CH",
+      "target": "EE",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Switzerland to Estonia"
+    },
+    {
+      "source": "UA",
+      "target": "EE",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Ukraine to Estonia"
+    },
+    {
+      "source": "GB",
+      "target": "EE",
+      "group": "west europe group",
+      "weight": 9,
+      "label": "United Kingdom to Estonia"
+    },
+    {
+      "source": "AL",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Albania to Sweden"
+    },
+    {
+      "source": "AM",
+      "target": "SE",
+      "group": "asia group",
+      "weight": 12,
+      "label": "Armenia to Sweden"
+    },
+    {
+      "source": "AU",
+      "target": "SE",
+      "group": "oceania group",
+      "weight": 14,
+      "label": "Australia to Sweden"
+    },
+    {
+      "source": "AT",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 9,
+      "label": "Austria to Sweden"
+    },
+    {
+      "source": "AZ",
+      "target": "SE",
+      "group": "asia group",
+      "weight": 3,
+      "label": "Azerbaijan to Sweden"
+    },
+    {
+      "source": "BE",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Belgium to Sweden"
+    },
+    {
+      "source": "HR",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 11,
+      "label": "Croatia to Sweden"
+    },
+    {
+      "source": "CY",
+      "target": "SE",
+      "group": "asia group",
+      "weight": 2,
+      "label": "Cyprus to Sweden"
+    },
+    {
+      "source": "CZ",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Czechia to Sweden"
+    },
+    {
+      "source": "DK",
+      "target": "SE",
+      "group": "scandinavia group",
+      "weight": 19,
+      "label": "Denmark to Sweden"
+    },
+    {
+      "source": "EE",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 20,
+      "label": "Estonia to Sweden"
+    },
+    {
+      "source": "FI",
+      "target": "SE",
+      "group": "scandinavia group",
+      "weight": 22,
+      "label": "Finland to Sweden"
+    },
+    {
+      "source": "GE",
+      "target": "SE",
+      "group": "asia group",
+      "weight": 1,
+      "label": "Georgia to Sweden"
+    },
+    {
+      "source": "DE",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 9,
+      "label": "Germany to Sweden"
+    },
+    {
+      "source": "GR",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Greece to Sweden"
+    },
+    {
+      "source": "IS",
+      "target": "SE",
+      "group": "west europe group",
+      "weight": 22,
+      "label": "Iceland to Sweden"
+    },
+    {
+      "source": "IE",
+      "target": "SE",
+      "group": "west europe group",
+      "weight": 7,
+      "label": "Ireland to Sweden"
+    },
+    {
+      "source": "IL",
+      "target": "SE",
+      "group": "asia group",
+      "weight": 2,
+      "label": "Israel to Sweden"
+    },
+    {
+      "source": "IT",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "Italy to Sweden"
+    },
+    {
+      "source": "LV",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Latvia to Sweden"
+    },
+    {
+      "source": "LT",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Lithuania to Sweden"
+    },
+    {
+      "source": "LU",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Luxembourg to Sweden"
+    },
+    {
+      "source": "MT",
+      "target": "SE",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "Malta to Sweden"
+    },
+    {
+      "source": "ME",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Montenegro to Sweden"
+    },
+    {
+      "source": "NL",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 15,
+      "label": "Netherlands to Sweden"
+    },
+    {
+      "source": "NO",
+      "target": "SE",
+      "group": "scandinavia group",
+      "weight": 22,
+      "label": "Norway to Sweden"
+    },
+    {
+      "source": "PL",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Poland to Sweden"
+    },
+    {
+      "source": "PT",
+      "target": "SE",
+      "group": "west europe group",
+      "weight": 4,
+      "label": "Portugal to Sweden"
+    },
+    {
+      "source": "SM",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "San Marino to Sweden"
+    },
+    {
+      "source": "RS",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Serbia to Sweden"
+    },
+    {
+      "source": "SI",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 11,
+      "label": "Slovenia to Sweden"
+    },
+    {
+      "source": "ES",
+      "target": "SE",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "Spain to Sweden"
+    },
+    {
+      "source": "CH",
+      "target": "SE",
+      "group": "central europe group",
+      "weight": 15,
+      "label": "Switzerland to Sweden"
+    },
+    {
+      "source": "UA",
+      "target": "SE",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Ukraine to Sweden"
+    },
+    {
+      "source": "GB",
+      "target": "SE",
+      "group": "west europe group",
+      "weight": 7,
+      "label": "United Kingdom to Sweden"
+    },
+    {
+      "source": "AL",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 10,
+      "label": "Albania to Italy"
+    },
+    {
+      "source": "AT",
+      "target": "IT",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Austria to Italy"
+    },
+    {
+      "source": "AZ",
+      "target": "IT",
+      "group": "asia group",
+      "weight": 10,
+      "label": "Azerbaijan to Italy"
+    },
+    {
+      "source": "BE",
+      "target": "IT",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Belgium to Italy"
+    },
+    {
+      "source": "HR",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 18,
+      "label": "Croatia to Italy"
+    },
+    {
+      "source": "CY",
+      "target": "IT",
+      "group": "asia group",
+      "weight": 3,
+      "label": "Cyprus to Italy"
+    },
+    {
+      "source": "CZ",
+      "target": "IT",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Czechia to Italy"
+    },
+    {
+      "source": "DK",
+      "target": "IT",
+      "group": "scandinavia group",
+      "weight": 8,
+      "label": "Denmark to Italy"
+    },
+    {
+      "source": "EE",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 11,
+      "label": "Estonia to Italy"
+    },
+    {
+      "source": "FR",
+      "target": "IT",
+      "group": "west europe group",
+      "weight": 9,
+      "label": "France to Italy"
+    },
+    {
+      "source": "GE",
+      "target": "IT",
+      "group": "asia group",
+      "weight": 12,
+      "label": "Georgia to Italy"
+    },
+    {
+      "source": "DE",
+      "target": "IT",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Germany to Italy"
+    },
+    {
+      "source": "GR",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Greece to Italy"
+    },
+    {
+      "source": "IS",
+      "target": "IT",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "Iceland to Italy"
+    },
+    {
+      "source": "IL",
+      "target": "IT",
+      "group": "asia group",
+      "weight": 3,
+      "label": "Israel to Italy"
+    },
+    {
+      "source": "LV",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 2,
+      "label": "Latvia to Italy"
+    },
+    {
+      "source": "LT",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 16,
+      "label": "Lithuania to Italy"
+    },
+    {
+      "source": "MT",
+      "target": "IT",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "Malta to Italy"
+    },
+    {
+      "source": "ME",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Montenegro to Italy"
+    },
+    {
+      "source": "NL",
+      "target": "IT",
+      "group": "central europe group",
+      "weight": 2,
+      "label": "Netherlands to Italy"
+    },
+    {
+      "source": "PL",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Poland to Italy"
+    },
+    {
+      "source": "PT",
+      "target": "IT",
+      "group": "west europe group",
+      "weight": 20,
+      "label": "Portugal to Italy"
+    },
+    {
+      "source": "SM",
+      "target": "IT",
+      "group": "central europe group",
+      "weight": 15,
+      "label": "San Marino to Italy"
+    },
+    {
+      "source": "SI",
+      "target": "IT",
+      "group": "central europe group",
+      "weight": 24,
+      "label": "Slovenia to Italy"
+    },
+    {
+      "source": "ES",
+      "target": "IT",
+      "group": "west europe group",
+      "weight": 4,
+      "label": "Spain to Italy"
+    },
+    {
+      "source": "SE",
+      "target": "IT",
+      "group": "scandinavia group",
+      "weight": 1,
+      "label": "Sweden to Italy"
+    },
+    {
+      "source": "CH",
+      "target": "IT",
+      "group": "central europe group",
+      "weight": 20,
+      "label": "Switzerland to Italy"
+    },
+    {
+      "source": "UA",
+      "target": "IT",
+      "group": "east europe group",
+      "weight": 15,
+      "label": "Ukraine to Italy"
+    },
+    {
+      "source": "AL",
+      "target": "GR",
+      "group": "east europe group",
+      "weight": 18,
+      "label": "Albania to Greece"
+    },
+    {
+      "source": "AM",
+      "target": "GR",
+      "group": "asia group",
+      "weight": 8,
+      "label": "Armenia to Greece"
+    },
+    {
+      "source": "AU",
+      "target": "GR",
+      "group": "oceania group",
+      "weight": 19,
+      "label": "Australia to Greece"
+    },
+    {
+      "source": "BE",
+      "target": "GR",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Belgium to Greece"
+    },
+    {
+      "source": "HR",
+      "target": "GR",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Croatia to Greece"
+    },
+    {
+      "source": "CY",
+      "target": "GR",
+      "group": "asia group",
+      "weight": 24,
+      "label": "Cyprus to Greece"
+    },
+    {
+      "source": "FI",
+      "target": "GR",
+      "group": "scandinavia group",
+      "weight": 3,
+      "label": "Finland to Greece"
+    },
+    {
+      "source": "FR",
+      "target": "GR",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "France to Greece"
+    },
+    {
+      "source": "GE",
+      "target": "GR",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Georgia to Greece"
+    },
+    {
+      "source": "DE",
+      "target": "GR",
+      "group": "central europe group",
+      "weight": 16,
+      "label": "Germany to Greece"
+    },
+    {
+      "source": "IE",
+      "target": "GR",
+      "group": "west europe group",
+      "weight": 3,
+      "label": "Ireland to Greece"
+    },
+    {
+      "source": "IL",
+      "target": "GR",
+      "group": "asia group",
+      "weight": 19,
+      "label": "Israel to Greece"
+    },
+    {
+      "source": "IT",
+      "target": "GR",
+      "group": "central europe group",
+      "weight": 2,
+      "label": "Italy to Greece"
+    },
+    {
+      "source": "LU",
+      "target": "GR",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Luxembourg to Greece"
+    },
+    {
+      "source": "MT",
+      "target": "GR",
+      "group": "west europe group",
+      "weight": 10,
+      "label": "Malta to Greece"
+    },
+    {
+      "source": "ME",
+      "target": "GR",
+      "group": "east europe group",
+      "weight": 16,
+      "label": "Montenegro to Greece"
+    },
+    {
+      "source": "NL",
+      "target": "GR",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "Netherlands to Greece"
+    },
+    {
+      "source": "PL",
+      "target": "GR",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Poland to Greece"
+    },
+    {
+      "source": "PT",
+      "target": "GR",
+      "group": "west europe group",
+      "weight": 1,
+      "label": "Portugal to Greece"
+    },
+    {
+      "source": "SM",
+      "target": "GR",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "San Marino to Greece"
+    },
+    {
+      "source": "RS",
+      "target": "GR",
+      "group": "east europe group",
+      "weight": 14,
+      "label": "Serbia to Greece"
+    },
+    {
+      "source": "SE",
+      "target": "GR",
+      "group": "scandinavia group",
+      "weight": 3,
+      "label": "Sweden to Greece"
+    },
+    {
+      "source": "CH",
+      "target": "GR",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Switzerland to Greece"
+    },
+    {
+      "source": "GB",
+      "target": "GR",
+      "group": "west europe group",
+      "weight": 3,
+      "label": "United Kingdom to Greece"
+    },
+    {
+      "source": "AL",
+      "target": "FR",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Albania to France"
+    },
+    {
+      "source": "AM",
+      "target": "FR",
+      "group": "asia group",
+      "weight": 22,
+      "label": "Armenia to France"
+    },
+    {
+      "source": "AT",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Austria to France"
+    },
+    {
+      "source": "AZ",
+      "target": "FR",
+      "group": "asia group",
+      "weight": 2,
+      "label": "Azerbaijan to France"
+    },
+    {
+      "source": "BE",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Belgium to France"
+    },
+    {
+      "source": "CY",
+      "target": "FR",
+      "group": "asia group",
+      "weight": 13,
+      "label": "Cyprus to France"
+    },
+    {
+      "source": "CZ",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Czechia to France"
+    },
+    {
+      "source": "EE",
+      "target": "FR",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Estonia to France"
+    },
+    {
+      "source": "FI",
+      "target": "FR",
+      "group": "scandinavia group",
+      "weight": 8,
+      "label": "Finland to France"
+    },
+    {
+      "source": "DE",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Germany to France"
+    },
+    {
+      "source": "GR",
+      "target": "FR",
+      "group": "east europe group",
+      "weight": 17,
+      "label": "Greece to France"
+    },
+    {
+      "source": "IS",
+      "target": "FR",
+      "group": "west europe group",
+      "weight": 4,
+      "label": "Iceland to France"
+    },
+    {
+      "source": "IE",
+      "target": "FR",
+      "group": "west europe group",
+      "weight": 8,
+      "label": "Ireland to France"
+    },
+    {
+      "source": "IL",
+      "target": "FR",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Israel to France"
+    },
+    {
+      "source": "LV",
+      "target": "FR",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Latvia to France"
+    },
+    {
+      "source": "LU",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 18,
+      "label": "Luxembourg to France"
+    },
+    {
+      "source": "MT",
+      "target": "FR",
+      "group": "west europe group",
+      "weight": 8,
+      "label": "Malta to France"
+    },
+    {
+      "source": "ME",
+      "target": "FR",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Montenegro to France"
+    },
+    {
+      "source": "NL",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 2,
+      "label": "Netherlands to France"
+    },
+    {
+      "source": "NO",
+      "target": "FR",
+      "group": "scandinavia group",
+      "weight": 2,
+      "label": "Norway to France"
+    },
+    {
+      "source": "PL",
+      "target": "FR",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Poland to France"
+    },
+    {
+      "source": "PT",
+      "target": "FR",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "Portugal to France"
+    },
+    {
+      "source": "SM",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "San Marino to France"
+    },
+    {
+      "source": "RS",
+      "target": "FR",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Serbia to France"
+    },
+    {
+      "source": "SI",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Slovenia to France"
+    },
+    {
+      "source": "ES",
+      "target": "FR",
+      "group": "west europe group",
+      "weight": 9,
+      "label": "Spain to France"
+    },
+    {
+      "source": "SE",
+      "target": "FR",
+      "group": "scandinavia group",
+      "weight": 7,
+      "label": "Sweden to France"
+    },
+    {
+      "source": "CH",
+      "target": "FR",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "Switzerland to France"
+    },
+    {
+      "source": "GB",
+      "target": "FR",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "United Kingdom to France"
+    },
+    {
+      "source": "AM",
+      "target": "AL",
+      "group": "asia group",
+      "weight": 3,
+      "label": "Armenia to Albania"
+    },
+    {
+      "source": "AU",
+      "target": "AL",
+      "group": "oceania group",
+      "weight": 4,
+      "label": "Australia to Albania"
+    },
+    {
+      "source": "AT",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Austria to Albania"
+    },
+    {
+      "source": "AZ",
+      "target": "AL",
+      "group": "asia group",
+      "weight": 7,
+      "label": "Azerbaijan to Albania"
+    },
+    {
+      "source": "BE",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Belgium to Albania"
+    },
+    {
+      "source": "HR",
+      "target": "AL",
+      "group": "east europe group",
+      "weight": 10,
+      "label": "Croatia to Albania"
+    },
+    {
+      "source": "CY",
+      "target": "AL",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Cyprus to Albania"
+    },
+    {
+      "source": "CZ",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "Czechia to Albania"
+    },
+    {
+      "source": "FI",
+      "target": "AL",
+      "group": "scandinavia group",
+      "weight": 4,
+      "label": "Finland to Albania"
+    },
+    {
+      "source": "FR",
+      "target": "AL",
+      "group": "west europe group",
+      "weight": 22,
+      "label": "France to Albania"
+    },
+    {
+      "source": "GE",
+      "target": "AL",
+      "group": "asia group",
+      "weight": 3,
+      "label": "Georgia to Albania"
+    },
+    {
+      "source": "DE",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Germany to Albania"
+    },
+    {
+      "source": "GR",
+      "target": "AL",
+      "group": "east europe group",
+      "weight": 14,
+      "label": "Greece to Albania"
+    },
+    {
+      "source": "IT",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 13,
+      "label": "Italy to Albania"
+    },
+    {
+      "source": "LU",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Luxembourg to Albania"
+    },
+    {
+      "source": "MT",
+      "target": "AL",
+      "group": "west europe group",
+      "weight": 4,
+      "label": "Malta to Albania"
+    },
+    {
+      "source": "ME",
+      "target": "AL",
+      "group": "east europe group",
+      "weight": 22,
+      "label": "Montenegro to Albania"
+    },
+    {
+      "source": "NL",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Netherlands to Albania"
+    },
+    {
+      "source": "PL",
+      "target": "AL",
+      "group": "east europe group",
+      "weight": 9,
+      "label": "Poland to Albania"
+    },
+    {
+      "source": "PT",
+      "target": "AL",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "Portugal to Albania"
+    },
+    {
+      "source": "SM",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "San Marino to Albania"
+    },
+    {
+      "source": "RS",
+      "target": "AL",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Serbia to Albania"
+    },
+    {
+      "source": "SI",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Slovenia to Albania"
+    },
+    {
+      "source": "ES",
+      "target": "AL",
+      "group": "west europe group",
+      "weight": 4,
+      "label": "Spain to Albania"
+    },
+    {
+      "source": "SE",
+      "target": "AL",
+      "group": "scandinavia group",
+      "weight": 10,
+      "label": "Sweden to Albania"
+    },
+    {
+      "source": "CH",
+      "target": "AL",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Switzerland to Albania"
+    },
+    {
+      "source": "GB",
+      "target": "AL",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "United Kingdom to Albania"
+    },
+    {
+      "source": "AM",
+      "target": "UA",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Armenia to Ukraine"
+    },
+    {
+      "source": "AZ",
+      "target": "UA",
+      "group": "asia group",
+      "weight": 12,
+      "label": "Azerbaijan to Ukraine"
+    },
+    {
+      "source": "HR",
+      "target": "UA",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Croatia to Ukraine"
+    },
+    {
+      "source": "CY",
+      "target": "UA",
+      "group": "asia group",
+      "weight": 8,
+      "label": "Cyprus to Ukraine"
+    },
+    {
+      "source": "CZ",
+      "target": "UA",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "Czechia to Ukraine"
+    },
+    {
+      "source": "DK",
+      "target": "UA",
+      "group": "scandinavia group",
+      "weight": 6,
+      "label": "Denmark to Ukraine"
+    },
+    {
+      "source": "EE",
+      "target": "UA",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Estonia to Ukraine"
+    },
+    {
+      "source": "FI",
+      "target": "UA",
+      "group": "scandinavia group",
+      "weight": 2,
+      "label": "Finland to Ukraine"
+    },
+    {
+      "source": "FR",
+      "target": "UA",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "France to Ukraine"
+    },
+    {
+      "source": "GE",
+      "target": "UA",
+      "group": "asia group",
+      "weight": 16,
+      "label": "Georgia to Ukraine"
+    },
+    {
+      "source": "DE",
+      "target": "UA",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Germany to Ukraine"
+    },
+    {
+      "source": "IE",
+      "target": "UA",
+      "group": "west europe group",
+      "weight": 7,
+      "label": "Ireland to Ukraine"
+    },
+    {
+      "source": "IL",
+      "target": "UA",
+      "group": "asia group",
+      "weight": 16,
+      "label": "Israel to Ukraine"
+    },
+    {
+      "source": "IT",
+      "target": "UA",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Italy to Ukraine"
+    },
+    {
+      "source": "LV",
+      "target": "UA",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Latvia to Ukraine"
+    },
+    {
+      "source": "LT",
+      "target": "UA",
+      "group": "east europe group",
+      "weight": 9,
+      "label": "Lithuania to Ukraine"
+    },
+    {
+      "source": "ME",
+      "target": "UA",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Montenegro to Ukraine"
+    },
+    {
+      "source": "NL",
+      "target": "UA",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Netherlands to Ukraine"
+    },
+    {
+      "source": "NO",
+      "target": "UA",
+      "group": "scandinavia group",
+      "weight": 3,
+      "label": "Norway to Ukraine"
+    },
+    {
+      "source": "PL",
+      "target": "UA",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Poland to Ukraine"
+    },
+    {
+      "source": "PT",
+      "target": "UA",
+      "group": "west europe group",
+      "weight": 18,
+      "label": "Portugal to Ukraine"
+    },
+    {
+      "source": "SM",
+      "target": "UA",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "San Marino to Ukraine"
+    },
+    {
+      "source": "RS",
+      "target": "UA",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Serbia to Ukraine"
+    },
+    {
+      "source": "SI",
+      "target": "UA",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Slovenia to Ukraine"
+    },
+    {
+      "source": "ES",
+      "target": "UA",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "Spain to Ukraine"
+    },
+    {
+      "source": "SE",
+      "target": "UA",
+      "group": "scandinavia group",
+      "weight": 9,
+      "label": "Sweden to Ukraine"
+    },
+    {
+      "source": "CH",
+      "target": "UA",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Switzerland to Ukraine"
+    },
+    {
+      "source": "AL",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Albania to Switzerland"
+    },
+    {
+      "source": "AM",
+      "target": "CH",
+      "group": "asia group",
+      "weight": 7,
+      "label": "Armenia to Switzerland"
+    },
+    {
+      "source": "AU",
+      "target": "CH",
+      "group": "oceania group",
+      "weight": 1,
+      "label": "Australia to Switzerland"
+    },
+    {
+      "source": "AZ",
+      "target": "CH",
+      "group": "asia group",
+      "weight": 1,
+      "label": "Azerbaijan to Switzerland"
+    },
+    {
+      "source": "BE",
+      "target": "CH",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Belgium to Switzerland"
+    },
+    {
+      "source": "HR",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Croatia to Switzerland"
+    },
+    {
+      "source": "CY",
+      "target": "CH",
+      "group": "asia group",
+      "weight": 6,
+      "label": "Cyprus to Switzerland"
+    },
+    {
+      "source": "DK",
+      "target": "CH",
+      "group": "scandinavia group",
+      "weight": 10,
+      "label": "Denmark to Switzerland"
+    },
+    {
+      "source": "EE",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Estonia to Switzerland"
+    },
+    {
+      "source": "FI",
+      "target": "CH",
+      "group": "scandinavia group",
+      "weight": 6,
+      "label": "Finland to Switzerland"
+    },
+    {
+      "source": "FR",
+      "target": "CH",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "France to Switzerland"
+    },
+    {
+      "source": "GE",
+      "target": "CH",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Georgia to Switzerland"
+    },
+    {
+      "source": "DE",
+      "target": "CH",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Germany to Switzerland"
+    },
+    {
+      "source": "GR",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Greece to Switzerland"
+    },
+    {
+      "source": "IS",
+      "target": "CH",
+      "group": "west europe group",
+      "weight": 7,
+      "label": "Iceland to Switzerland"
+    },
+    {
+      "source": "IT",
+      "target": "CH",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Italy to Switzerland"
+    },
+    {
+      "source": "LV",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Latvia to Switzerland"
+    },
+    {
+      "source": "LT",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Lithuania to Switzerland"
+    },
+    {
+      "source": "LU",
+      "target": "CH",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Luxembourg to Switzerland"
+    },
+    {
+      "source": "MT",
+      "target": "CH",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "Malta to Switzerland"
+    },
+    {
+      "source": "ME",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Montenegro to Switzerland"
+    },
+    {
+      "source": "NL",
+      "target": "CH",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Netherlands to Switzerland"
+    },
+    {
+      "source": "NO",
+      "target": "CH",
+      "group": "scandinavia group",
+      "weight": 3,
+      "label": "Norway to Switzerland"
+    },
+    {
+      "source": "PL",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Poland to Switzerland"
+    },
+    {
+      "source": "PT",
+      "target": "CH",
+      "group": "west europe group",
+      "weight": 10,
+      "label": "Portugal to Switzerland"
+    },
+    {
+      "source": "SM",
+      "target": "CH",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "San Marino to Switzerland"
+    },
+    {
+      "source": "RS",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Serbia to Switzerland"
+    },
+    {
+      "source": "SI",
+      "target": "CH",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Slovenia to Switzerland"
+    },
+    {
+      "source": "ES",
+      "target": "CH",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "Spain to Switzerland"
+    },
+    {
+      "source": "SE",
+      "target": "CH",
+      "group": "scandinavia group",
+      "weight": 10,
+      "label": "Sweden to Switzerland"
+    },
+    {
+      "source": "UA",
+      "target": "CH",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Ukraine to Switzerland"
+    },
+    {
+      "source": "AM",
+      "target": "FI",
+      "group": "asia group",
+      "weight": 11,
+      "label": "Armenia to Finland"
+    },
+    {
+      "source": "AU",
+      "target": "FI",
+      "group": "oceania group",
+      "weight": 12,
+      "label": "Australia to Finland"
+    },
+    {
+      "source": "AT",
+      "target": "FI",
+      "group": "central europe group",
+      "weight": 14,
+      "label": "Austria to Finland"
+    },
+    {
+      "source": "AZ",
+      "target": "FI",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Azerbaijan to Finland"
+    },
+    {
+      "source": "BE",
+      "target": "FI",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Belgium to Finland"
+    },
+    {
+      "source": "HR",
+      "target": "FI",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Croatia to Finland"
+    },
+    {
+      "source": "CZ",
+      "target": "FI",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Czechia to Finland"
+    },
+    {
+      "source": "DK",
+      "target": "FI",
+      "group": "scandinavia group",
+      "weight": 11,
+      "label": "Denmark to Finland"
+    },
+    {
+      "source": "EE",
+      "target": "FI",
+      "group": "east europe group",
+      "weight": 20,
+      "label": "Estonia to Finland"
+    },
+    {
+      "source": "IS",
+      "target": "FI",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "Iceland to Finland"
+    },
+    {
+      "source": "IE",
+      "target": "FI",
+      "group": "west europe group",
+      "weight": 9,
+      "label": "Ireland to Finland"
+    },
+    {
+      "source": "IL",
+      "target": "FI",
+      "group": "asia group",
+      "weight": 1,
+      "label": "Israel to Finland"
+    },
+    {
+      "source": "IT",
+      "target": "FI",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Italy to Finland"
+    },
+    {
+      "source": "LV",
+      "target": "FI",
+      "group": "east europe group",
+      "weight": 13,
+      "label": "Latvia to Finland"
+    },
+    {
+      "source": "MT",
+      "target": "FI",
+      "group": "west europe group",
+      "weight": 13,
+      "label": "Malta to Finland"
+    },
+    {
+      "source": "NL",
+      "target": "FI",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Netherlands to Finland"
+    },
+    {
+      "source": "NO",
+      "target": "FI",
+      "group": "scandinavia group",
+      "weight": 14,
+      "label": "Norway to Finland"
+    },
+    {
+      "source": "PL",
+      "target": "FI",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Poland to Finland"
+    },
+    {
+      "source": "RS",
+      "target": "FI",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Serbia to Finland"
+    },
+    {
+      "source": "ES",
+      "target": "FI",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "Spain to Finland"
+    },
+    {
+      "source": "SE",
+      "target": "FI",
+      "group": "scandinavia group",
+      "weight": 16,
+      "label": "Sweden to Finland"
+    },
+    {
+      "source": "CH",
+      "target": "FI",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Switzerland to Finland"
+    },
+    {
+      "source": "GB",
+      "target": "FI",
+      "group": "west europe group",
+      "weight": 9,
+      "label": "United Kingdom to Finland"
+    },
+    {
+      "source": "AL",
+      "target": "NL",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Albania to Netherlands"
+    },
+    {
+      "source": "AM",
+      "target": "NL",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Armenia to Netherlands"
+    },
+    {
+      "source": "AT",
+      "target": "NL",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "Austria to Netherlands"
+    },
+    {
+      "source": "AZ",
+      "target": "NL",
+      "group": "asia group",
+      "weight": 3,
+      "label": "Azerbaijan to Netherlands"
+    },
+    {
+      "source": "BE",
+      "target": "NL",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Belgium to Netherlands"
+    },
+    {
+      "source": "CY",
+      "target": "NL",
+      "group": "asia group",
+      "weight": 9,
+      "label": "Cyprus to Netherlands"
+    },
+    {
+      "source": "CZ",
+      "target": "NL",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Czechia to Netherlands"
+    },
+    {
+      "source": "EE",
+      "target": "NL",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Estonia to Netherlands"
+    },
+    {
+      "source": "FR",
+      "target": "NL",
+      "group": "west europe group",
+      "weight": 3,
+      "label": "France to Netherlands"
+    },
+    {
+      "source": "GE",
+      "target": "NL",
+      "group": "asia group",
+      "weight": 7,
+      "label": "Georgia to Netherlands"
+    },
+    {
+      "source": "GR",
+      "target": "NL",
+      "group": "east europe group",
+      "weight": 14,
+      "label": "Greece to Netherlands"
+    },
+    {
+      "source": "IS",
+      "target": "NL",
+      "group": "west europe group",
+      "weight": 16,
+      "label": "Iceland to Netherlands"
+    },
+    {
+      "source": "IE",
+      "target": "NL",
+      "group": "west europe group",
+      "weight": 10,
+      "label": "Ireland to Netherlands"
+    },
+    {
+      "source": "LT",
+      "target": "NL",
+      "group": "east europe group",
+      "weight": 9,
+      "label": "Lithuania to Netherlands"
+    },
+    {
+      "source": "LU",
+      "target": "NL",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Luxembourg to Netherlands"
+    },
+    {
+      "source": "ME",
+      "target": "NL",
+      "group": "east europe group",
+      "weight": 2,
+      "label": "Montenegro to Netherlands"
+    },
+    {
+      "source": "NO",
+      "target": "NL",
+      "group": "scandinavia group",
+      "weight": 10,
+      "label": "Norway to Netherlands"
+    },
+    {
+      "source": "PL",
+      "target": "NL",
+      "group": "east europe group",
+      "weight": 10,
+      "label": "Poland to Netherlands"
+    },
+    {
+      "source": "PT",
+      "target": "NL",
+      "group": "west europe group",
+      "weight": 8,
+      "label": "Portugal to Netherlands"
+    },
+    {
+      "source": "SM",
+      "target": "NL",
+      "group": "central europe group",
+      "weight": 2,
+      "label": "San Marino to Netherlands"
+    },
+    {
+      "source": "SI",
+      "target": "NL",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Slovenia to Netherlands"
+    },
+    {
+      "source": "ES",
+      "target": "NL",
+      "group": "west europe group",
+      "weight": 10,
+      "label": "Spain to Netherlands"
+    },
+    {
+      "source": "SE",
+      "target": "NL",
+      "group": "scandinavia group",
+      "weight": 10,
+      "label": "Sweden to Netherlands"
+    },
+    {
+      "source": "CH",
+      "target": "NL",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Switzerland to Netherlands"
+    },
+    {
+      "source": "AM",
+      "target": "LV",
+      "group": "asia group",
+      "weight": 1,
+      "label": "Armenia to Latvia"
+    },
+    {
+      "source": "AU",
+      "target": "LV",
+      "group": "oceania group",
+      "weight": 12,
+      "label": "Australia to Latvia"
+    },
+    {
+      "source": "AT",
+      "target": "LV",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Austria to Latvia"
+    },
+    {
+      "source": "BE",
+      "target": "LV",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Belgium to Latvia"
+    },
+    {
+      "source": "HR",
+      "target": "LV",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Croatia to Latvia"
+    },
+    {
+      "source": "DK",
+      "target": "LV",
+      "group": "scandinavia group",
+      "weight": 12,
+      "label": "Denmark to Latvia"
+    },
+    {
+      "source": "EE",
+      "target": "LV",
+      "group": "east europe group",
+      "weight": 11,
+      "label": "Estonia to Latvia"
+    },
+    {
+      "source": "FI",
+      "target": "LV",
+      "group": "scandinavia group",
+      "weight": 3,
+      "label": "Finland to Latvia"
+    },
+    {
+      "source": "GE",
+      "target": "LV",
+      "group": "asia group",
+      "weight": 8,
+      "label": "Georgia to Latvia"
+    },
+    {
+      "source": "IE",
+      "target": "LV",
+      "group": "west europe group",
+      "weight": 3,
+      "label": "Ireland to Latvia"
+    },
+    {
+      "source": "IL",
+      "target": "LV",
+      "group": "asia group",
+      "weight": 7,
+      "label": "Israel to Latvia"
+    },
+    {
+      "source": "LT",
+      "target": "LV",
+      "group": "east europe group",
+      "weight": 24,
+      "label": "Lithuania to Latvia"
+    },
+    {
+      "source": "LU",
+      "target": "LV",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Luxembourg to Latvia"
+    },
+    {
+      "source": "NL",
+      "target": "LV",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Netherlands to Latvia"
+    },
+    {
+      "source": "NO",
+      "target": "LV",
+      "group": "scandinavia group",
+      "weight": 6,
+      "label": "Norway to Latvia"
+    },
+    {
+      "source": "PL",
+      "target": "LV",
+      "group": "east europe group",
+      "weight": 2,
+      "label": "Poland to Latvia"
+    },
+    {
+      "source": "PT",
+      "target": "LV",
+      "group": "west europe group",
+      "weight": 7,
+      "label": "Portugal to Latvia"
+    },
+    {
+      "source": "SM",
+      "target": "LV",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "San Marino to Latvia"
+    },
+    {
+      "source": "RS",
+      "target": "LV",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Serbia to Latvia"
+    },
+    {
+      "source": "UA",
+      "target": "LV",
+      "group": "east europe group",
+      "weight": 14,
+      "label": "Ukraine to Latvia"
+    },
+    {
+      "source": "GB",
+      "target": "LV",
+      "group": "west europe group",
+      "weight": 15,
+      "label": "United Kingdom to Latvia"
+    },
+    {
+      "source": "AU",
+      "target": "PL",
+      "group": "oceania group",
+      "weight": 6,
+      "label": "Australia to Poland"
+    },
+    {
+      "source": "AT",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "Austria to Poland"
+    },
+    {
+      "source": "AZ",
+      "target": "PL",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Azerbaijan to Poland"
+    },
+    {
+      "source": "BE",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "Belgium to Poland"
+    },
+    {
+      "source": "CY",
+      "target": "PL",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Cyprus to Poland"
+    },
+    {
+      "source": "CZ",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Czechia to Poland"
+    },
+    {
+      "source": "DK",
+      "target": "PL",
+      "group": "scandinavia group",
+      "weight": 7,
+      "label": "Denmark to Poland"
+    },
+    {
+      "source": "EE",
+      "target": "PL",
+      "group": "east europe group",
+      "weight": 2,
+      "label": "Estonia to Poland"
+    },
+    {
+      "source": "FR",
+      "target": "PL",
+      "group": "west europe group",
+      "weight": 8,
+      "label": "France to Poland"
+    },
+    {
+      "source": "DE",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 9,
+      "label": "Germany to Poland"
+    },
+    {
+      "source": "IS",
+      "target": "PL",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "Iceland to Poland"
+    },
+    {
+      "source": "IE",
+      "target": "PL",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "Ireland to Poland"
+    },
+    {
+      "source": "IL",
+      "target": "PL",
+      "group": "asia group",
+      "weight": 1,
+      "label": "Israel to Poland"
+    },
+    {
+      "source": "IT",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Italy to Poland"
+    },
+    {
+      "source": "LU",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Luxembourg to Poland"
+    },
+    {
+      "source": "MT",
+      "target": "PL",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "Malta to Poland"
+    },
+    {
+      "source": "NL",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Netherlands to Poland"
+    },
+    {
+      "source": "NO",
+      "target": "PL",
+      "group": "scandinavia group",
+      "weight": 8,
+      "label": "Norway to Poland"
+    },
+    {
+      "source": "SM",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "San Marino to Poland"
+    },
+    {
+      "source": "ES",
+      "target": "PL",
+      "group": "west europe group",
+      "weight": 8,
+      "label": "Spain to Poland"
+    },
+    {
+      "source": "SE",
+      "target": "PL",
+      "group": "scandinavia group",
+      "weight": 6,
+      "label": "Sweden to Poland"
+    },
+    {
+      "source": "CH",
+      "target": "PL",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "Switzerland to Poland"
+    },
+    {
+      "source": "UA",
+      "target": "PL",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Ukraine to Poland"
+    },
+    {
+      "source": "GB",
+      "target": "PL",
+      "group": "west europe group",
+      "weight": 10,
+      "label": "United Kingdom to Poland"
+    },
+    {
+      "source": "AL",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Albania to Germany"
+    },
+    {
+      "source": "AM",
+      "target": "DE",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Armenia to Germany"
+    },
+    {
+      "source": "AT",
+      "target": "DE",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "Austria to Germany"
+    },
+    {
+      "source": "AZ",
+      "target": "DE",
+      "group": "asia group",
+      "weight": 2,
+      "label": "Azerbaijan to Germany"
+    },
+    {
+      "source": "BE",
+      "target": "DE",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Belgium to Germany"
+    },
+    {
+      "source": "HR",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Croatia to Germany"
+    },
+    {
+      "source": "CZ",
+      "target": "DE",
+      "group": "central europe group",
+      "weight": 13,
+      "label": "Czechia to Germany"
+    },
+    {
+      "source": "DK",
+      "target": "DE",
+      "group": "scandinavia group",
+      "weight": 1,
+      "label": "Denmark to Germany"
+    },
+    {
+      "source": "EE",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Estonia to Germany"
+    },
+    {
+      "source": "FI",
+      "target": "DE",
+      "group": "scandinavia group",
+      "weight": 6,
+      "label": "Finland to Germany"
+    },
+    {
+      "source": "GE",
+      "target": "DE",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Georgia to Germany"
+    },
+    {
+      "source": "GR",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Greece to Germany"
+    },
+    {
+      "source": "IS",
+      "target": "DE",
+      "group": "west europe group",
+      "weight": 1,
+      "label": "Iceland to Germany"
+    },
+    {
+      "source": "IL",
+      "target": "DE",
+      "group": "asia group",
+      "weight": 15,
+      "label": "Israel to Germany"
+    },
+    {
+      "source": "IT",
+      "target": "DE",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Italy to Germany"
+    },
+    {
+      "source": "LV",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 7,
+      "label": "Latvia to Germany"
+    },
+    {
+      "source": "LT",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 13,
+      "label": "Lithuania to Germany"
+    },
+    {
+      "source": "LU",
+      "target": "DE",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Luxembourg to Germany"
+    },
+    {
+      "source": "NL",
+      "target": "DE",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Netherlands to Germany"
+    },
+    {
+      "source": "PL",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Poland to Germany"
+    },
+    {
+      "source": "RS",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 15,
+      "label": "Serbia to Germany"
+    },
+    {
+      "source": "ES",
+      "target": "DE",
+      "group": "west europe group",
+      "weight": 3,
+      "label": "Spain to Germany"
+    },
+    {
+      "source": "UA",
+      "target": "DE",
+      "group": "east europe group",
+      "weight": 17,
+      "label": "Ukraine to Germany"
+    },
+    {
+      "source": "CZ",
+      "target": "LT",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "Czechia to Lithuania"
+    },
+    {
+      "source": "DK",
+      "target": "LT",
+      "group": "scandinavia group",
+      "weight": 2,
+      "label": "Denmark to Lithuania"
+    },
+    {
+      "source": "EE",
+      "target": "LT",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Estonia to Lithuania"
+    },
+    {
+      "source": "FI",
+      "target": "LT",
+      "group": "scandinavia group",
+      "weight": 1,
+      "label": "Finland to Lithuania"
+    },
+    {
+      "source": "GE",
+      "target": "LT",
+      "group": "asia group",
+      "weight": 6,
+      "label": "Georgia to Lithuania"
+    },
+    {
+      "source": "IE",
+      "target": "LT",
+      "group": "west europe group",
+      "weight": 8,
+      "label": "Ireland to Lithuania"
+    },
+    {
+      "source": "LV",
+      "target": "LT",
+      "group": "east europe group",
+      "weight": 17,
+      "label": "Latvia to Lithuania"
+    },
+    {
+      "source": "LU",
+      "target": "LT",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Luxembourg to Lithuania"
+    },
+    {
+      "source": "ME",
+      "target": "LT",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Montenegro to Lithuania"
+    },
+    {
+      "source": "NL",
+      "target": "LT",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Netherlands to Lithuania"
+    },
+    {
+      "source": "NO",
+      "target": "LT",
+      "group": "scandinavia group",
+      "weight": 4,
+      "label": "Norway to Lithuania"
+    },
+    {
+      "source": "PL",
+      "target": "LT",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Poland to Lithuania"
+    },
+    {
+      "source": "SM",
+      "target": "LT",
+      "group": "central europe group",
+      "weight": 3,
+      "label": "San Marino to Lithuania"
+    },
+    {
+      "source": "UA",
+      "target": "LT",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Ukraine to Lithuania"
+    },
+    {
+      "source": "GB",
+      "target": "LT",
+      "group": "west europe group",
+      "weight": 14,
+      "label": "United Kingdom to Lithuania"
+    },
+    {
+      "source": "AM",
+      "target": "MT",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Armenia to Malta"
+    },
+    {
+      "source": "AU",
+      "target": "MT",
+      "group": "oceania group",
+      "weight": 13,
+      "label": "Australia to Malta"
+    },
+    {
+      "source": "AT",
+      "target": "MT",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Austria to Malta"
+    },
+    {
+      "source": "AZ",
+      "target": "MT",
+      "group": "asia group",
+      "weight": 1,
+      "label": "Azerbaijan to Malta"
+    },
+    {
+      "source": "CZ",
+      "target": "MT",
+      "group": "central europe group",
+      "weight": 2,
+      "label": "Czechia to Malta"
+    },
+    {
+      "source": "FI",
+      "target": "MT",
+      "group": "scandinavia group",
+      "weight": 7,
+      "label": "Finland to Malta"
+    },
+    {
+      "source": "DE",
+      "target": "MT",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Germany to Malta"
+    },
+    {
+      "source": "IE",
+      "target": "MT",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "Ireland to Malta"
+    },
+    {
+      "source": "IL",
+      "target": "MT",
+      "group": "asia group",
+      "weight": 8,
+      "label": "Israel to Malta"
+    },
+    {
+      "source": "IT",
+      "target": "MT",
+      "group": "central europe group",
+      "weight": 5,
+      "label": "Italy to Malta"
+    },
+    {
+      "source": "LV",
+      "target": "MT",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Latvia to Malta"
+    },
+    {
+      "source": "ME",
+      "target": "MT",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Montenegro to Malta"
+    },
+    {
+      "source": "SM",
+      "target": "MT",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "San Marino to Malta"
+    },
+    {
+      "source": "RS",
+      "target": "MT",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Serbia to Malta"
+    },
+    {
+      "source": "ES",
+      "target": "MT",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "Spain to Malta"
+    },
+    {
+      "source": "SE",
+      "target": "MT",
+      "group": "scandinavia group",
+      "weight": 1,
+      "label": "Sweden to Malta"
+    },
+    {
+      "source": "GB",
+      "target": "MT",
+      "group": "west europe group",
+      "weight": 8,
+      "label": "United Kingdom to Malta"
+    },
+    {
+      "source": "AM",
+      "target": "NO",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Armenia to Norway"
+    },
+    {
+      "source": "AZ",
+      "target": "NO",
+      "group": "asia group",
+      "weight": 6,
+      "label": "Azerbaijan to Norway"
+    },
+    {
+      "source": "HR",
+      "target": "NO",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Croatia to Norway"
+    },
+    {
+      "source": "CY",
+      "target": "NO",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Cyprus to Norway"
+    },
+    {
+      "source": "CZ",
+      "target": "NO",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Czechia to Norway"
+    },
+    {
+      "source": "GE",
+      "target": "NO",
+      "group": "asia group",
+      "weight": 4,
+      "label": "Georgia to Norway"
+    },
+    {
+      "source": "DE",
+      "target": "NO",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Germany to Norway"
+    },
+    {
+      "source": "GR",
+      "target": "NO",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Greece to Norway"
+    },
+    {
+      "source": "IS",
+      "target": "NO",
+      "group": "west europe group",
+      "weight": 14,
+      "label": "Iceland to Norway"
+    },
+    {
+      "source": "IT",
+      "target": "NO",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Italy to Norway"
+    },
+    {
+      "source": "LV",
+      "target": "NO",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Latvia to Norway"
+    },
+    {
+      "source": "LT",
+      "target": "NO",
+      "group": "east europe group",
+      "weight": 2,
+      "label": "Lithuania to Norway"
+    },
+    {
+      "source": "MT",
+      "target": "NO",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "Malta to Norway"
+    },
+    {
+      "source": "PL",
+      "target": "NO",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Poland to Norway"
+    },
+    {
+      "source": "RS",
+      "target": "NO",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Serbia to Norway"
+    },
+    {
+      "source": "SI",
+      "target": "NO",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Slovenia to Norway"
+    },
+    {
+      "source": "ES",
+      "target": "NO",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "Spain to Norway"
+    },
+    {
+      "source": "SE",
+      "target": "NO",
+      "group": "scandinavia group",
+      "weight": 4,
+      "label": "Sweden to Norway"
+    },
+    {
+      "source": "UA",
+      "target": "NO",
+      "group": "east europe group",
+      "weight": 10,
+      "label": "Ukraine to Norway"
+    },
+    {
+      "source": "AT",
+      "target": "GB",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Austria to United Kingdom"
+    },
+    {
+      "source": "CZ",
+      "target": "GB",
+      "group": "central europe group",
+      "weight": 10,
+      "label": "Czechia to United Kingdom"
+    },
+    {
+      "source": "DK",
+      "target": "GB",
+      "group": "scandinavia group",
+      "weight": 4,
+      "label": "Denmark to United Kingdom"
+    },
+    {
+      "source": "EE",
+      "target": "GB",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Estonia to United Kingdom"
+    },
+    {
+      "source": "FI",
+      "target": "GB",
+      "group": "scandinavia group",
+      "weight": 5,
+      "label": "Finland to United Kingdom"
+    },
+    {
+      "source": "IS",
+      "target": "GB",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "Iceland to United Kingdom"
+    },
+    {
+      "source": "IE",
+      "target": "GB",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "Ireland to United Kingdom"
+    },
+    {
+      "source": "IT",
+      "target": "GB",
+      "group": "central europe group",
+      "weight": 12,
+      "label": "Italy to United Kingdom"
+    },
+    {
+      "source": "LU",
+      "target": "GB",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Luxembourg to United Kingdom"
+    },
+    {
+      "source": "NO",
+      "target": "GB",
+      "group": "scandinavia group",
+      "weight": 7,
+      "label": "Norway to United Kingdom"
+    },
+    {
+      "source": "PL",
+      "target": "GB",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Poland to United Kingdom"
+    },
+    {
+      "source": "PT",
+      "target": "GB",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "Portugal to United Kingdom"
+    },
+    {
+      "source": "SM",
+      "target": "GB",
+      "group": "central europe group",
+      "weight": 2,
+      "label": "San Marino to United Kingdom"
+    },
+    {
+      "source": "ES",
+      "target": "GB",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "Spain to United Kingdom"
+    },
+    {
+      "source": "CH",
+      "target": "GB",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Switzerland to United Kingdom"
+    },
+    {
+      "source": "UA",
+      "target": "GB",
+      "group": "east europe group",
+      "weight": 10,
+      "label": "Ukraine to United Kingdom"
+    },
+    {
+      "source": "CY",
+      "target": "AM",
+      "group": "asia group",
+      "weight": 2,
+      "label": "Cyprus to Armenia"
+    },
+    {
+      "source": "DK",
+      "target": "AM",
+      "group": "scandinavia group",
+      "weight": 1,
+      "label": "Denmark to Armenia"
+    },
+    {
+      "source": "FR",
+      "target": "AM",
+      "group": "west europe group",
+      "weight": 18,
+      "label": "France to Armenia"
+    },
+    {
+      "source": "GE",
+      "target": "AM",
+      "group": "asia group",
+      "weight": 15,
+      "label": "Georgia to Armenia"
+    },
+    {
+      "source": "GR",
+      "target": "AM",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Greece to Armenia"
+    },
+    {
+      "source": "IE",
+      "target": "AM",
+      "group": "west europe group",
+      "weight": 1,
+      "label": "Ireland to Armenia"
+    },
+    {
+      "source": "IL",
+      "target": "AM",
+      "group": "asia group",
+      "weight": 11,
+      "label": "Israel to Armenia"
+    },
+    {
+      "source": "LV",
+      "target": "AM",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Latvia to Armenia"
+    },
+    {
+      "source": "MT",
+      "target": "AM",
+      "group": "west europe group",
+      "weight": 12,
+      "label": "Malta to Armenia"
+    },
+    {
+      "source": "ME",
+      "target": "AM",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Montenegro to Armenia"
+    },
+    {
+      "source": "RS",
+      "target": "AM",
+      "group": "east europe group",
+      "weight": 2,
+      "label": "Serbia to Armenia"
+    },
+    {
+      "source": "AL",
+      "target": "PT",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Albania to Portugal"
+    },
+    {
+      "source": "AZ",
+      "target": "PT",
+      "group": "asia group",
+      "weight": 6,
+      "label": "Azerbaijan to Portugal"
+    },
+    {
+      "source": "CZ",
+      "target": "PT",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Czechia to Portugal"
+    },
+    {
+      "source": "FR",
+      "target": "PT",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "France to Portugal"
+    },
+    {
+      "source": "LT",
+      "target": "PT",
+      "group": "east europe group",
+      "weight": 6,
+      "label": "Lithuania to Portugal"
+    },
+    {
+      "source": "LU",
+      "target": "PT",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Luxembourg to Portugal"
+    },
+    {
+      "source": "NL",
+      "target": "PT",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Netherlands to Portugal"
+    },
+    {
+      "source": "SM",
+      "target": "PT",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "San Marino to Portugal"
+    },
+    {
+      "source": "SI",
+      "target": "PT",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Slovenia to Portugal"
+    },
+    {
+      "source": "CH",
+      "target": "PT",
+      "group": "central europe group",
+      "weight": 2,
+      "label": "Switzerland to Portugal"
+    },
+    {
+      "source": "UA",
+      "target": "PT",
+      "group": "east europe group",
+      "weight": 4,
+      "label": "Ukraine to Portugal"
+    },
+    {
+      "source": "AL",
+      "target": "LU",
+      "group": "east europe group",
+      "weight": 8,
+      "label": "Albania to Luxembourg"
+    },
+    {
+      "source": "AT",
+      "target": "LU",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Austria to Luxembourg"
+    },
+    {
+      "source": "FR",
+      "target": "LU",
+      "group": "west europe group",
+      "weight": 1,
+      "label": "France to Luxembourg"
+    },
+    {
+      "source": "IL",
+      "target": "LU",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Israel to Luxembourg"
+    },
+    {
+      "source": "LV",
+      "target": "LU",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Latvia to Luxembourg"
+    },
+    {
+      "source": "ME",
+      "target": "LU",
+      "group": "east europe group",
+      "weight": 12,
+      "label": "Montenegro to Luxembourg"
+    },
+    {
+      "source": "NL",
+      "target": "LU",
+      "group": "central europe group",
+      "weight": 6,
+      "label": "Netherlands to Luxembourg"
+    },
+    {
+      "source": "SI",
+      "target": "LU",
+      "group": "central europe group",
+      "weight": 4,
+      "label": "Slovenia to Luxembourg"
+    },
+    {
+      "source": "UA",
+      "target": "LU",
+      "group": "east europe group",
+      "weight": 3,
+      "label": "Ukraine to Luxembourg"
+    },
+    {
+      "source": "GB",
+      "target": "LU",
+      "group": "west europe group",
+      "weight": 4,
+      "label": "United Kingdom to Luxembourg"
+    },
+    {
+      "source": "AU",
+      "target": "DK",
+      "group": "oceania group",
+      "weight": 4,
+      "label": "Australia to Denmark"
+    },
+    {
+      "source": "AT",
+      "target": "DK",
+      "group": "central europe group",
+      "weight": 8,
+      "label": "Austria to Denmark"
+    },
+    {
+      "source": "CZ",
+      "target": "DK",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Czechia to Denmark"
+    },
+    {
+      "source": "GE",
+      "target": "DK",
+      "group": "asia group",
+      "weight": 10,
+      "label": "Georgia to Denmark"
+    },
+    {
+      "source": "IS",
+      "target": "DK",
+      "group": "west europe group",
+      "weight": 2,
+      "label": "Iceland to Denmark"
+    },
+    {
+      "source": "IT",
+      "target": "DK",
+      "group": "central europe group",
+      "weight": 7,
+      "label": "Italy to Denmark"
+    },
+    {
+      "source": "RS",
+      "target": "DK",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Serbia to Denmark"
+    },
+    {
+      "source": "GB",
+      "target": "DK",
+      "group": "west europe group",
+      "weight": 10,
+      "label": "United Kingdom to Denmark"
+    },
+    {
+      "source": "AL",
+      "target": "ES",
+      "group": "east europe group",
+      "weight": 10,
+      "label": "Albania to Spain"
+    },
+    {
+      "source": "AZ",
+      "target": "ES",
+      "group": "asia group",
+      "weight": 5,
+      "label": "Azerbaijan to Spain"
+    },
+    {
+      "source": "FR",
+      "target": "ES",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "France to Spain"
+    },
+    {
+      "source": "IE",
+      "target": "ES",
+      "group": "west europe group",
+      "weight": 1,
+      "label": "Ireland to Spain"
+    },
+    {
+      "source": "MT",
+      "target": "ES",
+      "group": "west europe group",
+      "weight": 5,
+      "label": "Malta to Spain"
+    },
+    {
+      "source": "PT",
+      "target": "ES",
+      "group": "west europe group",
+      "weight": 6,
+      "label": "Portugal to Spain"
+    },
+    {
+      "source": "SE",
+      "target": "ES",
+      "group": "scandinavia group",
+      "weight": 2,
+      "label": "Sweden to Spain"
+    },
+    {
+      "source": "AT",
+      "target": "IS",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Austria to Iceland"
+    },
+    {
+      "source": "HR",
+      "target": "IS",
+      "group": "east europe group",
+      "weight": 1,
+      "label": "Croatia to Iceland"
+    },
+    {
+      "source": "DK",
+      "target": "IS",
+      "group": "scandinavia group",
+      "weight": 10,
+      "label": "Denmark to Iceland"
+    },
+    {
+      "source": "EE",
+      "target": "IS",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Estonia to Iceland"
+    },
+    {
+      "source": "FI",
+      "target": "IS",
+      "group": "scandinavia group",
+      "weight": 6,
+      "label": "Finland to Iceland"
+    },
+    {
+      "source": "DE",
+      "target": "IS",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Germany to Iceland"
+    },
+    {
+      "source": "NO",
+      "target": "IS",
+      "group": "scandinavia group",
+      "weight": 3,
+      "label": "Norway to Iceland"
+    },
+    {
+      "source": "SI",
+      "target": "IS",
+      "group": "central europe group",
+      "weight": 1,
+      "label": "Slovenia to Iceland"
+    },
+    {
+      "source": "SE",
+      "target": "IS",
+      "group": "scandinavia group",
+      "weight": 5,
+      "label": "Sweden to Iceland"
+    },
+    {
+      "source": "AL",
+      "target": "SM",
+      "group": "east europe group",
+      "weight": 5,
+      "label": "Albania to San Marino"
+    },
+    {
+      "source": "CY",
+      "target": "SM",
+      "group": "asia group",
+      "weight": 1,
+      "label": "Cyprus to San Marino"
+    },
+    {
+      "source": "IT",
+      "target": "SM",
+      "group": "central europe group",
+      "weight": 18,
+      "label": "Italy to San Marino"
+    },
+    {
+      "source": "MT",
+      "target": "SM",
+      "group": "west europe group",
+      "weight": 3,
+      "label": "Malta to San Marino"
+    }
+  ]
+}

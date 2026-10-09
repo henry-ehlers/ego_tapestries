@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>🧬</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <title>Ego Tapestries</title>
+</head>
+
+<body>
+    <div>
+        <button class="view-button" id="company">Company Network</button>
+        <button class="view-button" id="logistics">Logistics Network</button>
+        <button class="view-button" id="trading">Trading Network</button>
+        <button class="view-button" id="esc">ESC 2025 Votes Network</button>
+    </div>
+</body>
+
+<script type="module">
+    import { init } from "./src/js/main.js";
+
+    const COMPANY_NETWORK = "./data/company-network.json";
+    const LOGISTICS_NETWORK = "./data/logistics-network.json";
+    const TRADING_NETWORK = "./data/trading-network.json";
+    const ESC_NETWORK = "./data/esc-network.json";
+
+    const buttons = [...document.querySelectorAll(".view-button")];
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const btnid = btn.id;
+            if (btnid === "company") {
+                init({ dataPath: COMPANY_NETWORK })
+            } else if (btnid === "logistics") {
+                init({ dataPath: LOGISTICS_NETWORK })
+            } else if (btnid === "trading") {
+                init({ dataPath: TRADING_NETWORK })
+            } else if (btnid === "esc") {
+                init({ dataPath: ESC_NETWORK })
+            }
+        });
+    });
+
+    init();
+</script>
+
+</html>
