@@ -7,7 +7,6 @@ const state = {
     width: 100,
     height: 50,
     rendererType: "biofabric",
-    layoutType: "layered",
     dataPath: "./data/company-network.json",
     graph: null,
     svg: null,
@@ -39,28 +38,6 @@ function render() {
     renderer.render(state.svg);
 }
 
-async function setRenderType(type) {
-    await loadGraph(); // Reload graph to reset any renderer-specific state
-
-    const allowed = ["biofabric", "nodelink", "matrix"];
-    if (!allowed.includes(type)) {
-        throw new Error(`Invalid rendererType "${type}". Allowed: ${allowed.join(", ")}`);
-    }
-    state.rendererType = type;
-    render();
-}
-
-async function setLayoutType(type) {
-    const allowed = ["force", "radial", "layered"];
-    if (!allowed.includes(type)) {
-        throw new Error(`Invalid layoutType "${type}". Allowed: ${allowed.join(", ")}`);
-    }
-    state.layoutType = type;
-    if (state.rendererType === "nodelink") {
-        render();
-    }
-}
-
 async function loadGraph(dataPath = state.dataPath) {
     state.dataPath = dataPath;
     const data = await d3.json(state.dataPath);
@@ -74,7 +51,6 @@ async function init(options = {}) {
     if (options.width != null) state.width = options.width;
     if (options.height != null) state.height = options.height;
     if (options.rendererType != null) state.rendererType = options.rendererType;
-    if (options.layoutType != null) state.layoutType = options.layoutType;
     if (options.dataPath != null) state.dataPath = options.dataPath;
 
     await loadGraph(state.dataPath);
@@ -84,7 +60,5 @@ async function init(options = {}) {
 export {
     init,
     render,
-    setRenderType,
-    setLayoutType,
     loadGraph,
 };
