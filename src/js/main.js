@@ -2,16 +2,12 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { Graph } from './graph.js';
 import { BioFabric } from './biofabric.js';
 import { BioFabricRenderer } from './biofabricrenderer.js';
-import { NodeLink } from './nodelink.js';
-import { NodeLinkRenderer } from './nodelinkrender.js';
-import { Matrix } from './matrix.js';
-import { MatrixRenderer } from './matrixrenderer.js';
 
 const state = {
     width: 100,
     height: 50,
-    rendererType: "biofabric", // "biofabric", "nodelink" or "matrix"
-    layoutType: "layered",    // "force", "radial" or "layered"
+    rendererType: "biofabric",
+    layoutType: "layered",
     dataPath: "./data/company-network.json",
     graph: null,
     svg: null,
@@ -38,22 +34,9 @@ function render() {
     state.svg = getOrCreateSvg();
     state.svg.selectAll("*").remove();
 
-    if (state.rendererType === "biofabric") {
-        const biofabric = new BioFabric(state.graph);
-        const renderer = new BioFabricRenderer(biofabric, state.width, state.height);
-        renderer.render(state.svg);
-    } else if (state.rendererType === "matrix") {
-        const matrix = new Matrix(state.graph);
-        const renderer = new MatrixRenderer(matrix, state.width, state.height);
-        renderer.render(state.svg);
-    } else if (state.rendererType === "nodelink") {
-        const nodelink = new NodeLink(state.graph);
-        nodelink.setLayoutType(state.layoutType);
-        const renderer = new NodeLinkRenderer(nodelink, state.width, state.height);
-        renderer.render(state.svg);
-    } else {
-        throw new Error(`Unknown rendererType: ${state.rendererType}`);
-    }
+    const biofabric = new BioFabric(state.graph);
+    const renderer = new BioFabricRenderer(biofabric, state.width, state.height);
+    renderer.render(state.svg);
 }
 
 async function setRenderType(type) {
