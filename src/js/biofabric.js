@@ -53,7 +53,6 @@ export class BioFabric {
         let nodeDepths = new Set(this.graph.nodes.filter(node => node.get_depth() <= this.graph.get_depth()).map(node => node.get_depth()));
         let edgeDepths = new Set(this.graph.edges.filter(edge => edge.get_depth() <= this.graph.get_depth()).map(edge => edge.get_depth()));
         let depths = [...new Set([...nodeDepths, ...edgeDepths])];
-        console.log(depths);
         // Iterate over depths and create new depths
         for (let depth of depths) {
             let edges = this.graph.edges.filter(edge => edge.get_depth() == depth);
@@ -249,10 +248,7 @@ export class BioFabric {
     calculcate_depth_x_coordinates() {
         const renderedEdgeDepths = this.edgeDepths.filter(depthIcon => (depthIcon.get_depth() <= this.graph.get_depth()));
         let emptyDepths = [];
-        // console.log("Graph Depth: " + this.graph.get_depth());
-        // console.log(this.edgeDepths.filter(depthIcon => (depthIcon.get_depth() <= this.graph.get_depth())));
         for (let depthIndex = 0; depthIndex < renderedEdgeDepths.length; depthIndex++) {
-            // console.log("Depth Index: " + depthIndex);
             let currEdgeDepthIcon = renderedEdgeDepths[depthIndex];
 
             let depthEdges = this.graph.edges.filter(edge => edge.get_depth() == currEdgeDepthIcon.get_depth());
@@ -282,7 +278,6 @@ export class BioFabric {
         }
         // Iterate over remaining empty Depths and fill in (center) x values
         for (let depthIndex of emptyDepths) {
-            console.log("Depth Index Part 2: " + depthIndex);
             let currEdgeDepthIcon = renderedEdgeDepths[depthIndex];
             if (currEdgeDepthIcon.get_x() != Infinity) {
                 continue;

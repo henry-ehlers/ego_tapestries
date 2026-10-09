@@ -269,7 +269,6 @@ export class BioFabricRenderer {
 
             // Extract Current Depth and its Nodes
             let depthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepthIcon.get_depth());
-            console.log("Node Depth: " + nodeDepthIcon.get_depth() + " - state: " + nodeDepthIcon.get_state() + " - length: " + depthNodes.length)
 
             // Append a Node Depth Line
             nodeDepthG.append("line")
@@ -428,8 +427,6 @@ export class BioFabricRenderer {
         }
 
         for (let edgeDepth of this.biofabric.edgeDepths) {
-            console.log(edgeDepth)
-
             edgeDepthG.append("line")
                 .attr("id", "edgeDepthLine-" + edgeDepth.get_depth().toString().replace(".", "-"))
                 .attr("class", "edgeDepthLine")
@@ -574,10 +571,7 @@ export class BioFabricRenderer {
 
             if (msg.nodeOrEdge == "node" || isByNonBioFabric) {
                 const nodeDepthIcon = foundNodeDepthIcon;
-                console.log("Toggling Node Depth Icon with depth " + nodeDepthIcon.get_depth() + " and state " + State[nodeDepthIcon.get_state()])
                 let depthNodes = this.biofabric.graph.nodes.filter(node => node.get_depth() == nodeDepthIcon.get_depth());
-
-
 
                 // Switch the State of the DepthIcon
                 switch (nodeDepthIcon.get_state()) {
