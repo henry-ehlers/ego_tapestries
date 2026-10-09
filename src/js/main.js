@@ -6,7 +6,6 @@ import { BioFabricRenderer } from './biofabricrenderer.js';
 const state = {
     width: 100,
     height: 50,
-    rendererType: "biofabric",
     dataPath: "./data/company-network.json",
     graph: null,
     svg: null,
@@ -42,15 +41,11 @@ async function loadGraph(dataPath = state.dataPath) {
     state.dataPath = dataPath;
     const data = await d3.json(state.dataPath);
     state.graph = new Graph(data);
-
-    console.log(state.graph.nodes);
-    console.log(state.graph.edges);
 }
 
 async function init(options = {}) {
     if (options.width != null) state.width = options.width;
     if (options.height != null) state.height = options.height;
-    if (options.rendererType != null) state.rendererType = options.rendererType;
     if (options.dataPath != null) state.dataPath = options.dataPath;
 
     await loadGraph(state.dataPath);
