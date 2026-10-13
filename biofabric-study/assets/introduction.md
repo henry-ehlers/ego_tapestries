@@ -1,13 +1,16 @@
 # Introduction
 
-Welcome to our study.
+Welcome to the study.
 
-In this study you will see different visualizations of Ego Networks.
+In this study you will asked to answer questions on graphs visualized with BioFabric.
 
-Ego Networks are special kind of graphs, which have a central node,
-known as the "ego," and connections of different depth, referred to as "alters."
+A graph is a mathematical structure of node and edges. Nodes can be linked to each other through edges.
 
-You will be tasked to read and comprehend 4 different visualization styles of Ego Networks.
-For each visualization you will be asked to answer one out of 8 different tasks.
+You might be familiar with a graph: a metro/subway map is a depiction of a graph. The metro stops are nodes,
+connected with lines between the stops, where the lines are edges.
 
-You will now be guided through a brief training. Later your answers will be recorded for our study.
+
+The metro map is also called a node-link representation of a graph. In this study you will see a different visualization style,
+namely BioFabric, which looks different, but still represents a graph with nodes and edges.
+
+Now you will be guided through a easy and brief training. Only later your answers will be recorded for our study.
