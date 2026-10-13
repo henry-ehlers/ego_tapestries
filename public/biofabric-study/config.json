@@ -52,13 +52,13 @@
             "correctAnswer": [
                 {
                     "id": "visualization-count",
-                    "answer": 4
+                    "answer": 9
                 }
             ],
             "response": [
                 {
                     "id": "visualization-count",
-                    "prompt": "How many different types of visualizations will you be shown?",
+                    "prompt": "How many letters are in the word 'BioFabric'?",
                     "type": "numerical"
                 }
             ]
@@ -301,11 +301,11 @@
         "components": [
             "introduction",
             "tutorial",
+            "graph-terminology",
             {
                 "id": "biofabric-only",
                 "order": "fixed",
                 "components": [
-                    "graph-terminology",
                     "graph-terminology-biofabric",
                     "tutorial-tlx",
                     "$nasa-tlx.components.nasa-tlx",
