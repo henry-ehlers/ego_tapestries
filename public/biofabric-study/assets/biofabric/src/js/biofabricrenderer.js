@@ -17,19 +17,19 @@ export class BioFabricRenderer {
         this.globalDispatcher = globalDispatcher;
 
         // InnerG (x,y)
-        this.innerX = 0.2
-        this.innerY = 0.2
+        this.innerX = 0.12
+        this.innerY = 0.1
 
         // NodeDepthG (x,y)
         this.nodeDepthX = 0.025
-        this.nodeDepthY = 0.2
+        this.nodeDepthY = 0.1
 
         // Node G (x,y)
-        this.nodeGX = 0.05
-        this.nodeGY = 0.2
+        this.nodeGX = 0.001
+        this.nodeGY = 0.1
 
         // EdgeDepthG (x,y)
-        this.edgeDepthX = 0.2
+        this.edgeDepthX = 0.1
         this.edgeDepthY = 0.05
     }
 
