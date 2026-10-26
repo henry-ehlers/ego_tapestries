@@ -865,6 +865,8 @@ export class BioFabricRenderer {
             this.biofabric.highlight_unh_nodes(n);
             d3.selectAll(".edgecircle").classed("highlight-biofabric", d => d.get_highlighted());
             d3.selectAll(".nodeline").classed("highlight-biofabric", d => d.get_highlighted());
+
+            this.sendRevisitAnswers();
         });
 
         this.globalDispatcher.on("edge-hover-in.biofabric", (id) => {
@@ -883,6 +885,16 @@ export class BioFabricRenderer {
 
     // Update
     update() {
+
+    }
+
+    sendRevisitAnswers() {
+        // Revisit is defined globaly through loading its script in the index.html.
+        let highlightedNodes = this.biofabric.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
+        Revisit.postAnswers({
+            // 'graphVis' must match id defined in config.json baseComponent response 
+            ['graphVis']: highlightedNodes
+        });
 
     }
 }
