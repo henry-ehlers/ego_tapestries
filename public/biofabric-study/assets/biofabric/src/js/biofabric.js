@@ -12,6 +12,7 @@ export class BioFabric {
         this.populate_node_depths();
         this.populate_edge_depths();
         // Sort Edges, Depths
+        this.sort_nodes_by_degree();
         this.sort_edges_degreescending();
         this.sort_edge_depth_icons();
         this.sort_node_depth_icons();
@@ -116,6 +117,32 @@ export class BioFabric {
             }
         });
     }
+
+    // sort the nodes in each depth aka node group by their degree (number of edges) in descending order,
+    sort_nodes_by_degree() {
+        this.graph.nodes.sort((nodeA, nodeB) => {
+            if (nodeA.get_depth() > nodeB.get_depth()) {
+                return 1;
+            }
+            else if (nodeA.get_depth() < nodeB.get_depth()) {
+                return -1;
+            }
+            else {
+                let degreeA = nodeA.incidence.length;
+                let degreeB = nodeB.incidence.length;
+                if (degreeA > degreeB) {
+                    return -1;
+                }
+                else if (degreeA < degreeB) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+        });
+    }
+
     sort_edges_degreescending() {
         this.graph.edges.sort((edgeA, edgeB) => {
             if (edgeA.get_depth() > edgeB.get_depth()) {
