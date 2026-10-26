@@ -294,6 +294,21 @@
                     1.5
                 ]
             }
+        },
+        "task-shortest-path-1": {
+            "baseComponent": "base-shortest-path",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large/grafo4286.74.json",
+                "collapsed": false
+            },
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        3
+                    ]
+                }
+            ]
         }
     },
     "sequence": {
@@ -317,6 +332,12 @@
                             "tutorial-gatekeep-biofabric-node-1",
                             "tutorial-gatekeep-biofabric-node-2",
                             "tutorial-gatekeep-biofabric-edge-1"
+                        ]
+                    },
+                    {
+                        "order": "random",
+                        "components": [
+                            "task-shortest-path-1"
                         ]
                     },
                     {
@@ -502,6 +523,22 @@
                     "type": "reactive"
                 }
             ],
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus"
+        },
+        "base-shortest-path": {
+            "description": "Whats the shortest path between node A and node B?",
+            "instruction": "# Select all nodes on the shortest path from node A to node B\n## How to answer\n Click on all nodes on the path to select them. Submit your answer when you have selected all nodes.",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected nodes:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "type": "website",
             "path": "biofabric-study/assets/biofabric/index.html",
             "instructionLocation": "aboveStimulus"
         }
