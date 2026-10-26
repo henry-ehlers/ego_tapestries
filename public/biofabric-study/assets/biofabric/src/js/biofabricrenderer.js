@@ -1,4 +1,5 @@
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+//import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+// loaded from local file in index.html
 import { State } from './state.js';
 import { CompressionMsg } from "./CompressionMsg.js";
 
