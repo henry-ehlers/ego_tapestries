@@ -61,6 +61,8 @@ TASK_1_SOLUTIONS = [  # in order of the graph files in ROME_GRAPH_FILES_LARGE
 # TASK 2: Identify the shortest path between two nodes.
 
 # TASK 3: Estimate the number of edges in the graph.
+#
+# only an estimate answer, so no solution
 
 
 biofabric_website_base = rvt.component(
@@ -69,6 +71,8 @@ biofabric_website_base = rvt.component(
     path="biofabric-study/assets/biofabric/index.html",
     instructionLocation="aboveStimulus",
 )
+
+# TASK 1: Select all adjacent nodes of a given node.
 
 task1_response_base = rvt.response(
     type="reactive",
@@ -83,8 +87,8 @@ task1_base = rvt.component(
     component_name__="task1_base",
     base__=biofabric_website_base,
     response=[task1_response_base],
-    # description=
-    # instruction=
+    # description= (details filled in by generate_task1_component)
+    # instruction= (details filled in by generate_task1_component)
 )
 
 
