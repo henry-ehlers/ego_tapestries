@@ -1,4 +1,5 @@
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+//import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+// loaded from local file in index.html
 import { State } from './state.js';
 import { CompressionMsg } from "./CompressionMsg.js";
 
@@ -16,19 +17,19 @@ export class BioFabricRenderer {
         this.globalDispatcher = globalDispatcher;
 
         // InnerG (x,y)
-        this.innerX = 0.2
-        this.innerY = 0.2
+        this.innerX = 0.12
+        this.innerY = 0.1
 
         // NodeDepthG (x,y)
         this.nodeDepthX = 0.025
-        this.nodeDepthY = 0.2
+        this.nodeDepthY = 0.1
 
         // Node G (x,y)
-        this.nodeGX = 0.05
-        this.nodeGY = 0.2
+        this.nodeGX = 0.001
+        this.nodeGY = 0.1
 
         // EdgeDepthG (x,y)
-        this.edgeDepthX = 0.2
+        this.edgeDepthX = 0.1
         this.edgeDepthY = 0.05
     }
 
@@ -864,6 +865,8 @@ export class BioFabricRenderer {
             this.biofabric.highlight_unh_nodes(n);
             d3.selectAll(".edgecircle").classed("highlight-biofabric", d => d.get_highlighted());
             d3.selectAll(".nodeline").classed("highlight-biofabric", d => d.get_highlighted());
+
+            this.sendRevisitAnswers();
         });
 
         this.globalDispatcher.on("edge-hover-in.biofabric", (id) => {
@@ -882,6 +885,16 @@ export class BioFabricRenderer {
 
     // Update
     update() {
+
+    }
+
+    sendRevisitAnswers() {
+        // Revisit is defined globaly through loading its script in the index.html.
+        let highlightedNodes = this.biofabric.graph.nodes.filter(n => n.get_highlighted()).map(n => n.label);
+        Revisit.postAnswers({
+            // 'graphVis' must match id defined in config.json baseComponent response 
+            ['graphVis']: highlightedNodes
+        });
 
     }
 }
