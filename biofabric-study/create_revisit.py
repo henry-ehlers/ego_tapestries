@@ -113,7 +113,26 @@ task1_components = [
 ]
 
 
-task1_sequence = rvt.sequence(order="fixed", components=task1_components)
+task1_sequence = rvt.sequence(order="random", numSamples=3, components=task1_components)
+
+
+intro_introduction = rvt.component(
+    component_name__="intro_introduction",
+    type="markdown",
+    path="biofabric-study/assets/introduction.md",
+)
+
+intro_tutorial = rvt.component(
+    component_name__="intro_tutorial",
+    type="markdown",
+    path="biofabric-study/assets/tutorial.md",
+)
+
+intro_graph_terminology_biofabric = rvt.component(
+    component_name__="intro_graph_terminology_biofabric",
+    type="markdown",
+    path="biofabric-study/assets/graph_terminology_biofabric.md",
+)
 
 
 study_metadata = rvt.studyMetadata(
@@ -147,7 +166,15 @@ def main() -> None:
         schema="https://raw.githubusercontent.com/revisit-studies/study/main/src/parser/StudyConfigSchema.json",
         uiConfig=ui_config,
         studyMetadata=study_metadata,
-        sequence=task1_sequence,
+        sequence=rvt.sequence(
+            order="fixed",
+            components=[
+                intro_introduction,
+                intro_tutorial,
+                intro_graph_terminology_biofabric,
+            ],
+        )
+        + task1_sequence,
         importedLibraries=["nasa-tlx"],
     )
 
