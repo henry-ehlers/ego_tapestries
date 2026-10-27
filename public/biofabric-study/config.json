@@ -1,6 +1,21 @@
 {
     "$schema": "https://raw.githubusercontent.com/revisit-studies/study/main/src/parser/StudyConfigSchema.json",
     "components": {
+        "intro_introduction": {
+            "path": "biofabric-study/assets/introduction.md",
+            "response": [],
+            "type": "markdown"
+        },
+        "intro_tutorial": {
+            "path": "biofabric-study/assets/tutorial.md",
+            "response": [],
+            "type": "markdown"
+        },
+        "intro_graph_terminology_biofabric": {
+            "path": "biofabric-study/assets/graph_terminology_biofabric.md",
+            "response": [],
+            "type": "markdown"
+        },
         "task1_component_grafo4286.74.json": {
             "correctAnswer": [
                 {
@@ -294,15 +309,24 @@
     ],
     "sequence": {
         "components": [
-            "task1_component_grafo4286.74.json",
-            "task1_component_grafo4481.77.json",
-            "task1_component_grafo4672.76.json",
-            "task1_component_grafo7907.80.json",
-            "task1_component_grafo8127.78.json",
-            "task1_component_grafo8142.73.json",
-            "task1_component_grafo8961.75.json",
-            "task1_component_grafo9163.72.json",
-            "task1_component_grafo9691.79.json"
+            "intro_introduction",
+            "intro_tutorial",
+            "intro_graph_terminology_biofabric",
+            {
+                "components": [
+                    "task1_component_grafo4286.74.json",
+                    "task1_component_grafo4481.77.json",
+                    "task1_component_grafo4672.76.json",
+                    "task1_component_grafo7907.80.json",
+                    "task1_component_grafo8127.78.json",
+                    "task1_component_grafo8142.73.json",
+                    "task1_component_grafo8961.75.json",
+                    "task1_component_grafo9163.72.json",
+                    "task1_component_grafo9691.79.json"
+                ],
+                "numSamples": 3.0,
+                "order": "random"
+            }
         ],
         "order": "fixed"
     },
