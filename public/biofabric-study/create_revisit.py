@@ -98,7 +98,7 @@ def generate_task1_component(graph_file: str, solution: dict, path_prefix: str =
             "graphDataPath": f"{path_prefix}/{graph_file}",
             "givenNode": solution["given"],
         },
-        provideFeedback=True,
+        provideFeedback=False,
         correctAnswer=[
             rvt.answer(id=REVISIT_REACTIVE_RESPONSE_ID, answer=solution["adjacent"])
         ],
@@ -114,6 +114,43 @@ task1_components = [
 
 
 task1_sequence = rvt.sequence(order="random", numSamples=3, components=task1_components)
+
+# TASK 3: Estimate the number of edges in the graph.
+
+task3_response_base = rvt.response(
+    type="numerical",
+    id="task3-numerical",
+    prompt="Your numerical estimate of the number of edges:",
+    required=True,
+    location="belowStimulus",
+)
+
+task3_base = rvt.component(
+    component_name__="task3_base",
+    base__=biofabric_website_base,
+    response=[task3_response_base],
+)
+
+
+def generate_task3_component(graph_file: str, path_prefix: str = "./"):
+    return rvt.component(
+        component_name__=f"task3_component_{graph_file}",
+        base__=task3_base,
+        description="Estimate the number of edges in the graph.",
+        instruction="# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+        parameters={
+            "graphDataPath": f"{path_prefix}/{graph_file}",
+        },
+        provideFeedback=False,
+    )
+
+
+task3_components = [
+    generate_task3_component(graph_file, path_prefix="./data/selected-rome-data/large/")
+    for graph_file in ROME_GRAPH_FILES_LARGE
+]
+
+task3_sequence = rvt.sequence(order="random", numSamples=3, components=task3_components)
 
 
 intro_introduction = rvt.component(
@@ -174,7 +211,8 @@ def main() -> None:
                 intro_graph_terminology_biofabric,
             ],
         )
-        + task1_sequence,
+        + task1_sequence
+        + task3_sequence,
         importedLibraries=["nasa-tlx"],
     )
 
