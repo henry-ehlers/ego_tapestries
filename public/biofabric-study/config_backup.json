@@ -1,0 +1,546 @@
+{
+    "$schema": "https://raw.githubusercontent.com/revisit-studies/study/main/src/parser/StudyConfigSchema.json",
+    "studyMetadata": {
+        "title": "BioFabric Study",
+        "version": "pilot",
+        "authors": [
+            "Sara Di Bartolomeo",
+            "Daniel Pahr",
+            "Velitchko Filipov",
+            "Henry Ehlers",
+            "Johann Sebastian Schicho"
+        ],
+        "date": "2026-02-23",
+        "description": "Working with collapsible BioFabric",
+        "organizations": [
+            "TU Wien"
+        ]
+    },
+    "uiConfig": {
+        "contactEmail": "your@email.com",
+        "helpTextPath": "biofabric-study/assets/help.md",
+        "logoPath": "revisitAssets/revisitLogoSquare.svg",
+        "withProgressBar": true,
+        "autoDownloadStudy": false,
+        "withSidebar": true
+    },
+    "importedLibraries": [
+        "nasa-tlx"
+    ],
+    "components": {
+        "introduction": {
+            "type": "markdown",
+            "path": "biofabric-study/assets/introduction.md",
+            "response": []
+        },
+        "tutorial": {
+            "type": "markdown",
+            "path": "biofabric-study/assets/tutorial.md",
+            "response": []
+        },
+        "graph-terminology-biofabric": {
+            "type": "markdown",
+            "path": "biofabric-study/assets/graph_terminology_biofabric.md",
+            "response": []
+        },
+        "graph-terminology": {
+            "type": "markdown",
+            "path": "biofabric-study/assets/graph_terms_intro.md",
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "visualization-count",
+                    "answer": 9
+                }
+            ],
+            "response": [
+                {
+                    "id": "visualization-count",
+                    "prompt": "How many letters are in the word 'BioFabric'?",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "tutorial-tlx": {
+            "type": "markdown",
+            "path": "biofabric-study/assets/tlx.md",
+            "response": []
+        },
+        "tutorial-gatekeep-biofabric": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        1
+                    ]
+                }
+            ],
+            "description": "Click on the ego",
+            "instruction": "# Tutorial\nSelect the ego. In our version of ego networks in BioFabric, the ego is the top horizontal line\n## How to answer\n Click on the top line to select it.",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-gatekeep-biofabric-node-1": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        7
+                    ]
+                }
+            ],
+            "description": "Select node 7",
+            "instruction": "# Tutorial\nSelect node 7. The nodes are the horizontal bars, stretching from left to right. The node name is written to the left hand side of the node.\n## How to answer\n Click on the node, i.e. horizontal bar of node 7. You can find node 7 by searching for '7' on the left side of all nodes. Check the answer when you have node 7 selected.",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-gatekeep-biofabric-node-2": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        19
+                    ]
+                }
+            ],
+            "description": "Select node 19",
+            "instruction": "# Tutorial\nSelect node 19. The nodes are the horizontal bars, stretching from left to right. The node name is written to the left hand side of the node.\n## How to answer\n Click on the node, i.e. horizontal bar of node 19. You can find node 19 by searching for '19' on the left side of all nodes. Check the answer when you have node 19 selected.",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-gatekeep-biofabric-edge-1": {
+            "baseComponent": "graph-vis-custom-response",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        8,
+                        9
+                    ]
+                }
+            ],
+            "description": "Select the edge between node 8 and node 9",
+            "instruction": "# Tutorial\nSelect the edge between node 8 and node 9. The nodes are the horizontal bars, stretching from left to right. The node name is written to the left hand side of the node. The edge is a vertical line with circular endpoints drawn between the two nodes. It connects the two nodes.\n## How to answer\n Click on the two endpoints of the edge between node 8 and node 9, You can find the nodes by looking  for their name on the left side of all nodes. Check the answer when you have the two edge endpoints selected.",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-gatekeep-compression-biofabric": {
+            "baseComponent": "tutorial-gatekeep-compression",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            },
+            "instruction": "# Tutorial\nDouble click the button on top or the left hand side of the visualization to compress / uncompress its alter level\n## How to answer\n Double click any of the buttons for the node group above or left of the visualization."
+        },
+        "tutorial-biofabric-task1": {
+            "baseComponent": "task1",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        3
+                    ]
+                }
+            ]
+        },
+        "tutorial-biofabric-task2": {
+            "baseComponent": "task2",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task4": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task4",
+                    "answer": 6
+                }
+            ]
+        },
+        "tutorial-biofabric-task5": {
+            "baseComponent": "task5",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task5",
+                    "answer": 5
+                }
+            ]
+        },
+        "tutorial-biofabric-task6": {
+            "baseComponent": "task6",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "tutorial-biofabric-task7": {
+            "baseComponent": "task7",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            },
+            "provideFeedback": true,
+            "correctAnswer": [
+                {
+                    "id": "task7",
+                    "answer": 1
+                }
+            ]
+        },
+        "tutorial-biofabric-task8": {
+            "baseComponent": "task8",
+            "parameters": {
+                "graphDataPath": "./data/company-network.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "test-biofabric-task4-large-graph": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "biofabric"
+            }
+        },
+        "test-biofabric-task4-large-graph-preset-compression": {
+            "baseComponent": "task4",
+            "parameters": {
+                "graphDataPath": "./data/biofabric_graph_01_edgelist.json",
+                "visualizationStyle": "biofabric",
+                "nodeAlterCompressions": [
+                    1
+                ],
+                "edgeAlterCompressions": [
+                    0.5,
+                    0.5,
+                    1,
+                    1.5
+                ]
+            }
+        },
+        "task-shortest-path-1": {
+            "baseComponent": "base-shortest-path",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large/grafo4286.74.json",
+                "collapsed": false
+            },
+            "correctAnswer": [
+                {
+                    "id": "graphVis",
+                    "answer": [
+                        3
+                    ]
+                }
+            ]
+        }
+    },
+    "sequence": {
+        "order": "fixed",
+        "components": [
+            "introduction",
+            "tutorial",
+            "graph-terminology",
+            {
+                "id": "biofabric-only",
+                "order": "fixed",
+                "components": [
+                    "graph-terminology-biofabric",
+                    "tutorial-tlx",
+                    "$nasa-tlx.components.nasa-tlx",
+                    {
+                        "order": "fixed",
+                        "components": [
+                            "tutorial-gatekeep-biofabric",
+                            "tutorial-gatekeep-compression-biofabric",
+                            "tutorial-gatekeep-biofabric-node-1",
+                            "tutorial-gatekeep-biofabric-node-2",
+                            "tutorial-gatekeep-biofabric-edge-1"
+                        ]
+                    },
+                    {
+                        "order": "random",
+                        "components": [
+                            "task-shortest-path-1"
+                        ]
+                    },
+                    {
+                        "order": "random",
+                        "components": [
+                            "tutorial-biofabric-task1",
+                            "tutorial-biofabric-task2",
+                            "tutorial-biofabric-task4",
+                            "tutorial-biofabric-task5",
+                            "tutorial-biofabric-task6",
+                            "tutorial-biofabric-task7",
+                            "tutorial-biofabric-task8"
+                        ]
+                    },
+                    {
+                        "order": "random",
+                        "components": [
+                            "test-biofabric-task4-large-graph",
+                            "test-biofabric-task4-large-graph-preset-compression"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "baseComponents": {
+        "tutorial-gatekeep-compression": {
+            "type": "website",
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "response": [
+                {
+                    "id": "manyCompressions",
+                    "prompt": "Complete at least 3 compressions or uncompressions of an alter level.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
+            "provideFeedback": true,
+            "trainingAttempts": 3,
+            "allowFailedTraining": false,
+            "correctAnswer": [
+                {
+                    "id": "manyCompressions",
+                    "answer": true
+                }
+            ],
+            "description": "Compress the alter levels."
+        },
+        "task1": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Locate the node, which is not the ego, with the largest number of neighbors.",
+            "instruction": "# Task 1\nLocate the node, which is not the ego, with the largest number of neighbors.\n## How to answer\n Click on the alter to select the answer."
+        },
+        "task2": {
+            "type": "website",
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Identify the shortest path between two nodes",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes\n## How to answer\n Enter the number of edges of the path between those two nodes below.",
+            "response": [
+                {
+                    "id": "task2",
+                    "prompt": "Identify the shortest path between two nodes",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "task3": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Which alter is closest to the ego (i.e., which edge between ego and 1-ater has the largest edge weight)",
+            "instruction": "# Task 3\nWhich alter is closest to the ego (i.e., which edge between ego and 1-ater has the largest edge weight)\n## How to answer\n Click on the alter to select the answer."
+        },
+        "task4": {
+            "type": "website",
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Estimate the number of nodes in alter level 2.",
+            "instruction": "# Task 4\nEstimate the number of nodes in alter level 2.\n## How to answer\n Enter the number below.",
+            "response": [
+                {
+                    "id": "task4",
+                    "prompt": "Estimate/Count the number of nodes in alter level 2.",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "task5": {
+            "type": "website",
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Estimate the number of edges between all nodes of alter level 2.",
+            "instruction": "# Task 5\nEstimate the number of edges between all nodes of alter level 2.\n## How to answer\n Enter the number below.",
+            "response": [
+                {
+                    "id": "task5",
+                    "prompt": "Estimate the number of edges between all nodes of alter level k.",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "task6": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Given two nodes, identify their common neighbors.",
+            "instruction": "# Task 6\nGiven two nodes, identify their common neighbors.\n## How to answer\n Click on the nodes to select them"
+        },
+        "task7": {
+            "type": "website",
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Which alter level is the largest?",
+            "instruction": "# Task 7\nWhich alter level is the largest?\n## How to answer\n Enter the number below.",
+            "response": [
+                {
+                    "id": "task7",
+                    "prompt": "Which alter level is the largest?",
+                    "type": "numerical"
+                }
+            ]
+        },
+        "task8": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus",
+            "description": "Follow the path p from node v to node u.",
+            "instruction": "# Task 8\nFollow the path p from node v to node u.\n## How to answer\n Click on all nodes on the path"
+        },
+        "graph-vis-custom-response": {
+            "type": "website",
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus"
+        },
+        "graph-vis": {
+            "type": "website",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected answer:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus"
+        },
+        "base-shortest-path": {
+            "description": "Whats the shortest path between node A and node B?",
+            "instruction": "# Select all nodes on the shortest path from node A to node B\n## How to answer\n Click on all nodes on the path to select them. Submit your answer when you have selected all nodes.",
+            "response": [
+                {
+                    "id": "graphVis",
+                    "prompt": "Your selected nodes:",
+                    "required": true,
+                    "location": "belowStimulus",
+                    "type": "reactive"
+                }
+            ],
+            "type": "website",
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "instructionLocation": "aboveStimulus"
+        }
+    }
+}
