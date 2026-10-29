@@ -175,25 +175,6 @@ export class BioFabricRenderer {
                 .attr("fill-opacity", "0")
                 .attr("stroke", "#333")
                 .attr("stroke-width", 0.2)
-                .on("click", () => {
-                    // Check if Depth is not Singleton/Empty -> update drawing if not so
-                    if ((nodeDepthIcon.get_state() != State["Singleton"]) && (nodeDepthIcon.get_state() != State["Empty"])) {
-                        // we only fully compress if the edge is already fully compressed and we are compressing the node, or if we are already fully compressed and are decompressing the node.
-                        const edgePendant = this.biofabric.edgeDepths.find(edgeDepth => edgeDepth.get_depth() == nodeDepthIcon.get_depth());
-                        const isFullCompression = (nodeDepthIcon.get_state() == State["Uncompressed"] && edgePendant.get_state() == State["Fully Compressed"]) || (nodeDepthIcon.get_state() == State["Fully Compressed"] && edgePendant.get_state() == State["Fully Compressed"]);
-                        this.globalDispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, isFullCompression, "node"));
-                    }
-                })
-                .style("cursor", () => {
-                    // Change Cursor on hover over non-singleton circles
-                    if (depthNodes[0].get_state() == State["Singleton"]) {
-                        return "default";
-                    } else {
-                        return "pointer";
-                    }
-
-                }
-                )
         }
 
         // Iterate over all Edges in Depth Limit
@@ -353,21 +334,6 @@ export class BioFabricRenderer {
                 .attr("fill", "white")
                 .attr('fill-opacity', 0)
                 .attr("stroke", ((edgeDepth.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edgeDepth.get_depth()])
-                .style("cursor", () => {
-                    if (edgeDepth.get_state() == State["Singleton"] || edgeDepth.get_state() == State["Empty"]) {
-                        return "default"
-                    } else {
-                        return "pointer"
-                    }
-                }
-                )
-                .on("click", () => {
-                    // Ensure Current Depth's EdgeSet is not Singleton or Empty
-                    if ((edgeDepth.get_state() != State["Singleton"]) && (edgeDepth.get_state() != State["Empty"])) {
-                        let isFullCompression = false;
-                        this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, isFullCompression, "edge"));
-                    }
-                });
 
             edgeDepthCircleG.append("text")
                 .attr("id", "edgeDepthCircleText-" + edgeDepth.get_depth().toString().replace(".", "-"))
