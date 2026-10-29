@@ -61,6 +61,62 @@ TASK_1_SOLUTIONS = [  # in order of the graph files in ROME_GRAPH_FILES_LARGE
 
 # TASK 2: Identify the shortest path between two nodes.
 
+TASK_2_SOLUTIONS = [  # in order of the graph files in ROME_GRAPH_FILES_LARGE
+    # 4286
+    {
+        "source": "Luna",
+        "target": "Michael",
+        "path": ["Luna", "Victoria", "Adrian", "Michael"],
+    },
+    # 4481
+    {
+        "source": "Victoria",
+        "target": "Zoey",
+        "path": ["Victoria", "Dylan", "Aurora", "Zoey"],
+    },
+    # 4672
+    {
+        "source": "Owen",
+        "target": "Stella",
+        "path": ["Owen", "Natalie", "Lincoln", "Stella"],
+    },
+    # 7907
+    {
+        "source": "Andrew",
+        "target": "Benjamin",
+        "path": ["Andrew", "Chloe", "Christopher", "Benjamin"],
+    },
+    # 8127
+    {
+        "source": "Grace",
+        "target": "Samuel",
+        "path": ["Grace", "Luna", "Adrian", "Samuel"],
+    },
+    # 8142
+    {
+        "source": "Sebastian",
+        "target": "Violet",
+        "path": ["Sebastian", "Adrian", "Maya", "Violet"],
+    },
+    # 8961
+    {
+        "source": "Aurora",
+        "target": "Ellie",
+        "path": ["Aurora", "Evelyn", "Lincoln", "Ellie"],
+    },
+    # 9163
+    {
+        "source": "Adrian",
+        "target": "Henry",
+        "path": ["Adrian", "Aurora", "Mia", "Henry"],
+    },  # 9691
+    {
+        "source": "Daniel",
+        "target": "Victoria",
+        "path": ["Daniel", "Scarlett", "Samuel", "Victoria"],
+    },
+]
+
 # TASK 3: Estimate the number of edges in the graph.
 #
 # only an estimate answer, so no solution
@@ -78,7 +134,7 @@ biofabric_website_base = rvt.component(
 task1_response_base = rvt.response(
     type="reactive",
     id=REVISIT_REACTIVE_RESPONSE_ID,
-    prompt="Your selected nodes:",
+    prompt="### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
     required=True,
     location="belowStimulus",
 )
@@ -98,7 +154,7 @@ def generate_task1_component(graph_file: str, solution: dict, path_prefix: str =
         component_name__=f"task1_component_{graph_file}",
         base__=task1_base,
         description=f"Locate and select all adjacent nodes of node {solution['given']}.",
-        instruction=f"# Task 1\nLocate and select all adjacent nodes of node {solution['given']}.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+        instruction=f"### Task 1\nLocate and select all adjacent nodes of node {solution['given']}.",
         parameters={
             "graphDataPath": f"{path_prefix}/{graph_file}",
             "givenNode": solution["given"],
@@ -112,20 +168,39 @@ def generate_task1_component(graph_file: str, solution: dict, path_prefix: str =
 
 # TASK 2: Identify the shortest path between two nodes.
 
+task2_response_base = rvt.response(
+    type="reactive",
+    id=REVISIT_REACTIVE_RESPONSE_ID,
+    prompt="### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+    required=True,
+    location="belowStimulus",
+)
 
-def generate_task2_component(graph_file: str, path_prefix: str = "./"):
+task2_base = rvt.component(
+    component_name__="task2_base",
+    base__=biofabric_website_base,
+    response=[task2_response_base],
+    # description= (details filled in by generate_task1_component)
+    # instruction= (details filled in by generate_task1_component)
+)
+
+
+def generate_task2_component(graph_file: str, solution: dict, path_prefix: str = "./"):
     # todo: this is currently a dummy implementation
     return rvt.component(
         component_name__=f"task2_component_{graph_file}",
-        base__=biofabric_website_base,
-        description="Identify the shortest path between two nodes.",
-        instruction="# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+        base__=task2_base,
+        description=f"Identify the shortest path between {solution['source']} and {solution['target']}.",
+        instruction=f"### Task 2\nIdentify the shortest path between {solution['source']} and {solution['target']}.",
         parameters={
             "graphDataPath": f"{path_prefix}/{graph_file}",
-            "givenNode": "Amelia",  # todo: change to random node
-            "targetNode": "Ethan",  # todo: change to random node
+            "sourceNode": solution["source"],
+            "targetNode": solution["target"],
         },
         provideFeedback=False,
+        correctAnswer=[
+            rvt.answer(id=REVISIT_REACTIVE_RESPONSE_ID, answer=solution["path"])
+        ],
     )
 
 
@@ -134,7 +209,7 @@ def generate_task2_component(graph_file: str, path_prefix: str = "./"):
 task3_response_base = rvt.response(
     type="numerical",
     id="task3-numerical",
-    prompt="Your numerical estimate of the number of edges:",
+    prompt="### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
     required=True,
     location="belowStimulus",
 )
@@ -151,12 +226,22 @@ def generate_task3_component(graph_file: str, path_prefix: str = "./"):
         component_name__=f"task3_component_{graph_file}",
         base__=task3_base,
         description="Estimate the number of edges in the graph.",
-        instruction="# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+        instruction="### Task 3\nEstimate the number of edges in the graph.",
         parameters={
             "graphDataPath": f"{path_prefix}/{graph_file}",
         },
         provideFeedback=False,
     )
+
+
+# predefined sequences for NASA-TLX components, to be used in the task sequences
+
+NASA_TLX = rvt.sequence(order="fixed", components=["$nasa-tlx.components.nasa-tlx"])
+
+NASA_TLX_AND_SOURCE_OF_LOAD = rvt.sequence(
+    order="fixed",
+    components=["$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"],
+)
 
 
 def generate_intro_sequence():
@@ -189,7 +274,75 @@ def generate_intro_sequence():
     )
 
 
-def get_task_permutations():
+def generate_task1_sequence(graphs_subset):
+    task1_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task1_component(
+                graph_file, solution, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file, solution in zip(
+                graphs_subset["graph_files"], graphs_subset["task1_solutions"]
+            )
+        ],
+    )
+
+    return task1_random_sequence
+
+
+def generate_task2_sequence(graph_subset):
+
+    task2_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task2_component(
+                graph_file, solution, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file, solution in zip(
+                graph_subset["graph_files"], graph_subset["task2_solutions"]
+            )
+        ],
+    )
+
+    return task2_random_sequence
+
+
+def generate_task3_sequence(graph_subset):
+    task3_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task3_component(
+                graph_file, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file in graph_subset["graph_files"]
+        ],
+    )
+
+    return task3_random_sequence
+
+
+def generate_task_sequence_with_tlx(task: str, graph_subset):
+    random_inner_task = None
+
+    if task == "task1":
+        random_inner_task = generate_task1_sequence(graph_subset)
+    elif task == "task2":
+        random_inner_task = generate_task2_sequence(graph_subset)
+    elif task == "task3":
+        random_inner_task = generate_task3_sequence(graph_subset)
+    else:
+        raise ValueError(f"Invalid task: {task}")
+
+    task_outer_fixed = rvt.sequence(order="fixed", components=[])
+
+    task_outer_fixed += NASA_TLX_AND_SOURCE_OF_LOAD
+    task_outer_fixed += random_inner_task
+    task_outer_fixed += NASA_TLX
+
+    return task_outer_fixed
+
+
+def get_graph_perumtations():
     """
     Returns a list of all possible permutations of the task variations.
     """
@@ -202,20 +355,27 @@ def get_task_permutations():
     TASK_1_SOLUTIONS_THIRD_2 = TASK_1_SOLUTIONS[3:6]
     TASK_1_SOLUTIONS_THIRD_3 = TASK_1_SOLUTIONS[6:9]
 
+    TASK_2_SOLUTIONS_THIRD_1 = TASK_2_SOLUTIONS[:3]
+    TASK_2_SOLUTIONS_THIRD_2 = TASK_2_SOLUTIONS[3:6]
+    TASK_2_SOLUTIONS_THIRD_3 = TASK_2_SOLUTIONS[6:9]
+
     perms = list(
         itertools.permutations(
             [
                 {
                     "graph_files": ROME_GRAPH_FILES_THIRD_1,
-                    "solutions": TASK_1_SOLUTIONS_THIRD_1,
+                    "task1_solutions": TASK_1_SOLUTIONS_THIRD_1,
+                    "task2_solutions": TASK_2_SOLUTIONS_THIRD_1,
                 },
                 {
                     "graph_files": ROME_GRAPH_FILES_THIRD_2,
-                    "solutions": TASK_1_SOLUTIONS_THIRD_2,
+                    "task1_solutions": TASK_1_SOLUTIONS_THIRD_2,
+                    "task2_solutions": TASK_2_SOLUTIONS_THIRD_2,
                 },
                 {
                     "graph_files": ROME_GRAPH_FILES_THIRD_3,
-                    "solutions": TASK_1_SOLUTIONS_THIRD_3,
+                    "task1_solutions": TASK_1_SOLUTIONS_THIRD_3,
+                    "task2_solutions": TASK_2_SOLUTIONS_THIRD_3,
                 },
             ]
         )
@@ -238,9 +398,13 @@ def generate_random_task_seqeuence():
         order="latinSquare", numSamples=1, components=[]
     )
 
-    task_permutations = get_task_permutations()
+    graph_permutations = get_graph_perumtations()
 
-    for i, task_permutation in enumerate(task_permutations):
+    for i, graph_permutation in enumerate(graph_permutations):
+        task1_sequence = generate_task_sequence_with_tlx("task1", graph_permutation[0])
+        task2_sequence = generate_task_sequence_with_tlx("task2", graph_permutation[1])
+        task3_sequence = generate_task_sequence_with_tlx("task3", graph_permutation[2])
+
         # the variations are wrapped in a random sequence
         # to ensure that the order of the tasks is random.
         random_sequence = rvt.sequence(
@@ -248,42 +412,6 @@ def generate_random_task_seqeuence():
             order="random",
             components=[],
         )
-
-        task1_sequence = rvt.sequence(
-            order="random",
-            id=f"task1_sequence_permutation_{i}",
-            components=[
-                generate_task1_component(
-                    graph_file, solution, path_prefix="./data/selected-rome-data/large/"
-                )
-                for graph_file, solution in zip(
-                    task_permutation[0]["graph_files"], task_permutation[0]["solutions"]
-                )
-            ],
-        )
-
-        task2_sequence = rvt.sequence(
-            order="random",
-            id=f"task2_sequence_permutation_{i}",
-            components=[
-                generate_task2_component(
-                    graph_file, path_prefix="./data/selected-rome-data/large/"
-                )
-                for graph_file in task_permutation[1]["graph_files"]
-            ],
-        )
-
-        task3_sequence = rvt.sequence(
-            order="random",
-            id=f"task3_sequence_permutation_{i}",
-            components=[
-                generate_task3_component(
-                    graph_file, path_prefix="./data/selected-rome-data/large/"
-                )
-                for graph_file in task_permutation[2]["graph_files"]
-            ],
-        )
-
         # these additions need to be separated, otherwise they will be attached
         # as children to each other, breaking the sequence structure.
         random_sequence += task1_sequence
