@@ -110,6 +110,210 @@
             ],
             "type": "website"
         },
+        "task2_component_grafo7907.80.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo7907.80.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task2_component_grafo8127.78.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo8127.78.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task2_component_grafo8142.73.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo8142.73.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task3_component_grafo8961.75.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo8961.75.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
+        "task3_component_grafo9163.72.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo9163.72.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
+        "task3_component_grafo9691.79.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo9691.79.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
+        "task2_component_grafo8961.75.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo8961.75.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task2_component_grafo9163.72.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo9163.72.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task2_component_grafo9691.79.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo9691.79.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task3_component_grafo7907.80.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo7907.80.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
+        "task3_component_grafo8127.78.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo8127.78.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
+        "task3_component_grafo8142.73.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo8142.73.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
         "task1_component_grafo7907.80.json": {
             "correctAnswer": [
                 {
@@ -208,6 +412,108 @@
             ],
             "type": "website"
         },
+        "task2_component_grafo4286.74.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo4286.74.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task2_component_grafo4481.77.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo4481.77.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task2_component_grafo4672.76.json": {
+            "description": "Identify the shortest path between two nodes.",
+            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo4672.76.json",
+                "givenNode": "Amelia",
+                "targetNode": "Ethan"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [],
+            "type": "website"
+        },
+        "task3_component_grafo4286.74.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo4286.74.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
+        "task3_component_grafo4481.77.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo4481.77.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
+        "task3_component_grafo4672.76.json": {
+            "description": "Estimate the number of edges in the graph.",
+            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instructionLocation": "aboveStimulus",
+            "parameters": {
+                "graphDataPath": "./data/selected-rome-data/large//grafo4672.76.json"
+            },
+            "path": "biofabric-study/assets/biofabric/index.html",
+            "provideFeedback": false,
+            "response": [
+                {
+                    "id": "task3-numerical",
+                    "location": "belowStimulus",
+                    "prompt": "Your numerical estimate of the number of edges:",
+                    "required": true,
+                    "type": "numerical"
+                }
+            ],
+            "type": "website"
+        },
         "task1_component_grafo8961.75.json": {
             "correctAnswer": [
                 {
@@ -302,186 +608,6 @@
                 }
             ],
             "type": "website"
-        },
-        "task3_component_grafo4286.74.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo4286.74.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
-        },
-        "task3_component_grafo4481.77.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo4481.77.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
-        },
-        "task3_component_grafo4672.76.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo4672.76.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
-        },
-        "task3_component_grafo7907.80.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo7907.80.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
-        },
-        "task3_component_grafo8127.78.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo8127.78.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
-        },
-        "task3_component_grafo8142.73.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo8142.73.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
-        },
-        "task3_component_grafo8961.75.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo8961.75.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
-        },
-        "task3_component_grafo9163.72.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo9163.72.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
-        },
-        "task3_component_grafo9691.79.json": {
-            "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
-            "instructionLocation": "aboveStimulus",
-            "parameters": {
-                "graphDataPath": "./data/selected-rome-data/large//grafo9691.79.json"
-            },
-            "path": "biofabric-study/assets/biofabric/index.html",
-            "provideFeedback": false,
-            "response": [
-                {
-                    "id": "task3-numerical",
-                    "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
-                    "required": true,
-                    "type": "numerical"
-                }
-            ],
-            "type": "website"
         }
     },
     "importedLibraries": [
@@ -494,33 +620,183 @@
             "intro_graph_terminology_biofabric",
             {
                 "components": [
-                    "task1_component_grafo4286.74.json",
-                    "task1_component_grafo4481.77.json",
-                    "task1_component_grafo4672.76.json",
-                    "task1_component_grafo7907.80.json",
-                    "task1_component_grafo8127.78.json",
-                    "task1_component_grafo8142.73.json",
-                    "task1_component_grafo8961.75.json",
-                    "task1_component_grafo9163.72.json",
-                    "task1_component_grafo9691.79.json"
+                    {
+                        "components": [
+                            {
+                                "components": [
+                                    "task1_component_grafo4286.74.json",
+                                    "task1_component_grafo4481.77.json",
+                                    "task1_component_grafo4672.76.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task2_component_grafo7907.80.json",
+                                    "task2_component_grafo8127.78.json",
+                                    "task2_component_grafo8142.73.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task3_component_grafo8961.75.json",
+                                    "task3_component_grafo9163.72.json",
+                                    "task3_component_grafo9691.79.json"
+                                ],
+                                "order": "random"
+                            }
+                        ],
+                        "order": "random"
+                    },
+                    {
+                        "components": [
+                            {
+                                "components": [
+                                    "task1_component_grafo4286.74.json",
+                                    "task1_component_grafo4481.77.json",
+                                    "task1_component_grafo4672.76.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task2_component_grafo8961.75.json",
+                                    "task2_component_grafo9163.72.json",
+                                    "task2_component_grafo9691.79.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task3_component_grafo7907.80.json",
+                                    "task3_component_grafo8127.78.json",
+                                    "task3_component_grafo8142.73.json"
+                                ],
+                                "order": "random"
+                            }
+                        ],
+                        "order": "random"
+                    },
+                    {
+                        "components": [
+                            {
+                                "components": [
+                                    "task1_component_grafo7907.80.json",
+                                    "task1_component_grafo8127.78.json",
+                                    "task1_component_grafo8142.73.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task2_component_grafo4286.74.json",
+                                    "task2_component_grafo4481.77.json",
+                                    "task2_component_grafo4672.76.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task3_component_grafo8961.75.json",
+                                    "task3_component_grafo9163.72.json",
+                                    "task3_component_grafo9691.79.json"
+                                ],
+                                "order": "random"
+                            }
+                        ],
+                        "order": "random"
+                    },
+                    {
+                        "components": [
+                            {
+                                "components": [
+                                    "task1_component_grafo7907.80.json",
+                                    "task1_component_grafo8127.78.json",
+                                    "task1_component_grafo8142.73.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task2_component_grafo8961.75.json",
+                                    "task2_component_grafo9163.72.json",
+                                    "task2_component_grafo9691.79.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task3_component_grafo4286.74.json",
+                                    "task3_component_grafo4481.77.json",
+                                    "task3_component_grafo4672.76.json"
+                                ],
+                                "order": "random"
+                            }
+                        ],
+                        "order": "random"
+                    },
+                    {
+                        "components": [
+                            {
+                                "components": [
+                                    "task1_component_grafo8961.75.json",
+                                    "task1_component_grafo9163.72.json",
+                                    "task1_component_grafo9691.79.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task2_component_grafo4286.74.json",
+                                    "task2_component_grafo4481.77.json",
+                                    "task2_component_grafo4672.76.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task3_component_grafo7907.80.json",
+                                    "task3_component_grafo8127.78.json",
+                                    "task3_component_grafo8142.73.json"
+                                ],
+                                "order": "random"
+                            }
+                        ],
+                        "order": "random"
+                    },
+                    {
+                        "components": [
+                            {
+                                "components": [
+                                    "task1_component_grafo8961.75.json",
+                                    "task1_component_grafo9163.72.json",
+                                    "task1_component_grafo9691.79.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task2_component_grafo7907.80.json",
+                                    "task2_component_grafo8127.78.json",
+                                    "task2_component_grafo8142.73.json"
+                                ],
+                                "order": "random"
+                            },
+                            {
+                                "components": [
+                                    "task3_component_grafo4286.74.json",
+                                    "task3_component_grafo4481.77.json",
+                                    "task3_component_grafo4672.76.json"
+                                ],
+                                "order": "random"
+                            }
+                        ],
+                        "order": "random"
+                    }
                 ],
-                "numSamples": 3.0,
-                "order": "random"
-            },
-            {
-                "components": [
-                    "task3_component_grafo4286.74.json",
-                    "task3_component_grafo4481.77.json",
-                    "task3_component_grafo4672.76.json",
-                    "task3_component_grafo7907.80.json",
-                    "task3_component_grafo8127.78.json",
-                    "task3_component_grafo8142.73.json",
-                    "task3_component_grafo8961.75.json",
-                    "task3_component_grafo9163.72.json",
-                    "task3_component_grafo9691.79.json"
-                ],
-                "numSamples": 3.0,
-                "order": "random"
+                "numSamples": 1.0,
+                "order": "latinSquare"
             }
         ],
         "order": "fixed"
