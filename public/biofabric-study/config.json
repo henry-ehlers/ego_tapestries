@@ -628,6 +628,7 @@
                                     "task1_component_grafo4481.77.json",
                                     "task1_component_grafo4672.76.json"
                                 ],
+                                "id": "task1_sequence_permutation_0",
                                 "order": "random"
                             },
                             {
@@ -636,6 +637,7 @@
                                     "task2_component_grafo8127.78.json",
                                     "task2_component_grafo8142.73.json"
                                 ],
+                                "id": "task2_sequence_permutation_0",
                                 "order": "random"
                             },
                             {
@@ -644,9 +646,11 @@
                                     "task3_component_grafo9163.72.json",
                                     "task3_component_grafo9691.79.json"
                                 ],
+                                "id": "task3_sequence_permutation_0",
                                 "order": "random"
                             }
                         ],
+                        "id": "random_sequence_permutation_0",
                         "order": "random"
                     },
                     {
@@ -657,6 +661,7 @@
                                     "task1_component_grafo4481.77.json",
                                     "task1_component_grafo4672.76.json"
                                 ],
+                                "id": "task1_sequence_permutation_1",
                                 "order": "random"
                             },
                             {
@@ -665,6 +670,7 @@
                                     "task2_component_grafo9163.72.json",
                                     "task2_component_grafo9691.79.json"
                                 ],
+                                "id": "task2_sequence_permutation_1",
                                 "order": "random"
                             },
                             {
@@ -673,9 +679,11 @@
                                     "task3_component_grafo8127.78.json",
                                     "task3_component_grafo8142.73.json"
                                 ],
+                                "id": "task3_sequence_permutation_1",
                                 "order": "random"
                             }
                         ],
+                        "id": "random_sequence_permutation_1",
                         "order": "random"
                     },
                     {
@@ -686,6 +694,7 @@
                                     "task1_component_grafo8127.78.json",
                                     "task1_component_grafo8142.73.json"
                                 ],
+                                "id": "task1_sequence_permutation_2",
                                 "order": "random"
                             },
                             {
@@ -694,6 +703,7 @@
                                     "task2_component_grafo4481.77.json",
                                     "task2_component_grafo4672.76.json"
                                 ],
+                                "id": "task2_sequence_permutation_2",
                                 "order": "random"
                             },
                             {
@@ -702,9 +712,11 @@
                                     "task3_component_grafo9163.72.json",
                                     "task3_component_grafo9691.79.json"
                                 ],
+                                "id": "task3_sequence_permutation_2",
                                 "order": "random"
                             }
                         ],
+                        "id": "random_sequence_permutation_2",
                         "order": "random"
                     },
                     {
@@ -715,6 +727,7 @@
                                     "task1_component_grafo8127.78.json",
                                     "task1_component_grafo8142.73.json"
                                 ],
+                                "id": "task1_sequence_permutation_3",
                                 "order": "random"
                             },
                             {
@@ -723,6 +736,7 @@
                                     "task2_component_grafo9163.72.json",
                                     "task2_component_grafo9691.79.json"
                                 ],
+                                "id": "task2_sequence_permutation_3",
                                 "order": "random"
                             },
                             {
@@ -731,9 +745,11 @@
                                     "task3_component_grafo4481.77.json",
                                     "task3_component_grafo4672.76.json"
                                 ],
+                                "id": "task3_sequence_permutation_3",
                                 "order": "random"
                             }
                         ],
+                        "id": "random_sequence_permutation_3",
                         "order": "random"
                     },
                     {
@@ -744,6 +760,7 @@
                                     "task1_component_grafo9163.72.json",
                                     "task1_component_grafo9691.79.json"
                                 ],
+                                "id": "task1_sequence_permutation_4",
                                 "order": "random"
                             },
                             {
@@ -752,6 +769,7 @@
                                     "task2_component_grafo4481.77.json",
                                     "task2_component_grafo4672.76.json"
                                 ],
+                                "id": "task2_sequence_permutation_4",
                                 "order": "random"
                             },
                             {
@@ -760,9 +778,11 @@
                                     "task3_component_grafo8127.78.json",
                                     "task3_component_grafo8142.73.json"
                                 ],
+                                "id": "task3_sequence_permutation_4",
                                 "order": "random"
                             }
                         ],
+                        "id": "random_sequence_permutation_4",
                         "order": "random"
                     },
                     {
@@ -773,6 +793,7 @@
                                     "task1_component_grafo9163.72.json",
                                     "task1_component_grafo9691.79.json"
                                 ],
+                                "id": "task1_sequence_permutation_5",
                                 "order": "random"
                             },
                             {
@@ -781,6 +802,7 @@
                                     "task2_component_grafo8127.78.json",
                                     "task2_component_grafo8142.73.json"
                                 ],
+                                "id": "task2_sequence_permutation_5",
                                 "order": "random"
                             },
                             {
@@ -789,9 +811,11 @@
                                     "task3_component_grafo4481.77.json",
                                     "task3_component_grafo4672.76.json"
                                 ],
+                                "id": "task3_sequence_permutation_5",
                                 "order": "random"
                             }
                         ],
+                        "id": "random_sequence_permutation_5",
                         "order": "random"
                     }
                 ],

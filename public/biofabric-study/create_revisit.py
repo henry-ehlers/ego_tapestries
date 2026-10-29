@@ -240,16 +240,18 @@ def generate_random_task_seqeuence():
 
     task_permutations = get_task_permutations()
 
-    for task_permutation in task_permutations:
+    for i, task_permutation in enumerate(task_permutations):
         # the variations are wrapped in a random sequence
         # to ensure that the order of the tasks is random.
         random_sequence = rvt.sequence(
+            id=f"random_sequence_permutation_{i}",
             order="random",
             components=[],
         )
 
         task1_sequence = rvt.sequence(
             order="random",
+            id=f"task1_sequence_permutation_{i}",
             components=[
                 generate_task1_component(
                     graph_file, solution, path_prefix="./data/selected-rome-data/large/"
@@ -262,6 +264,7 @@ def generate_random_task_seqeuence():
 
         task2_sequence = rvt.sequence(
             order="random",
+            id=f"task2_sequence_permutation_{i}",
             components=[
                 generate_task2_component(
                     graph_file, path_prefix="./data/selected-rome-data/large/"
@@ -272,6 +275,7 @@ def generate_random_task_seqeuence():
 
         task3_sequence = rvt.sequence(
             order="random",
+            id=f"task3_sequence_permutation_{i}",
             components=[
                 generate_task3_component(
                     graph_file, path_prefix="./data/selected-rome-data/large/"
