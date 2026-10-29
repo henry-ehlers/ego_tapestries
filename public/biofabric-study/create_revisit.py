@@ -78,7 +78,7 @@ biofabric_website_base = rvt.component(
 task1_response_base = rvt.response(
     type="reactive",
     id=REVISIT_REACTIVE_RESPONSE_ID,
-    prompt="Your selected nodes:",
+    prompt="### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
     required=True,
     location="belowStimulus",
 )
@@ -98,7 +98,7 @@ def generate_task1_component(graph_file: str, solution: dict, path_prefix: str =
         component_name__=f"task1_component_{graph_file}",
         base__=task1_base,
         description=f"Locate and select all adjacent nodes of node {solution['given']}.",
-        instruction=f"# Task 1\nLocate and select all adjacent nodes of node {solution['given']}.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+        instruction=f"### Task 1\nLocate and select all adjacent nodes of node {solution['given']}.",
         parameters={
             "graphDataPath": f"{path_prefix}/{graph_file}",
             "givenNode": solution["given"],
@@ -112,14 +112,30 @@ def generate_task1_component(graph_file: str, solution: dict, path_prefix: str =
 
 # TASK 2: Identify the shortest path between two nodes.
 
+task2_response_base = rvt.response(
+    type="reactive",
+    id=REVISIT_REACTIVE_RESPONSE_ID,
+    prompt="### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+    required=True,
+    location="belowStimulus",
+)
+
+task2_base = rvt.component(
+    component_name__="task2_base",
+    base__=biofabric_website_base,
+    response=[task2_response_base],
+    # description= (details filled in by generate_task1_component)
+    # instruction= (details filled in by generate_task1_component)
+)
+
 
 def generate_task2_component(graph_file: str, path_prefix: str = "./"):
     # todo: this is currently a dummy implementation
     return rvt.component(
         component_name__=f"task2_component_{graph_file}",
-        base__=biofabric_website_base,
+        base__=task2_base,
         description="Identify the shortest path between two nodes.",
-        instruction="# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+        instruction="### Task 2\nIdentify the shortest path between two nodes.",
         parameters={
             "graphDataPath": f"{path_prefix}/{graph_file}",
             "givenNode": "Amelia",  # todo: change to random node
@@ -134,7 +150,7 @@ def generate_task2_component(graph_file: str, path_prefix: str = "./"):
 task3_response_base = rvt.response(
     type="numerical",
     id="task3-numerical",
-    prompt="Your numerical estimate of the number of edges:",
+    prompt="### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
     required=True,
     location="belowStimulus",
 )
@@ -151,7 +167,7 @@ def generate_task3_component(graph_file: str, path_prefix: str = "./"):
         component_name__=f"task3_component_{graph_file}",
         base__=task3_base,
         description="Estimate the number of edges in the graph.",
-        instruction="# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+        instruction="### Task 3\nEstimate the number of edges in the graph.",
         parameters={
             "graphDataPath": f"{path_prefix}/{graph_file}",
         },
@@ -189,7 +205,7 @@ def generate_intro_sequence():
     )
 
 
-def get_task_permutations():
+def get_graph_perumtations():
     """
     Returns a list of all possible permutations of the task variations.
     """
@@ -223,6 +239,65 @@ def get_task_permutations():
     return perms
 
 
+def generate_task1_sequence(graphs_subset):
+    task1_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task1_component(
+                graph_file, solution, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file, solution in zip(
+                graphs_subset["graph_files"], graphs_subset["solutions"]
+            )
+        ],
+    )
+
+    task1_outer_fixed = rvt.sequence(order="fixed", components=[])
+    task1_outer_fixed += task1_random_sequence
+    task1_outer_fixed += rvt.sequence(
+        order="fixed", components=["$nasa-tlx.components.nasa-tlx"]
+    )
+    return task1_outer_fixed
+
+
+def generate_task2_sequence(graph_perm):
+    task2_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task2_component(
+                graph_file, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file in graph_perm["graph_files"]
+        ],
+    )
+
+    task2_outer_fixed = rvt.sequence(order="fixed", components=[])
+    task2_outer_fixed += task2_random_sequence
+    task2_outer_fixed += rvt.sequence(
+        order="fixed", components=["$nasa-tlx.components.nasa-tlx"]
+    )
+    return task2_outer_fixed
+
+
+def create_task3_sequence(graph_perm):
+    task3_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task3_component(
+                graph_file, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file in graph_perm["graph_files"]
+        ],
+    )
+
+    task3_outer_fixed = rvt.sequence(order="fixed", components=[])
+    task3_outer_fixed += task3_random_sequence
+    task3_outer_fixed += rvt.sequence(
+        order="fixed", components=["$nasa-tlx.components.nasa-tlx"]
+    )
+    return task3_outer_fixed
+
+
 def generate_random_task_seqeuence():
     """
     Splits the 9 graphs such that no graphs are repeated for any tasks per participant,
@@ -238,9 +313,13 @@ def generate_random_task_seqeuence():
         order="latinSquare", numSamples=1, components=[]
     )
 
-    task_permutations = get_task_permutations()
+    graph_permutations = get_graph_perumtations()
 
-    for i, task_permutation in enumerate(task_permutations):
+    for i, graph_permutation in enumerate(graph_permutations):
+        task1_sequence = generate_task1_sequence(graph_permutation[0])
+        task2_sequence = generate_task2_sequence(graph_permutation[1])
+        task3_sequence = create_task3_sequence(graph_permutation[2])
+
         # the variations are wrapped in a random sequence
         # to ensure that the order of the tasks is random.
         random_sequence = rvt.sequence(
@@ -248,42 +327,6 @@ def generate_random_task_seqeuence():
             order="random",
             components=[],
         )
-
-        task1_sequence = rvt.sequence(
-            order="random",
-            id=f"task1_sequence_permutation_{i}",
-            components=[
-                generate_task1_component(
-                    graph_file, solution, path_prefix="./data/selected-rome-data/large/"
-                )
-                for graph_file, solution in zip(
-                    task_permutation[0]["graph_files"], task_permutation[0]["solutions"]
-                )
-            ],
-        )
-
-        task2_sequence = rvt.sequence(
-            order="random",
-            id=f"task2_sequence_permutation_{i}",
-            components=[
-                generate_task2_component(
-                    graph_file, path_prefix="./data/selected-rome-data/large/"
-                )
-                for graph_file in task_permutation[1]["graph_files"]
-            ],
-        )
-
-        task3_sequence = rvt.sequence(
-            order="random",
-            id=f"task3_sequence_permutation_{i}",
-            components=[
-                generate_task3_component(
-                    graph_file, path_prefix="./data/selected-rome-data/large/"
-                )
-                for graph_file in task_permutation[2]["graph_files"]
-            ],
-        )
-
         # these additions need to be separated, otherwise they will be attached
         # as children to each other, breaking the sequence structure.
         random_sequence += task1_sequence
