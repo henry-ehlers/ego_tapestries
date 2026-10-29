@@ -797,6 +797,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task1_component_grafo4286.74.json",
                                             "task1_component_grafo4481.77.json",
                                             "task1_component_grafo4672.76.json"
@@ -816,6 +822,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task2_component_grafo7907.80.json",
                                             "task2_component_grafo8127.78.json",
                                             "task2_component_grafo8142.73.json"
@@ -833,6 +845,12 @@
                             },
                             {
                                 "components": [
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
                                     {
                                         "components": [
                                             "task3_component_grafo8961.75.json",
@@ -860,6 +878,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task1_component_grafo4286.74.json",
                                             "task1_component_grafo4481.77.json",
                                             "task1_component_grafo4672.76.json"
@@ -879,6 +903,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task2_component_grafo8961.75.json",
                                             "task2_component_grafo9163.72.json",
                                             "task2_component_grafo9691.79.json"
@@ -896,6 +926,12 @@
                             },
                             {
                                 "components": [
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
                                     {
                                         "components": [
                                             "task3_component_grafo7907.80.json",
@@ -923,6 +959,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task1_component_grafo7907.80.json",
                                             "task1_component_grafo8127.78.json",
                                             "task1_component_grafo8142.73.json"
@@ -942,6 +984,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task2_component_grafo4286.74.json",
                                             "task2_component_grafo4481.77.json",
                                             "task2_component_grafo4672.76.json"
@@ -959,6 +1007,12 @@
                             },
                             {
                                 "components": [
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
                                     {
                                         "components": [
                                             "task3_component_grafo8961.75.json",
@@ -986,6 +1040,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task1_component_grafo7907.80.json",
                                             "task1_component_grafo8127.78.json",
                                             "task1_component_grafo8142.73.json"
@@ -1005,6 +1065,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task2_component_grafo8961.75.json",
                                             "task2_component_grafo9163.72.json",
                                             "task2_component_grafo9691.79.json"
@@ -1022,6 +1088,12 @@
                             },
                             {
                                 "components": [
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
                                     {
                                         "components": [
                                             "task3_component_grafo4286.74.json",
@@ -1049,6 +1121,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task1_component_grafo8961.75.json",
                                             "task1_component_grafo9163.72.json",
                                             "task1_component_grafo9691.79.json"
@@ -1068,6 +1146,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task2_component_grafo4286.74.json",
                                             "task2_component_grafo4481.77.json",
                                             "task2_component_grafo4672.76.json"
@@ -1085,6 +1169,12 @@
                             },
                             {
                                 "components": [
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
                                     {
                                         "components": [
                                             "task3_component_grafo7907.80.json",
@@ -1112,6 +1202,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task1_component_grafo8961.75.json",
                                             "task1_component_grafo9163.72.json",
                                             "task1_component_grafo9691.79.json"
@@ -1131,6 +1227,12 @@
                                 "components": [
                                     {
                                         "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
+                                    {
+                                        "components": [
                                             "task2_component_grafo7907.80.json",
                                             "task2_component_grafo8127.78.json",
                                             "task2_component_grafo8142.73.json"
@@ -1148,6 +1250,12 @@
                             },
                             {
                                 "components": [
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"
+                                        ],
+                                        "order": "fixed"
+                                    },
                                     {
                                         "components": [
                                             "task3_component_grafo4286.74.json",

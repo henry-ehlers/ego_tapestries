@@ -234,6 +234,16 @@ def generate_task3_component(graph_file: str, path_prefix: str = "./"):
     )
 
 
+# predefined sequences for NASA-TLX components, to be used in the task sequences
+
+NASA_TLX = rvt.sequence(order="fixed", components=["$nasa-tlx.components.nasa-tlx"])
+
+NASA_TLX_AND_SOURCE_OF_LOAD = rvt.sequence(
+    order="fixed",
+    components=["$nasa-tlx.sequences.nasa-tlx-with-source-of-load-evaluation"],
+)
+
+
 def generate_intro_sequence():
 
     intro_introduction = rvt.component(
@@ -262,6 +272,74 @@ def generate_intro_sequence():
             intro_graph_terminology_biofabric,
         ],
     )
+
+
+def generate_task1_sequence(graphs_subset):
+    task1_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task1_component(
+                graph_file, solution, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file, solution in zip(
+                graphs_subset["graph_files"], graphs_subset["task1_solutions"]
+            )
+        ],
+    )
+
+    return task1_random_sequence
+
+
+def generate_task2_sequence(graph_subset):
+
+    task2_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task2_component(
+                graph_file, solution, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file, solution in zip(
+                graph_subset["graph_files"], graph_subset["task2_solutions"]
+            )
+        ],
+    )
+
+    return task2_random_sequence
+
+
+def generate_task3_sequence(graph_subset):
+    task3_random_sequence = rvt.sequence(
+        order="random",
+        components=[
+            generate_task3_component(
+                graph_file, path_prefix="./data/selected-rome-data/large/"
+            )
+            for graph_file in graph_subset["graph_files"]
+        ],
+    )
+
+    return task3_random_sequence
+
+
+def generate_task_sequence_with_tlx(task: str, graph_subset):
+    random_inner_task = None
+
+    if task == "task1":
+        random_inner_task = generate_task1_sequence(graph_subset)
+    elif task == "task2":
+        random_inner_task = generate_task2_sequence(graph_subset)
+    elif task == "task3":
+        random_inner_task = generate_task3_sequence(graph_subset)
+    else:
+        raise ValueError(f"Invalid task: {task}")
+
+    task_outer_fixed = rvt.sequence(order="fixed", components=[])
+
+    task_outer_fixed += NASA_TLX_AND_SOURCE_OF_LOAD
+    task_outer_fixed += random_inner_task
+    task_outer_fixed += NASA_TLX
+
+    return task_outer_fixed
 
 
 def get_graph_perumtations():
@@ -305,68 +383,6 @@ def get_graph_perumtations():
     return perms
 
 
-def generate_task1_sequence(graphs_subset):
-    task1_random_sequence = rvt.sequence(
-        order="random",
-        components=[
-            generate_task1_component(
-                graph_file, solution, path_prefix="./data/selected-rome-data/large/"
-            )
-            for graph_file, solution in zip(
-                graphs_subset["graph_files"], graphs_subset["task1_solutions"]
-            )
-        ],
-    )
-
-    task1_outer_fixed = rvt.sequence(order="fixed", components=[])
-    task1_outer_fixed += task1_random_sequence
-    task1_outer_fixed += rvt.sequence(
-        order="fixed", components=["$nasa-tlx.components.nasa-tlx"]
-    )
-    return task1_outer_fixed
-
-
-def generate_task2_sequence(graph_subset):
-
-    task2_random_sequence = rvt.sequence(
-        order="random",
-        components=[
-            generate_task2_component(
-                graph_file, solution, path_prefix="./data/selected-rome-data/large/"
-            )
-            for graph_file, solution in zip(
-                graph_subset["graph_files"], graph_subset["task2_solutions"]
-            )
-        ],
-    )
-
-    task2_outer_fixed = rvt.sequence(order="fixed", components=[])
-    task2_outer_fixed += task2_random_sequence
-    task2_outer_fixed += rvt.sequence(
-        order="fixed", components=["$nasa-tlx.components.nasa-tlx"]
-    )
-    return task2_outer_fixed
-
-
-def create_task3_sequence(graph_subset):
-    task3_random_sequence = rvt.sequence(
-        order="random",
-        components=[
-            generate_task3_component(
-                graph_file, path_prefix="./data/selected-rome-data/large/"
-            )
-            for graph_file in graph_subset["graph_files"]
-        ],
-    )
-
-    task3_outer_fixed = rvt.sequence(order="fixed", components=[])
-    task3_outer_fixed += task3_random_sequence
-    task3_outer_fixed += rvt.sequence(
-        order="fixed", components=["$nasa-tlx.components.nasa-tlx"]
-    )
-    return task3_outer_fixed
-
-
 def generate_random_task_seqeuence():
     """
     Splits the 9 graphs such that no graphs are repeated for any tasks per participant,
@@ -385,9 +401,9 @@ def generate_random_task_seqeuence():
     graph_permutations = get_graph_perumtations()
 
     for i, graph_permutation in enumerate(graph_permutations):
-        task1_sequence = generate_task1_sequence(graph_permutation[0])
-        task2_sequence = generate_task2_sequence(graph_permutation[1])
-        task3_sequence = create_task3_sequence(graph_permutation[2])
+        task1_sequence = generate_task_sequence_with_tlx("task1", graph_permutation[0])
+        task2_sequence = generate_task_sequence_with_tlx("task2", graph_permutation[1])
+        task3_sequence = generate_task_sequence_with_tlx("task3", graph_permutation[2])
 
         # the variations are wrapped in a random sequence
         # to ensure that the order of the tasks is random.
