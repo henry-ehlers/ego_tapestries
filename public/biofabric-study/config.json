@@ -26,7 +26,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Amelia.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Amelia.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Amelia.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4286.74.json",
@@ -38,7 +38,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -56,7 +56,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Olivia.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Olivia.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Olivia.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4481.77.json",
@@ -68,7 +68,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -91,7 +91,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Ethan.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Ethan.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Ethan.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4672.76.json",
@@ -103,7 +103,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -111,50 +111,107 @@
             "type": "website"
         },
         "task2_component_grafo7907.80.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Andrew",
+                        "Chloe",
+                        "Christopher",
+                        "Benjamin"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Andrew and Benjamin.",
+            "instruction": "### Task 2\nIdentify the shortest path between Andrew and Benjamin.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo7907.80.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Andrew",
+                "targetNode": "Benjamin"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task2_component_grafo8127.78.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Grace",
+                        "Luna",
+                        "Adrian",
+                        "Samuel"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Grace and Samuel.",
+            "instruction": "### Task 2\nIdentify the shortest path between Grace and Samuel.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8127.78.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Grace",
+                "targetNode": "Samuel"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task2_component_grafo8142.73.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Sebastian",
+                        "Adrian",
+                        "Maya",
+                        "Violet"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Sebastian and Violet.",
+            "instruction": "### Task 2\nIdentify the shortest path between Sebastian and Violet.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8142.73.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Sebastian",
+                "targetNode": "Violet"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task3_component_grafo8961.75.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8961.75.json"
@@ -165,7 +222,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -174,7 +231,7 @@
         },
         "task3_component_grafo9163.72.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo9163.72.json"
@@ -185,7 +242,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -194,7 +251,7 @@
         },
         "task3_component_grafo9691.79.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo9691.79.json"
@@ -205,7 +262,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -213,50 +270,107 @@
             "type": "website"
         },
         "task2_component_grafo8961.75.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Aurora",
+                        "Evelyn",
+                        "Lincoln",
+                        "Ellie"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Aurora and Ellie.",
+            "instruction": "### Task 2\nIdentify the shortest path between Aurora and Ellie.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8961.75.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Aurora",
+                "targetNode": "Ellie"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task2_component_grafo9163.72.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Adrian",
+                        "Aurora",
+                        "Mia",
+                        "Henry"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Adrian and Henry.",
+            "instruction": "### Task 2\nIdentify the shortest path between Adrian and Henry.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo9163.72.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Adrian",
+                "targetNode": "Henry"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task2_component_grafo9691.79.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Daniel",
+                        "Scarlett",
+                        "Samuel",
+                        "Victoria"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Daniel and Victoria.",
+            "instruction": "### Task 2\nIdentify the shortest path between Daniel and Victoria.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo9691.79.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Daniel",
+                "targetNode": "Victoria"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task3_component_grafo7907.80.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo7907.80.json"
@@ -267,7 +381,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -276,7 +390,7 @@
         },
         "task3_component_grafo8127.78.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8127.78.json"
@@ -287,7 +401,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -296,7 +410,7 @@
         },
         "task3_component_grafo8142.73.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8142.73.json"
@@ -307,7 +421,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -327,7 +441,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Liam.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Liam.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Liam.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo7907.80.json",
@@ -339,7 +453,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -362,7 +476,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Caleb.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Caleb.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Caleb.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8127.78.json",
@@ -374,7 +488,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -393,7 +507,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Layla.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Layla.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Layla.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8142.73.json",
@@ -405,7 +519,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -413,50 +527,107 @@
             "type": "website"
         },
         "task2_component_grafo4286.74.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Luna",
+                        "Victoria",
+                        "Adrian",
+                        "Michael"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Luna and Michael.",
+            "instruction": "### Task 2\nIdentify the shortest path between Luna and Michael.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4286.74.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Luna",
+                "targetNode": "Michael"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task2_component_grafo4481.77.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Victoria",
+                        "Dylan",
+                        "Aurora",
+                        "Zoey"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Victoria and Zoey.",
+            "instruction": "### Task 2\nIdentify the shortest path between Victoria and Zoey.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4481.77.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Victoria",
+                "targetNode": "Zoey"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task2_component_grafo4672.76.json": {
-            "description": "Identify the shortest path between two nodes.",
-            "instruction": "# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+            "correctAnswer": [
+                {
+                    "answer": [
+                        "Owen",
+                        "Natalie",
+                        "Lincoln",
+                        "Stella"
+                    ],
+                    "id": "graphVis"
+                }
+            ],
+            "description": "Identify the shortest path between Owen and Stella.",
+            "instruction": "### Task 2\nIdentify the shortest path between Owen and Stella.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4672.76.json",
-                "givenNode": "Amelia",
-                "targetNode": "Ethan"
+                "sourceNode": "Owen",
+                "targetNode": "Stella"
             },
             "path": "biofabric-study/assets/biofabric/index.html",
             "provideFeedback": false,
-            "response": [],
+            "response": [
+                {
+                    "id": "graphVis",
+                    "location": "belowStimulus",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select the entire path.",
+                    "required": true,
+                    "type": "reactive"
+                }
+            ],
             "type": "website"
         },
         "task3_component_grafo4286.74.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4286.74.json"
@@ -467,7 +638,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -476,7 +647,7 @@
         },
         "task3_component_grafo4481.77.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4481.77.json"
@@ -487,7 +658,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -496,7 +667,7 @@
         },
         "task3_component_grafo4672.76.json": {
             "description": "Estimate the number of edges in the graph.",
-            "instruction": "# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+            "instruction": "### Task 3\nEstimate the number of edges in the graph.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo4672.76.json"
@@ -507,7 +678,7 @@
                 {
                     "id": "task3-numerical",
                     "location": "belowStimulus",
-                    "prompt": "Your numerical estimate of the number of edges:",
+                    "prompt": "### How to answer\n Enter the number of your estimate in the field below and submit. Your numerical estimate of the number of edges:",
                     "required": true,
                     "type": "numerical"
                 }
@@ -526,7 +697,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Gabriel.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Gabriel.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Gabriel.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo8961.75.json",
@@ -538,7 +709,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -559,7 +730,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Julian.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Julian.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Julian.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo9163.72.json",
@@ -571,7 +742,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -590,7 +761,7 @@
                 }
             ],
             "description": "Locate and select all adjacent nodes of node Naomi.",
-            "instruction": "# Task 1\nLocate and select all adjacent nodes of node Naomi.\n## How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes.",
+            "instruction": "### Task 1\nLocate and select all adjacent nodes of node Naomi.",
             "instructionLocation": "aboveStimulus",
             "parameters": {
                 "graphDataPath": "./data/selected-rome-data/large//grafo9691.79.json",
@@ -602,7 +773,7 @@
                 {
                     "id": "graphVis",
                     "location": "belowStimulus",
-                    "prompt": "Your selected nodes:",
+                    "prompt": "### How to answer\n Click on the nodes to select them. Submit your answer once you select all the adjacent nodes. Your selected nodes:",
                     "required": true,
                     "type": "reactive"
                 }
@@ -624,30 +795,60 @@
                         "components": [
                             {
                                 "components": [
-                                    "task1_component_grafo4286.74.json",
-                                    "task1_component_grafo4481.77.json",
-                                    "task1_component_grafo4672.76.json"
+                                    {
+                                        "components": [
+                                            "task1_component_grafo4286.74.json",
+                                            "task1_component_grafo4481.77.json",
+                                            "task1_component_grafo4672.76.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task1_sequence_permutation_0",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task2_component_grafo7907.80.json",
-                                    "task2_component_grafo8127.78.json",
-                                    "task2_component_grafo8142.73.json"
+                                    {
+                                        "components": [
+                                            "task2_component_grafo7907.80.json",
+                                            "task2_component_grafo8127.78.json",
+                                            "task2_component_grafo8142.73.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task2_sequence_permutation_0",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task3_component_grafo8961.75.json",
-                                    "task3_component_grafo9163.72.json",
-                                    "task3_component_grafo9691.79.json"
+                                    {
+                                        "components": [
+                                            "task3_component_grafo8961.75.json",
+                                            "task3_component_grafo9163.72.json",
+                                            "task3_component_grafo9691.79.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task3_sequence_permutation_0",
-                                "order": "random"
+                                "order": "fixed"
                             }
                         ],
                         "id": "random_sequence_permutation_0",
@@ -657,30 +858,60 @@
                         "components": [
                             {
                                 "components": [
-                                    "task1_component_grafo4286.74.json",
-                                    "task1_component_grafo4481.77.json",
-                                    "task1_component_grafo4672.76.json"
+                                    {
+                                        "components": [
+                                            "task1_component_grafo4286.74.json",
+                                            "task1_component_grafo4481.77.json",
+                                            "task1_component_grafo4672.76.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task1_sequence_permutation_1",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task2_component_grafo8961.75.json",
-                                    "task2_component_grafo9163.72.json",
-                                    "task2_component_grafo9691.79.json"
+                                    {
+                                        "components": [
+                                            "task2_component_grafo8961.75.json",
+                                            "task2_component_grafo9163.72.json",
+                                            "task2_component_grafo9691.79.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task2_sequence_permutation_1",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task3_component_grafo7907.80.json",
-                                    "task3_component_grafo8127.78.json",
-                                    "task3_component_grafo8142.73.json"
+                                    {
+                                        "components": [
+                                            "task3_component_grafo7907.80.json",
+                                            "task3_component_grafo8127.78.json",
+                                            "task3_component_grafo8142.73.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task3_sequence_permutation_1",
-                                "order": "random"
+                                "order": "fixed"
                             }
                         ],
                         "id": "random_sequence_permutation_1",
@@ -690,30 +921,60 @@
                         "components": [
                             {
                                 "components": [
-                                    "task1_component_grafo7907.80.json",
-                                    "task1_component_grafo8127.78.json",
-                                    "task1_component_grafo8142.73.json"
+                                    {
+                                        "components": [
+                                            "task1_component_grafo7907.80.json",
+                                            "task1_component_grafo8127.78.json",
+                                            "task1_component_grafo8142.73.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task1_sequence_permutation_2",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task2_component_grafo4286.74.json",
-                                    "task2_component_grafo4481.77.json",
-                                    "task2_component_grafo4672.76.json"
+                                    {
+                                        "components": [
+                                            "task2_component_grafo4286.74.json",
+                                            "task2_component_grafo4481.77.json",
+                                            "task2_component_grafo4672.76.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task2_sequence_permutation_2",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task3_component_grafo8961.75.json",
-                                    "task3_component_grafo9163.72.json",
-                                    "task3_component_grafo9691.79.json"
+                                    {
+                                        "components": [
+                                            "task3_component_grafo8961.75.json",
+                                            "task3_component_grafo9163.72.json",
+                                            "task3_component_grafo9691.79.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task3_sequence_permutation_2",
-                                "order": "random"
+                                "order": "fixed"
                             }
                         ],
                         "id": "random_sequence_permutation_2",
@@ -723,30 +984,60 @@
                         "components": [
                             {
                                 "components": [
-                                    "task1_component_grafo7907.80.json",
-                                    "task1_component_grafo8127.78.json",
-                                    "task1_component_grafo8142.73.json"
+                                    {
+                                        "components": [
+                                            "task1_component_grafo7907.80.json",
+                                            "task1_component_grafo8127.78.json",
+                                            "task1_component_grafo8142.73.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task1_sequence_permutation_3",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task2_component_grafo8961.75.json",
-                                    "task2_component_grafo9163.72.json",
-                                    "task2_component_grafo9691.79.json"
+                                    {
+                                        "components": [
+                                            "task2_component_grafo8961.75.json",
+                                            "task2_component_grafo9163.72.json",
+                                            "task2_component_grafo9691.79.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task2_sequence_permutation_3",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task3_component_grafo4286.74.json",
-                                    "task3_component_grafo4481.77.json",
-                                    "task3_component_grafo4672.76.json"
+                                    {
+                                        "components": [
+                                            "task3_component_grafo4286.74.json",
+                                            "task3_component_grafo4481.77.json",
+                                            "task3_component_grafo4672.76.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task3_sequence_permutation_3",
-                                "order": "random"
+                                "order": "fixed"
                             }
                         ],
                         "id": "random_sequence_permutation_3",
@@ -756,30 +1047,60 @@
                         "components": [
                             {
                                 "components": [
-                                    "task1_component_grafo8961.75.json",
-                                    "task1_component_grafo9163.72.json",
-                                    "task1_component_grafo9691.79.json"
+                                    {
+                                        "components": [
+                                            "task1_component_grafo8961.75.json",
+                                            "task1_component_grafo9163.72.json",
+                                            "task1_component_grafo9691.79.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task1_sequence_permutation_4",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task2_component_grafo4286.74.json",
-                                    "task2_component_grafo4481.77.json",
-                                    "task2_component_grafo4672.76.json"
+                                    {
+                                        "components": [
+                                            "task2_component_grafo4286.74.json",
+                                            "task2_component_grafo4481.77.json",
+                                            "task2_component_grafo4672.76.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task2_sequence_permutation_4",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task3_component_grafo7907.80.json",
-                                    "task3_component_grafo8127.78.json",
-                                    "task3_component_grafo8142.73.json"
+                                    {
+                                        "components": [
+                                            "task3_component_grafo7907.80.json",
+                                            "task3_component_grafo8127.78.json",
+                                            "task3_component_grafo8142.73.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task3_sequence_permutation_4",
-                                "order": "random"
+                                "order": "fixed"
                             }
                         ],
                         "id": "random_sequence_permutation_4",
@@ -789,30 +1110,60 @@
                         "components": [
                             {
                                 "components": [
-                                    "task1_component_grafo8961.75.json",
-                                    "task1_component_grafo9163.72.json",
-                                    "task1_component_grafo9691.79.json"
+                                    {
+                                        "components": [
+                                            "task1_component_grafo8961.75.json",
+                                            "task1_component_grafo9163.72.json",
+                                            "task1_component_grafo9691.79.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task1_sequence_permutation_5",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task2_component_grafo7907.80.json",
-                                    "task2_component_grafo8127.78.json",
-                                    "task2_component_grafo8142.73.json"
+                                    {
+                                        "components": [
+                                            "task2_component_grafo7907.80.json",
+                                            "task2_component_grafo8127.78.json",
+                                            "task2_component_grafo8142.73.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task2_sequence_permutation_5",
-                                "order": "random"
+                                "order": "fixed"
                             },
                             {
                                 "components": [
-                                    "task3_component_grafo4286.74.json",
-                                    "task3_component_grafo4481.77.json",
-                                    "task3_component_grafo4672.76.json"
+                                    {
+                                        "components": [
+                                            "task3_component_grafo4286.74.json",
+                                            "task3_component_grafo4481.77.json",
+                                            "task3_component_grafo4672.76.json"
+                                        ],
+                                        "order": "random"
+                                    },
+                                    {
+                                        "components": [
+                                            "$nasa-tlx.components.nasa-tlx"
+                                        ],
+                                        "order": "fixed"
+                                    }
                                 ],
-                                "id": "task3_sequence_permutation_5",
-                                "order": "random"
+                                "order": "fixed"
                             }
                         ],
                         "id": "random_sequence_permutation_5",

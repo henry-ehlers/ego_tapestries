@@ -61,6 +61,62 @@ TASK_1_SOLUTIONS = [  # in order of the graph files in ROME_GRAPH_FILES_LARGE
 
 # TASK 2: Identify the shortest path between two nodes.
 
+TASK_2_SOLUTIONS = [  # in order of the graph files in ROME_GRAPH_FILES_LARGE
+    # 4286
+    {
+        "source": "Luna",
+        "target": "Michael",
+        "path": ["Luna", "Victoria", "Adrian", "Michael"],
+    },
+    # 4481
+    {
+        "source": "Victoria",
+        "target": "Zoey",
+        "path": ["Victoria", "Dylan", "Aurora", "Zoey"],
+    },
+    # 4672
+    {
+        "source": "Owen",
+        "target": "Stella",
+        "path": ["Owen", "Natalie", "Lincoln", "Stella"],
+    },
+    # 7907
+    {
+        "source": "Andrew",
+        "target": "Benjamin",
+        "path": ["Andrew", "Chloe", "Christopher", "Benjamin"],
+    },
+    # 8127
+    {
+        "source": "Grace",
+        "target": "Samuel",
+        "path": ["Grace", "Luna", "Adrian", "Samuel"],
+    },
+    # 8142
+    {
+        "source": "Sebastian",
+        "target": "Violet",
+        "path": ["Sebastian", "Adrian", "Maya", "Violet"],
+    },
+    # 8961
+    {
+        "source": "Aurora",
+        "target": "Ellie",
+        "path": ["Aurora", "Evelyn", "Lincoln", "Ellie"],
+    },
+    # 9163
+    {
+        "source": "Adrian",
+        "target": "Henry",
+        "path": ["Adrian", "Aurora", "Mia", "Henry"],
+    },  # 9691
+    {
+        "source": "Daniel",
+        "target": "Victoria",
+        "path": ["Daniel", "Scarlett", "Samuel", "Victoria"],
+    },
+]
+
 # TASK 3: Estimate the number of edges in the graph.
 #
 # only an estimate answer, so no solution
@@ -129,19 +185,22 @@ task2_base = rvt.component(
 )
 
 
-def generate_task2_component(graph_file: str, path_prefix: str = "./"):
+def generate_task2_component(graph_file: str, solution: dict, path_prefix: str = "./"):
     # todo: this is currently a dummy implementation
     return rvt.component(
         component_name__=f"task2_component_{graph_file}",
         base__=task2_base,
-        description="Identify the shortest path between two nodes.",
-        instruction="### Task 2\nIdentify the shortest path between two nodes.",
+        description=f"Identify the shortest path between {solution['source']} and {solution['target']}.",
+        instruction=f"### Task 2\nIdentify the shortest path between {solution['source']} and {solution['target']}.",
         parameters={
             "graphDataPath": f"{path_prefix}/{graph_file}",
-            "givenNode": "Amelia",  # todo: change to random node
-            "targetNode": "Ethan",  # todo: change to random node
+            "sourceNode": solution["source"],
+            "targetNode": solution["target"],
         },
         provideFeedback=False,
+        correctAnswer=[
+            rvt.answer(id=REVISIT_REACTIVE_RESPONSE_ID, answer=solution["path"])
+        ],
     )
 
 
@@ -218,20 +277,27 @@ def get_graph_perumtations():
     TASK_1_SOLUTIONS_THIRD_2 = TASK_1_SOLUTIONS[3:6]
     TASK_1_SOLUTIONS_THIRD_3 = TASK_1_SOLUTIONS[6:9]
 
+    TASK_2_SOLUTIONS_THIRD_1 = TASK_2_SOLUTIONS[:3]
+    TASK_2_SOLUTIONS_THIRD_2 = TASK_2_SOLUTIONS[3:6]
+    TASK_2_SOLUTIONS_THIRD_3 = TASK_2_SOLUTIONS[6:9]
+
     perms = list(
         itertools.permutations(
             [
                 {
                     "graph_files": ROME_GRAPH_FILES_THIRD_1,
-                    "solutions": TASK_1_SOLUTIONS_THIRD_1,
+                    "task1_solutions": TASK_1_SOLUTIONS_THIRD_1,
+                    "task2_solutions": TASK_2_SOLUTIONS_THIRD_1,
                 },
                 {
                     "graph_files": ROME_GRAPH_FILES_THIRD_2,
-                    "solutions": TASK_1_SOLUTIONS_THIRD_2,
+                    "task1_solutions": TASK_1_SOLUTIONS_THIRD_2,
+                    "task2_solutions": TASK_2_SOLUTIONS_THIRD_2,
                 },
                 {
                     "graph_files": ROME_GRAPH_FILES_THIRD_3,
-                    "solutions": TASK_1_SOLUTIONS_THIRD_3,
+                    "task1_solutions": TASK_1_SOLUTIONS_THIRD_3,
+                    "task2_solutions": TASK_2_SOLUTIONS_THIRD_3,
                 },
             ]
         )
@@ -247,7 +313,7 @@ def generate_task1_sequence(graphs_subset):
                 graph_file, solution, path_prefix="./data/selected-rome-data/large/"
             )
             for graph_file, solution in zip(
-                graphs_subset["graph_files"], graphs_subset["solutions"]
+                graphs_subset["graph_files"], graphs_subset["task1_solutions"]
             )
         ],
     )
@@ -260,14 +326,17 @@ def generate_task1_sequence(graphs_subset):
     return task1_outer_fixed
 
 
-def generate_task2_sequence(graph_perm):
+def generate_task2_sequence(graph_subset):
+
     task2_random_sequence = rvt.sequence(
         order="random",
         components=[
             generate_task2_component(
-                graph_file, path_prefix="./data/selected-rome-data/large/"
+                graph_file, solution, path_prefix="./data/selected-rome-data/large/"
             )
-            for graph_file in graph_perm["graph_files"]
+            for graph_file, solution in zip(
+                graph_subset["graph_files"], graph_subset["task2_solutions"]
+            )
         ],
     )
 
@@ -279,14 +348,14 @@ def generate_task2_sequence(graph_perm):
     return task2_outer_fixed
 
 
-def create_task3_sequence(graph_perm):
+def create_task3_sequence(graph_subset):
     task3_random_sequence = rvt.sequence(
         order="random",
         components=[
             generate_task3_component(
                 graph_file, path_prefix="./data/selected-rome-data/large/"
             )
-            for graph_file in graph_perm["graph_files"]
+            for graph_file in graph_subset["graph_files"]
         ],
     )
 
