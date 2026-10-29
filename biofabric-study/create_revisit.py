@@ -1,3 +1,4 @@
+import itertools
 import os
 
 import revisitpy as rvt
@@ -61,6 +62,8 @@ TASK_1_SOLUTIONS = [  # in order of the graph files in ROME_GRAPH_FILES_LARGE
 # TASK 2: Identify the shortest path between two nodes.
 
 # TASK 3: Estimate the number of edges in the graph.
+#
+# only an estimate answer, so no solution
 
 
 biofabric_website_base = rvt.component(
@@ -69,6 +72,8 @@ biofabric_website_base = rvt.component(
     path="biofabric-study/assets/biofabric/index.html",
     instructionLocation="aboveStimulus",
 )
+
+# TASK 1: Select all adjacent nodes of a given node.
 
 task1_response_base = rvt.response(
     type="reactive",
@@ -83,8 +88,8 @@ task1_base = rvt.component(
     component_name__="task1_base",
     base__=biofabric_website_base,
     response=[task1_response_base],
-    # description=
-    # instruction=
+    # description= (details filled in by generate_task1_component)
+    # instruction= (details filled in by generate_task1_component)
 )
 
 
@@ -98,41 +103,196 @@ def generate_task1_component(graph_file: str, solution: dict, path_prefix: str =
             "graphDataPath": f"{path_prefix}/{graph_file}",
             "givenNode": solution["given"],
         },
-        provideFeedback=True,
+        provideFeedback=False,
         correctAnswer=[
             rvt.answer(id=REVISIT_REACTIVE_RESPONSE_ID, answer=solution["adjacent"])
         ],
     )
 
 
-task1_components = [
-    generate_task1_component(
-        graph_file, solution, path_prefix="./data/selected-rome-data/large/"
+# TASK 2: Identify the shortest path between two nodes.
+
+
+def generate_task2_component(graph_file: str, path_prefix: str = "./"):
+    # todo: this is currently a dummy implementation
+    return rvt.component(
+        component_name__=f"task2_component_{graph_file}",
+        base__=biofabric_website_base,
+        description="Identify the shortest path between two nodes.",
+        instruction="# Task 2\nIdentify the shortest path between two nodes.\n## How to answer\n Click on the nodes to select them in order. Submit your answer once you select the entire path.",
+        parameters={
+            "graphDataPath": f"{path_prefix}/{graph_file}",
+            "givenNode": "Amelia",  # todo: change to random node
+            "targetNode": "Ethan",  # todo: change to random node
+        },
+        provideFeedback=False,
     )
-    for graph_file, solution in zip(ROME_GRAPH_FILES_LARGE, TASK_1_SOLUTIONS)
-]
 
 
-task1_sequence = rvt.sequence(order="random", numSamples=3, components=task1_components)
+# TASK 3: Estimate the number of edges in the graph.
 
-
-intro_introduction = rvt.component(
-    component_name__="intro_introduction",
-    type="markdown",
-    path="biofabric-study/assets/introduction.md",
+task3_response_base = rvt.response(
+    type="numerical",
+    id="task3-numerical",
+    prompt="Your numerical estimate of the number of edges:",
+    required=True,
+    location="belowStimulus",
 )
 
-intro_tutorial = rvt.component(
-    component_name__="intro_tutorial",
-    type="markdown",
-    path="biofabric-study/assets/tutorial.md",
+task3_base = rvt.component(
+    component_name__="task3_base",
+    base__=biofabric_website_base,
+    response=[task3_response_base],
 )
 
-intro_graph_terminology_biofabric = rvt.component(
-    component_name__="intro_graph_terminology_biofabric",
-    type="markdown",
-    path="biofabric-study/assets/graph_terminology_biofabric.md",
-)
+
+def generate_task3_component(graph_file: str, path_prefix: str = "./"):
+    return rvt.component(
+        component_name__=f"task3_component_{graph_file}",
+        base__=task3_base,
+        description="Estimate the number of edges in the graph.",
+        instruction="# Task 3\nEstimate the number of edges in the graph.\n## How to answer\n Enter the number of your estimate in the field below and submit.",
+        parameters={
+            "graphDataPath": f"{path_prefix}/{graph_file}",
+        },
+        provideFeedback=False,
+    )
+
+
+def generate_intro_sequence():
+
+    intro_introduction = rvt.component(
+        component_name__="intro_introduction",
+        type="markdown",
+        path="biofabric-study/assets/introduction.md",
+    )
+
+    intro_tutorial = rvt.component(
+        component_name__="intro_tutorial",
+        type="markdown",
+        path="biofabric-study/assets/tutorial.md",
+    )
+
+    intro_graph_terminology_biofabric = rvt.component(
+        component_name__="intro_graph_terminology_biofabric",
+        type="markdown",
+        path="biofabric-study/assets/graph_terminology_biofabric.md",
+    )
+
+    return rvt.sequence(
+        order="fixed",
+        components=[
+            intro_introduction,
+            intro_tutorial,
+            intro_graph_terminology_biofabric,
+        ],
+    )
+
+
+def get_task_permutations():
+    """
+    Returns a list of all possible permutations of the task variations.
+    """
+
+    ROME_GRAPH_FILES_THIRD_1 = ROME_GRAPH_FILES_LARGE[:3]
+    ROME_GRAPH_FILES_THIRD_2 = ROME_GRAPH_FILES_LARGE[3:6]
+    ROME_GRAPH_FILES_THIRD_3 = ROME_GRAPH_FILES_LARGE[6:9]
+
+    TASK_1_SOLUTIONS_THIRD_1 = TASK_1_SOLUTIONS[:3]
+    TASK_1_SOLUTIONS_THIRD_2 = TASK_1_SOLUTIONS[3:6]
+    TASK_1_SOLUTIONS_THIRD_3 = TASK_1_SOLUTIONS[6:9]
+
+    perms = list(
+        itertools.permutations(
+            [
+                {
+                    "graph_files": ROME_GRAPH_FILES_THIRD_1,
+                    "solutions": TASK_1_SOLUTIONS_THIRD_1,
+                },
+                {
+                    "graph_files": ROME_GRAPH_FILES_THIRD_2,
+                    "solutions": TASK_1_SOLUTIONS_THIRD_2,
+                },
+                {
+                    "graph_files": ROME_GRAPH_FILES_THIRD_3,
+                    "solutions": TASK_1_SOLUTIONS_THIRD_3,
+                },
+            ]
+        )
+    )
+    return perms
+
+
+def generate_random_task_seqeuence():
+    """
+    Splits the 9 graphs such that no graphs are repeated for any tasks per participant,
+    while making sure all graphs can appear in all tasks.
+
+    This is done by splitting the 9 graphs into 3 groups of 3 graphs each,
+    and then permuting the order of the groups for each task.
+    The final sequence is a latin square of the 3 groups, with each group appearing in a different order for each task.
+    """
+
+    # the latin square sequence ensures that each variation of the tasks appears equally often across participants.
+    latin_square_sequence = rvt.sequence(
+        order="latinSquare", numSamples=1, components=[]
+    )
+
+    task_permutations = get_task_permutations()
+
+    for i, task_permutation in enumerate(task_permutations):
+        # the variations are wrapped in a random sequence
+        # to ensure that the order of the tasks is random.
+        random_sequence = rvt.sequence(
+            id=f"random_sequence_permutation_{i}",
+            order="random",
+            components=[],
+        )
+
+        task1_sequence = rvt.sequence(
+            order="random",
+            id=f"task1_sequence_permutation_{i}",
+            components=[
+                generate_task1_component(
+                    graph_file, solution, path_prefix="./data/selected-rome-data/large/"
+                )
+                for graph_file, solution in zip(
+                    task_permutation[0]["graph_files"], task_permutation[0]["solutions"]
+                )
+            ],
+        )
+
+        task2_sequence = rvt.sequence(
+            order="random",
+            id=f"task2_sequence_permutation_{i}",
+            components=[
+                generate_task2_component(
+                    graph_file, path_prefix="./data/selected-rome-data/large/"
+                )
+                for graph_file in task_permutation[1]["graph_files"]
+            ],
+        )
+
+        task3_sequence = rvt.sequence(
+            order="random",
+            id=f"task3_sequence_permutation_{i}",
+            components=[
+                generate_task3_component(
+                    graph_file, path_prefix="./data/selected-rome-data/large/"
+                )
+                for graph_file in task_permutation[2]["graph_files"]
+            ],
+        )
+
+        # these additions need to be separated, otherwise they will be attached
+        # as children to each other, breaking the sequence structure.
+        random_sequence += task1_sequence
+        random_sequence += task2_sequence
+        random_sequence += task3_sequence
+
+        latin_square_sequence += random_sequence
+
+    return latin_square_sequence
 
 
 study_metadata = rvt.studyMetadata(
@@ -146,14 +306,14 @@ study_metadata = rvt.studyMetadata(
         "Johann Sebastian Schicho",
     ],
     date="2026-02-23",
-    description="Working with collapsible BioFabric",
+    description="Working with collapsible BioFabric",  # todo
     organizations=["TU Wien"],
 )
 
 ui_config = rvt.uiConfig(
     helpTextPath="biofabric-study/assets/help.md",
     logoPath="revisitAssets/revisitLogoSquare.svg",
-    contactEmail="your@email.com",
+    contactEmail="your@email.com",  # todo
     withProgressBar=True,
     showNavigationButtons=True,
     showComponentTitles=True,
@@ -166,15 +326,7 @@ def main() -> None:
         schema="https://raw.githubusercontent.com/revisit-studies/study/main/src/parser/StudyConfigSchema.json",
         uiConfig=ui_config,
         studyMetadata=study_metadata,
-        sequence=rvt.sequence(
-            order="fixed",
-            components=[
-                intro_introduction,
-                intro_tutorial,
-                intro_graph_terminology_biofabric,
-            ],
-        )
-        + task1_sequence,
+        sequence=generate_intro_sequence() + generate_random_task_seqeuence(),
         importedLibraries=["nasa-tlx"],
     )
 

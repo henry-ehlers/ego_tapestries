@@ -102,168 +102,6 @@ export class BioFabricRenderer {
                 });
         }
 
-        compressG.append("circle")
-            .attr("id", "compressAllNodesButton")
-            .attr("cx", 0)
-            .attr("cy", 2)
-            .attr("r", 0.5)
-            .attr("fill", "black")
-            .attr("stroke", "black")
-            .attr("stroke-width", 0.2)
-            .style("cursor", "pointer")
-            .on("mouseover", () => {
-                d3.select("#compressAllNodesButton")
-                    .transition(transitionDuration)
-                    .attr("fill", "white")
-                    .transition(transitionDuration)
-                    .attr("fill", "black");
-            })
-            .on("mouseout", () => {
-                d3.select("#compressAllNodesButton")
-                    .transition(transitionDuration)
-                    .attr("fill", "black");
-            })
-            .on("click", () => {
-                for (let nodeDepthIcon of this.biofabric.nodeDepths.filter(nodeDepth => nodeDepth.get_depth() <= this.biofabric.graph.get_depth())) {
-                    switch (nodeDepthIcon.get_state()) {
-                        case State["Uncompressed"]:
-                            this.globalDispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, false, "node"));
-                    }
-                }
-            });
-
-        // require a group for the half step to render the semi circle and the circle
-        let compressAllEdgesHalfButton = compressG.append("g").attr("transform", "translate(" + (2) + "," + (0) + ")");
-
-        compressAllEdgesHalfButton
-            .append("path")
-            .attr("id", "compressAllEdgesHalfButtonPath")
-            .attr("fill", "black")
-            .attr("stroke", "black")
-            .attr("stroke-width", 0)
-            .attr("d", () => {
-                let curve = d3.line().curve(d3.curveBasisClosed)
-                return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]]);
-            })
-
-        compressAllEdgesHalfButton.append("circle")
-            .attr("id", "compressAllEdgesHalfButton")
-            .attr("cx", 0)
-            .attr("cy", 0)
-            .attr("r", 0.5)
-            .attr("fill", "white")
-            .attr("fill-opacity", "0")
-            .attr("stroke", "black")
-            .attr("stroke-width", 0.2)
-            .style("cursor", "pointer")
-            .on("mouseover", () => {
-                d3.select("#compressAllEdgesHalfButtonPath")
-                    .transition(transitionDuration)
-                    .attr("d", () => {
-                        let curve = d3.line().curve(d3.curveBasisClosed)
-                        return curve([[0, 0.7], [0, 0.7], [0, 0.7], [0, 0.7]])
-                    })
-                    .transition(transitionDuration)
-                    .attr("d", () => {
-                        let curve = d3.line().curve(d3.curveBasisClosed)
-                        return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]]);
-                    })
-            })
-            .on("mouseout", () => {
-                d3.select("#compressAllEdgesHalfButtonPath")
-                    .attr("d", () => {
-                        let curve = d3.line().curve(d3.curveBasisClosed)
-                        return curve([[0, 0.7], [-0.7, 0], [0, 0], [0.7, 0]]);
-                    })
-            })
-            .on("click", () => {
-                for (let edgeDepth of this.biofabric.edgeDepths.filter(edgeDepth => edgeDepth.get_depth() <= this.biofabric.graph.get_depth())) {
-                    switch (edgeDepth.get_state()) {
-                        case State["Fully Compressed"]:
-                            this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, false, "edge"));
-                        // fall through to uncompressed
-                        case State["Uncompressed"]:
-                            this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, false, "edge"));
-                    }
-                }
-            })
-
-
-
-        compressG.append("circle")
-            .attr("id", "compressAllEdgesButton")
-            .attr("cx", 4)
-            .attr("cy", 0)
-            .attr("r", 0.5)
-            .attr("fill", "black")
-            .attr("stroke", "black")
-            .attr("stroke-width", 0.2)
-            .style("cursor", "pointer")
-            .on("mouseover", () => {
-                d3.select("#compressAllEdgesButton")
-                    .transition(transitionDuration)
-                    .attr("fill", "white")
-                    .transition(transitionDuration)
-                    .attr("fill", "black");
-            })
-            .on("mouseout", () => {
-                d3.select("#compressAllEdgesButton")
-                    .transition(transitionDuration)
-                    .attr("fill", "black");
-            })
-            .on("click", () => {
-                for (let edgeDepth of this.biofabric.edgeDepths.filter(edgeDepth => edgeDepth.get_depth() <= this.biofabric.graph.get_depth())) {
-                    switch (edgeDepth.get_state()) {
-                        case State["Uncompressed"]:
-                            this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, false, "edge"));
-                        // fall through to partially compressed
-                        case State["Partially Compressed"]:
-                            this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, false, "edge"));
-                    }
-                }
-            });
-
-        // uncompress All Button
-        compressG.append("circle")
-            .attr("id", "uncompressAllButton")
-            .attr("cx", 0)
-            .attr("cy", 0)
-            .attr("r", 0.5)
-            .attr("fill", "white")
-            .attr("stroke", "black")
-            .attr("stroke-width", 0.2)
-            .style("cursor", "pointer")
-            .on("mouseover", () => {
-                d3.select("#uncompressAllButton")
-                    .transition(transitionDuration)
-                    .attr("fill", "black")
-                    .transition(transitionDuration)
-                    .attr("fill", "white");
-            })
-            .on("mouseout", () => {
-                d3.select("#uncompressAllButton")
-
-                    .transition(transitionDuration)
-                    .attr("fill", "white");
-            })
-            .on("click", () => {
-                for (let edgeDepth of this.biofabric.edgeDepths.filter(edgeDepth => edgeDepth.get_depth() <= this.biofabric.graph.get_depth())) {
-                    switch (edgeDepth.get_state()) {
-                        case State["Partially Compressed"]:
-                            this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, false, "edge"));
-                        // fall through to fully compressed
-                        case State["Fully Compressed"]:
-                            this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, false, "edge"));
-                    }
-                }
-                for (let nodeDepthIcon of this.biofabric.nodeDepths.filter(nodeDepth => nodeDepth.get_depth() <= this.biofabric.graph.get_depth())) {
-                    switch (nodeDepthIcon.get_state()) {
-                        case State["Fully Compressed"]:
-                            this.globalDispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, false, "node"));
-                    }
-                }
-            });
-
         // Iterate over unique node Depths       
         let nodeDepthIcons = [...new Set(this.biofabric.nodeDepths.filter(nodeDepth => nodeDepth.get_depth() <= this.biofabric.graph.get_depth()))]
         for (let nodeDepthIcon of nodeDepthIcons) {
@@ -337,25 +175,6 @@ export class BioFabricRenderer {
                 .attr("fill-opacity", "0")
                 .attr("stroke", "#333")
                 .attr("stroke-width", 0.2)
-                .on("click", () => {
-                    // Check if Depth is not Singleton/Empty -> update drawing if not so
-                    if ((nodeDepthIcon.get_state() != State["Singleton"]) && (nodeDepthIcon.get_state() != State["Empty"])) {
-                        // we only fully compress if the edge is already fully compressed and we are compressing the node, or if we are already fully compressed and are decompressing the node.
-                        const edgePendant = this.biofabric.edgeDepths.find(edgeDepth => edgeDepth.get_depth() == nodeDepthIcon.get_depth());
-                        const isFullCompression = (nodeDepthIcon.get_state() == State["Uncompressed"] && edgePendant.get_state() == State["Fully Compressed"]) || (nodeDepthIcon.get_state() == State["Fully Compressed"] && edgePendant.get_state() == State["Fully Compressed"]);
-                        this.globalDispatcher.call("compression", this, new CompressionMsg(nodeDepthIcon, isFullCompression, "node"));
-                    }
-                })
-                .style("cursor", () => {
-                    // Change Cursor on hover over non-singleton circles
-                    if (depthNodes[0].get_state() == State["Singleton"]) {
-                        return "default";
-                    } else {
-                        return "pointer";
-                    }
-
-                }
-                )
         }
 
         // Iterate over all Edges in Depth Limit
@@ -515,21 +334,6 @@ export class BioFabricRenderer {
                 .attr("fill", "white")
                 .attr('fill-opacity', 0)
                 .attr("stroke", ((edgeDepth.get_depth() % 1) == 0.5) ? "#333" : d3.schemeObservable10[edgeDepth.get_depth()])
-                .style("cursor", () => {
-                    if (edgeDepth.get_state() == State["Singleton"] || edgeDepth.get_state() == State["Empty"]) {
-                        return "default"
-                    } else {
-                        return "pointer"
-                    }
-                }
-                )
-                .on("click", () => {
-                    // Ensure Current Depth's EdgeSet is not Singleton or Empty
-                    if ((edgeDepth.get_state() != State["Singleton"]) && (edgeDepth.get_state() != State["Empty"])) {
-                        let isFullCompression = false;
-                        this.globalDispatcher.call("compression", this, new CompressionMsg(edgeDepth, isFullCompression, "edge"));
-                    }
-                });
 
             edgeDepthCircleG.append("text")
                 .attr("id", "edgeDepthCircleText-" + edgeDepth.get_depth().toString().replace(".", "-"))
@@ -845,20 +649,6 @@ export class BioFabricRenderer {
                 .attr("r", radius);
         });
 
-        this.globalDispatcher.on("hover-in.biofabric", (id) => {
-            const n = this.biofabric.graph.nodes.find(n => n.get_id() === id);
-            const incidentEdges = this.biofabric.graph.get_incident_edges(n);
-            d3.selectAll(".edgeG").classed("fade-biofabric", edge => !incidentEdges.includes(edge));
-            d3.selectAll(".nodeline").classed("fade-biofabric-light", node => !incidentEdges.some(edge => edge.has_node_id(node.get_id())));
-            d3.selectAll(".nodetext").classed("fade-biofabric-light", node => !incidentEdges.some(edge => edge.has_node_id(node.get_id())));
-        });
-
-        this.globalDispatcher.on("hover-out.biofabric", () => {
-            d3.selectAll(".edgeG").classed("fade-biofabric", false);
-            d3.selectAll(".nodeline").classed("fade-biofabric-light", false);
-            d3.selectAll(".nodetext").classed("fade-biofabric-light", false);
-        });
-
         this.globalDispatcher.on("highlight.biofabric", (id) => {
             // equivalent to matrix highlighting.
             const n = this.biofabric.graph.nodes.find(n => n.get_id() === id);
@@ -867,19 +657,6 @@ export class BioFabricRenderer {
             d3.selectAll(".nodeline").classed("highlight-biofabric", d => d.get_highlighted());
 
             this.sendRevisitAnswers();
-        });
-
-        this.globalDispatcher.on("edge-hover-in.biofabric", (id) => {
-            const e = this.biofabric.graph.edges.find(e => e.get_id() === id);
-            d3.selectAll(".edgeG").classed("fade-biofabric", edge => edge.get_id() !== id);
-            d3.selectAll(".nodeline").classed("fade-biofabric-light", node => !e.has_node_id(node.get_id()));
-            d3.selectAll(".nodetext").classed("fade-biofabric-light", node => !e.has_node_id(node.get_id()));
-        });
-
-        this.globalDispatcher.on("edge-hover-out.biofabric", () => {
-            d3.selectAll(".edgeG").classed("fade-biofabric", false);
-            d3.selectAll(".nodeline").classed("fade-biofabric-light", false);
-            d3.selectAll(".nodetext").classed("fade-biofabric-light", false);
         });
     }
 
